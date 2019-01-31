@@ -28,17 +28,22 @@ export class AdminHomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  logout() {
+    localStorage.removeItem("userWallet");
+    this.router.navigate([""]);
+  }
+
   transferCoins(){
     if (this.transferInfo.amount && this.transferInfo.receiver){
       this.transferingCoins.transferCoins(this.transferInfo, this.userWallet.walletId, this.realBalance, this.balanceAvailable)
         .subscribe(result => {
-          this.balanceAvailable = result.balanceAvailable;
-          this.realBalance = result.realBalance;
+          this.balanceAvailable = result
         }, error => {
-          alert("The information you filled is not correct");
+          alert("The information you filled is not correct" +error);
         })
     } else {
       alert("Please transfer again");
     }
+    debugger
   }
 }

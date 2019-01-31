@@ -10,7 +10,7 @@ export class TransferCoinsService {
   constructor(private http: HttpClient) { }
 
   transferCoins(transferInfo: TransferingCoins, walletId: String, realBalance: Number, balanceAvailable: Number){
-    return this.http.post<TransferingCoins>('http://localhost:3000/user_wallet/charge', {
+    return this.http.post<Number>('http://localhost:3000/user_wallet/charge', {
       amount: transferInfo.amount,
       receiver: transferInfo.receiver,
       walletId: walletId,
