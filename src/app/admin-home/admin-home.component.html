@@ -14,10 +14,10 @@
     <table class="table-home">
       <tr>
         <th style="text-align: left" class="form-buying-title">
-          <h3>Balance available: {{userWallet.balance}}</h3>
+          <h3>Balance available: {{balanceAvailable}}</h3>
         </th>
         <th style="text-align: center" class="form-buying-title">
-          <h3>Real balance: {{userWallet.balance}}</h3>
+          <h3>Real balance: {{realBalance}}</h3>
         </th>
       </tr>
       <tr>
@@ -26,11 +26,11 @@
       </tr>
     </table>
 
-    <form method="post" action="/user_wallet/buy" class="form-charging">
+    <form class="form-charging">
         <label for="amount" class="form-charging-title"> Amount: </label>
         <input
           name="amount"
-          [(ngModel)]="amount"
+          [(ngModel)]="transferInfo.amount"
           type="number"
           min="0.1"
           id="form-buying-quantity"
@@ -40,15 +40,13 @@
       <label for="receiver" class="form-charging-title"> Receiver's Address: </label>
       <input
         name="receiver"
-        [(ngModel)]="receiver"
+        [(ngModel)]="transferInfo.receiver"
         type="text"
         id="form-buying-quantity"
         placeholder="Receiver's Address"
         required
       />
-      <input type="hidden" value="{{userWallet.publicKey}}">
-      <input type="hidden" value="{{userWallet.walletId}}">
-      <button class="form-buying-btn" (click)="validateLogin();" type="button">
+      <button class="form-buying-btn" (click)="transferCoins();" type="button">
         Charge
       </button>
     </form>
