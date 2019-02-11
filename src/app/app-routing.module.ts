@@ -22,6 +22,10 @@ export const AppRoutes: Routes = [
     {
         path: 'logout',
         component: LogoutComponent
+    },
+    {
+        path: 'user_detail/:walletId',
+        component: AdminHomeComponent
     }
 ];
 

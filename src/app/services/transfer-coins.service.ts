@@ -9,13 +9,11 @@ export class TransferCoinsService {
 
   constructor(private http: HttpClient) { }
 
-  transferCoins(transferInfo: TransferingCoins, walletId: String, realBalance: Number, balanceAvailable: Number){
+  transferCoins(amount: Number, walletId: String, receiver: String){
     return this.http.post<Number>('http://localhost:3000/user_wallet/charge', {
-      amount: transferInfo.amount,
-      receiver: transferInfo.receiver,
-      walletId: walletId,
-      realBalance: realBalance,
-      balanceAvailable: balanceAvailable
+      amount: amount,
+      receiver: receiver,
+      walletId: walletId
     })
   }
 }

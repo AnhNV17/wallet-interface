@@ -4,63 +4,169 @@
 >
   <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
     <span class="page-admin-title"
-      >Welcome {{userWallet.username}}
+      >Welcome {{ userWallet.username }}
       <a routerLink="/logout">
-        <button id="logout" (click)="logout();" type="button">
-          Logout
-        </button>
+        <button id="logout" (click)="logout()" type="button">Logout</button>
       </a>
     </span>
+
     <table class="table-home">
       <tr>
-        <th style="text-align: left" class="form-buying-title">
-          <h3>Balance available: {{balanceAvailable}}</h3>
-        </th>
-        <th style="text-align: center" class="form-buying-title">
-          <h3>Real balance: {{realBalance}}</h3>
-        </th>
+        <th style="text-align: center" class="form-buying-title">Id</th>
+        <th style="text-align: center" class="form-buying-title">Username</th>
+        <th style="text-align: center" class="form-buying-title">WalletId</th>
       </tr>
-      <tr>
-        <td></td>
-        <td style="text-align: center">Some transactions haven't done yet</td>
+      <tr *ngFor="let user of listUser">
+        <td style="text-align: center">{{ user._id }}</td>
+        <td style="text-align: center">{{ user.username }}</td>
+        <td style="text-align: center">{{ user.walletId }}</td>
+        <td >
+          <a routerLink ="/user_detail/{{user.walletId}}">
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#detail"
+            >
+              Detail
+          </button>
+          </a>
+          &nbsp;&nbsp;&nbsp;
+          <!-- <a  (click)="transferCoins()" routerLink = "/user_detail/{{user.walletId}}" *ngIf="user.username !== 'Admin'">
+          </a> -->
+          <span *ngIf="user.username !== 'Admin'">
+            <button (click)="getUserDetail(user.walletId)" 
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#myModal"
+            >
+              Charge
+            </button>
+          </span>
+        </td>
       </tr>
     </table>
 
-    <form class="form-charging">
-        <label for="amount" class="form-charging-title"> Amount: </label>
-        <input
-          name="amount"
-          [(ngModel)]="transferInfo.amount"
-          type="number"
-          min="0.1"
-          id="form-buying-quantity"
-          placeholder="The amount of money"
-          required
-        />
-      <label for="receiver" class="form-charging-title"> Receiver's Address: </label>
-      <input
-        name="receiver"
-        [(ngModel)]="transferInfo.receiver"
-        type="text"
-        id="form-buying-quantity"
-        placeholder="Receiver's Address"
-        required
-      />
-      <button class="form-buying-btn" (click)="transferCoins();" type="button">
-        Charge
-      </button>
-    </form>
+    <div class="modal fade" id="detail" data-backdrop="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Detail</h4>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+    
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form class="form-charging">
+              <label for="id">{{userWallet._id}}</label>
+              <label for="amount" class="form-charging-title"> Username: </label>&nbsp;&nbsp;
+              <input
+                name="amount"
+                [(ngModel)]="userWallet.username"
+                type="text"
+                required
+              />
+              <label>Password</label>
+              <input
+                name="amount"
+                [(ngModel)]="userWallet.password"
+                type="text"
+                required
+              />
+              <button
+                class="btn btn-info btn-sm"
+                (click)="transferCoins()"
+                type="button"
+              >
+                Charge
+              </button>
+            </form>
+          </div>
+    
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="myModal" data-backdrop="false">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Charge</h4>
+            <button type="button" class="close" data-dismiss="modal">
+              &times;
+            </button>
+          </div>
+    
+          <!-- Modal body -->
+          <div class="modal-body">
+            <form class="form-charging">
+              <label for="amount" class="form-charging-title"> Amount: </label>&nbsp;&nbsp;
+              <input
+                name="amount"
+                [(ngModel)]="amount"
+                type="number"
+                min="0.1"
+                id="form-buying-quantity"
+                placeholder="The amount of money"
+                required
+              />
+              <input type="hidden" name="receiver" [(ngModel)]="userWallet.publicKey">
+              <button
+                class="btn btn-info btn-sm"
+                (click)="transferCoins()"
+                type="button"
+              >
+                Charge
+              </button>
+            </form>
+          </div>
+    
+          <!-- Modal footer -->
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="history">
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#home">Pending Transactions</a>
+          <a class="nav-link active" data-toggle="tab" href="#home"
+            >Pending Transactions</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#menu1">Successful Transactions</a>
+          <a class="nav-link" data-toggle="tab" href="#menu1"
+            >Successful Transactions</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#menu2">Failed Transactions</a>
+          <a class="nav-link" data-toggle="tab" href="#menu2"
+            >Failed Transactions</a
+          >
         </li>
       </ul>
     </div>
