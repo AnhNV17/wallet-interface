@@ -4,9 +4,9 @@
 >
   <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
     <span class="page-home-title"
-      >Welcome {{userWallet.username}}
+      >Welcome {{ userWallet.username }}
       <a routerLink="/logout">
-        <button id="logout" (click)="logout();" type="button">
+        <button id="logout" (click)="logout()" type="button">
           Logout
         </button>
       </a>
@@ -14,10 +14,10 @@
     <table class="table-home">
       <tr>
         <th style="text-align: left" class="form-buying-title">
-          <h3>Balance available: {{userWallet.balance}}</h3>
+          <h3>Balance available: {{ walletBalance?.balance_available }}</h3>
         </th>
         <th style="text-align: center" class="form-buying-title">
-          <h3>Real balance: {{userWallet.balance}}</h3>
+          <h3>Real balance: {{ walletBalance?.real_balance }}</h3>
         </th>
       </tr>
       <tr>
@@ -26,12 +26,15 @@
       </tr>
     </table>
 
-    <form method="post" action="/user_wallet/buy" class="form-buying">
-      <select name="userchoice" class="form-buying-btn">
-        <option value="coffee">Coffee</option>
-        <option value="tea">Tea</option>
-        <option value="yogurt">Yogurt</option>
-      </select>
+    <form method="post" class="form-buying">
+      <ng-select
+        [items]="simpleItems"
+        [(ngModel)]="userchoice"
+        [ngModelOptions]="{ standalone: true }"
+        class="form-buying-btn"
+      >
+      </ng-select>
+
       <label for="quantity" class="form-buying-title"> Quantity: </label>
       <input
         name="quantity"
@@ -43,23 +46,23 @@
         required
         autofocus
       />
-      <input type="hidden" value="{{userWallet.publicKey}}">
-      <input type="hidden" value="{{userWallet.walletId}}">
-      <input type="submit" value="Buy" id="buying-submit-btn" />
+      <button (click)="buy(quantity, userchoice, walletBalance.real_balance);" type="submit" class="submit-btn">Buy</button>
     </form>
 
-    <form method="post" action="/user_wallet/buy" class="form-charging">
-        <label for="amount" class="form-charging-title"> Amount: </label>
-        <input
-          name="amount"
-          [(ngModel)]="amount"
-          type="number"
-          min="0.1"
-          id="form-buying-quantity"
-          placeholder="The amount of money"
-          required
-        />
-      <label for="receiver" class="form-charging-title"> Receiver's Address: </label>
+    <form method="post" class="form-charging">
+      <label for="amount" class="form-charging-title"> Amount: </label>
+      <input
+        name="amount"
+        [(ngModel)]="amount"
+        type="number"
+        min="0.1"
+        id="form-buying-quantity"
+        placeholder="The amount of money"
+        required
+      />
+      <label for="receiver" class="form-charging-title">
+        Receiver's Address:
+      </label>
       <input
         name="receiver"
         [(ngModel)]="receiver"
@@ -68,22 +71,25 @@
         placeholder="Receiver's Address"
         required
       />
-      <input type="hidden" value="{{userWallet.publicKey}}">
-      <input type="hidden" value="{{userWallet.walletId}}">
-      <input type="submit" value="Transfer" class="submit-btn" />
+      <button (click)="transfer(amount, receiver, walletBalance.real_balance);" type="submit" class="submit-btn">Transfer</button>
     </form>
-
 
     <div class="history">
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#home">Pending Transactions</a>
+          <a class="nav-link active" data-toggle="tab" href="#home"
+            >Pending Transactions</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#menu1">Successful Transactions</a>
+          <a class="nav-link" data-toggle="tab" href="#menu1"
+            >Successful Transactions</a
+          >
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#menu2">Failed Transactions</a>
+          <a class="nav-link" data-toggle="tab" href="#menu2"
+            >Failed Transactions</a
+          >
         </li>
       </ul>
     </div>

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserWallet } from '../models/user-wallet';
-import { TransferingCoins } from '../models/transferingCoins';
-import { TransferCoinsService } from '../services/transfer-coins.service';
+import { TransferCoinsService } from '../services/charge.service';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../services/user-info.service';
 
@@ -19,10 +18,8 @@ export class AdminHomeComponent implements OnInit {
   amount: Number;
   receiver: String;
   walletId: String;
-  transferInfo: TransferingCoins;
   constructor(private transferingCoins: TransferCoinsService, private router: Router, private userInfo: UserInfoService) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
-    this.transferInfo = new TransferingCoins();
     this.getAllUsers();
    }
 

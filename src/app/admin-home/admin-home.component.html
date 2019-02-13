@@ -20,22 +20,20 @@
         <td style="text-align: center">{{ user._id }}</td>
         <td style="text-align: center">{{ user.username }}</td>
         <td style="text-align: center">{{ user.walletId }}</td>
-        <td >
-          <a routerLink ="/user_detail/{{user.walletId}}">
-            <button
-              type="button"
-              class="btn btn-primary"
-              data-toggle="modal"
-              data-target="#detail"
-            >
-              Detail
+        <td>
+          <button
+            (click)="getUserDetail(user.walletId)"
+            type="button"
+            class="btn btn-primary"
+            data-toggle="modal"
+            data-target="#detail"
+          >
+            Detail
           </button>
-          </a>
           &nbsp;&nbsp;&nbsp;
-          <!-- <a  (click)="transferCoins()" routerLink = "/user_detail/{{user.walletId}}" *ngIf="user.username !== 'Admin'">
-          </a> -->
           <span *ngIf="user.username !== 'Admin'">
-            <button (click)="getUserDetail(user.walletId)" 
+            <button
+              (click)="getUserDetail(user.walletId)"
               type="button"
               class="btn btn-primary"
               data-toggle="modal"
@@ -49,44 +47,46 @@
     </table>
 
     <div class="modal fade" id="detail" data-backdrop="false">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-          <div class="modal-content">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
-            <h4 class="modal-title">Detail</h4>
+            <h4 class="modal-title">Detail for UserID: {{ userWallet._id }}</h4>
             <button type="button" class="close" data-dismiss="modal">
               &times;
             </button>
           </div>
-    
+
           <!-- Modal body -->
           <div class="modal-body">
             <form class="form-charging">
-              <label for="id">{{userWallet._id}}</label>
-              <label for="amount" class="form-charging-title"> Username: </label>&nbsp;&nbsp;
-              <input
+              <label for="amount" class="form-charging-title"> WalletId: {{userWallet.walletId}}</label
+              >&nbsp;
+              <label for="amount" class="form-charging-title" style="width: 300px; word-wrap: break-word;"> Public Key: {{userWallet.publicKey}}</label>
+              <label for="amount" class="form-charging-title"> Balance: {{userWallet.balance}}</label
+                >
+              <!-- <input
                 name="amount"
-                [(ngModel)]="userWallet.username"
+                [(ngModel)]="userWallet.balance"
                 type="text"
                 required
               />
-              <label>Password</label>
               <input
                 name="amount"
                 [(ngModel)]="userWallet.password"
                 type="text"
                 required
-              />
-              <button
+              /> -->
+              <!-- <button
                 class="btn btn-info btn-sm"
                 (click)="transferCoins()"
                 type="button"
               >
                 Charge
-              </button>
+              </button> -->
             </form>
           </div>
-    
+
           <!-- Modal footer -->
           <div class="modal-footer">
             <button
@@ -101,22 +101,22 @@
       </div>
     </div>
 
-
     <div class="modal fade" id="myModal" data-backdrop="false">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-          <div class="modal-content">
+      <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
-            <h4 class="modal-title">Charge</h4>
+            <h4 class="modal-title">Charge></h4>
             <button type="button" class="close" data-dismiss="modal">
               &times;
             </button>
           </div>
-    
+
           <!-- Modal body -->
           <div class="modal-body">
             <form class="form-charging">
-              <label for="amount" class="form-charging-title"> Amount: </label>&nbsp;&nbsp;
+              <label for="amount" class="form-charging-title"> Amount: </label
+              >&nbsp;&nbsp;
               <input
                 name="amount"
                 [(ngModel)]="amount"
@@ -126,7 +126,11 @@
                 placeholder="The amount of money"
                 required
               />
-              <input type="hidden" name="receiver" [(ngModel)]="userWallet.publicKey">
+              <input
+                type="hidden"
+                name="receiver"
+                [(ngModel)]="userWallet.publicKey"
+              />
               <button
                 class="btn btn-info btn-sm"
                 (click)="transferCoins()"
@@ -136,7 +140,7 @@
               </button>
             </form>
           </div>
-    
+
           <!-- Modal footer -->
           <div class="modal-footer">
             <button
