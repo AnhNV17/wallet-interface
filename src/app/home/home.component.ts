@@ -3,6 +3,7 @@ import { UserWallet } from '../models/user-wallet';
 import { UpdateBalanceService } from '../services/update-balance.service';
 import { BuyService } from '../services/buy.service';
 import { TransferService } from '../services/transfer.service';
+import { UserInfoService } from '../services/user-info.service';
 
 
 @Component({
@@ -13,13 +14,16 @@ import { TransferService } from '../services/transfer.service';
 export class HomeComponent implements OnInit {
   userWallet: UserWallet;
   walletBalance: UserWallet;
+  listTransaction = [];
   balance: Number;
   walletId: String;
   balance_available: Number;
   userchoices= ["Tea", "Coffee", "Yogurt"];
   userchoice = 'Tea';
   simpleItems = [];
-  constructor(private updateBalanceService: UpdateBalanceService, private buyService: BuyService, private transferService: TransferService) {
+  successfulList: String;
+  isShow = true;
+  constructor(private updateBalanceService: UpdateBalanceService, private buyService: BuyService, private transferService: TransferService, private userInfoService: UserInfoService) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
     this.walletId = this.userWallet.walletId;
     
@@ -28,6 +32,7 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
     this.simpleItems = ["Tea", "Coffee", "Yogurt"];
     this.updateBalance(this.walletId);
+    this.getListTransaction();
   }
 
   updateBalance(walletId: String){
@@ -46,6 +51,17 @@ export class HomeComponent implements OnInit {
     debugger
     this.transferService.transfer(amount, receiver, this.userWallet.publicKey, real_balance)
       .subscribe(balance => { this.walletBalance = balance});
-      alert(this.walletBalance);
+      alert(this.walletBalance.message);
+  }
+
+  getSuccessfulList(){
+    this.userInfoService.getSuccessfulList(this.userWallet.walletId)
+      .subscribe(succesfulList => {this.successfulList = succesfulList});
+    this.isShow = !this.isShow;
+  }
+
+  getListTransaction(){
+    this.userInfoService.getListTransaction()
+      .subscribe(result => {this.listTransaction = result});
   }
 }

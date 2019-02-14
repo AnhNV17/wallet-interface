@@ -13,6 +13,7 @@ export class AdminHomeComponent implements OnInit {
 
   userWallet: UserWallet;
   listUser: UserWallet[];
+  listTransaction = [];
   balanceAvailable: Number;
   realBalance: Number;
   amount: Number;
@@ -20,10 +21,11 @@ export class AdminHomeComponent implements OnInit {
   walletId: String;
   constructor(private transferingCoins: TransferCoinsService, private router: Router, private userInfo: UserInfoService) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
-    this.getAllUsers();
-   }
-
+  }
+  
   ngOnInit() {
+    this.getListTransaction();
+    this.getAllUsers();
   }
 
   logout() {
@@ -54,5 +56,10 @@ export class AdminHomeComponent implements OnInit {
     debugger
     this.userInfo.showUserDetail(walletId)
       .subscribe(userWallet => {this.userWallet = userWallet});
+  }
+
+  getListTransaction(){
+    this.userInfo.getListTransaction()
+      .subscribe(result => {this.listTransaction = result});
   }
 }
