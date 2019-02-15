@@ -157,20 +157,20 @@
 
     <div class="history">
       <ul class="nav nav-tabs" role="tablist">
+          <li class="nav-item">
+              <button (click)="getSuccessfulList();" type="button" class="btn btn-outline-primary">Pending Transactions</button>
+          </li>
         <li class="nav-item">
-          <a class="nav-link active" data-toggle="tab" href="#home"
-            >Pending Transactions</a
-          >
+            <button (click)="getSuccessfulList();" type="button" class="btn btn-outline-success">Successful Transactions</button>
+            <ul *ngFor="let output of successfulList">
+                <li *ngFor="let output of successfulList">
+                    
+                </li>
+            </ul>
+            <p id="successfulList" [hidden]="isShow">{{successfulList | json}}</p>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#menu1"
-            >Successful Transactions</a
-          >
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#menu2"
-            >Failed Transactions</a
-          >
+            <button (click)="getSuccessfulList();" type="button" class="btn btn-outline-danger">Failed Transactions</button>
         </li>
       </ul>
     </div>

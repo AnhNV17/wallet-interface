@@ -14,11 +14,13 @@ export class AdminHomeComponent implements OnInit {
   userWallet: UserWallet;
   listUser: UserWallet[];
   listTransaction = [];
+  successfulList: String;
   balanceAvailable: Number;
   realBalance: Number;
   amount: Number;
   receiver: String;
   walletId: String;
+  isShow = true;
   constructor(private transferingCoins: TransferCoinsService, private router: Router, private userInfo: UserInfoService) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
   }
@@ -56,6 +58,13 @@ export class AdminHomeComponent implements OnInit {
     debugger
     this.userInfo.showUserDetail(walletId)
       .subscribe(userWallet => {this.userWallet = userWallet});
+  }
+
+  getSuccessfulList(){
+    debugger
+    this.userInfo.getSuccessfulList(this.userWallet.walletId)
+      .subscribe(succesfulList => {this.successfulList = succesfulList});
+    this.isShow = !this.isShow;
   }
 
   getListTransaction(){

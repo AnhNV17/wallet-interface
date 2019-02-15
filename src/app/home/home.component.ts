@@ -55,6 +55,7 @@ export class HomeComponent implements OnInit {
   }
 
   getSuccessfulList(){
+    debugger
     this.userInfoService.getSuccessfulList(this.userWallet.walletId)
       .subscribe(succesfulList => {this.successfulList = succesfulList});
     this.isShow = !this.isShow;
