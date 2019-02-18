@@ -27,6 +27,7 @@
     </table>
 
     <form method="post" class="form-buying">
+      <label for="amount" class="form-charging-title"> Item: </label>
       <ng-select
         [items]="simpleItems"
         [(ngModel)]="userchoice"
@@ -46,7 +47,7 @@
         required
         autofocus
       />
-      <button (click)="buy(quantity, userchoice, walletBalance.real_balance);" type="submit" class="submit-btn">Buy</button>
+      <button (click)="buy(quantity, userchoice, walletBalance.real_balance);" type="submit" class="submit-buy-btn">Buy</button>
     </form>
 
     <form method="post" class="form-charging">
@@ -71,7 +72,7 @@
         placeholder="Receiver's Address"
         required
       />
-      <button (click)="transfer(amount, receiver, walletBalance.real_balance);" type="submit" class="submit-btn">Transfer</button>
+      <button (click)="transfer(amount, receiver, walletBalance.real_balance);" type="submit" class="submit-transfer-btn">Transfer</button>
     </form>
 
     <div class="history">
