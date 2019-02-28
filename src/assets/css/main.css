@@ -145,8 +145,8 @@ iframe {
 .history{
   width: 100%;
   margin-top: 5%;
-  text-align: center;
-  font-size: 100px;
+  /* text-align: center;
+  font-size: 100px; */
   font-weight: bold;
   color: #232454;
 }
@@ -539,6 +539,16 @@ iframe {
   text-transform: uppercase;
 }
 
+.historyBtn{
+  position: relative;
+  margin-bottom: 3%;
+}
+
+.successListBtn{
+  margin-left: 5%;
+  margin-bottom: 3%;
+  position: relative;
+}
 /*//////////////////////////////////////////////////////////////////
 [ Table ]*/
 .table-home{

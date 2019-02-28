@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   userWallet: UserWallet;
   walletBalance: UserWallet;
   listTransaction = [];
+  listHistory = [];
   balance: Number;
   walletId: String;
   balance_available: Number;
@@ -25,6 +26,7 @@ export class HomeComponent implements OnInit {
   simpleItems = [];
   successfulList: String;
   isShow = true;
+  isDisplay = true;
   constructor(
     private updateBalanceService: UpdateBalanceService,
     private buyService: BuyService,
@@ -79,7 +81,7 @@ export class HomeComponent implements OnInit {
   getSuccessfulList() {
     debugger;
     this.userInfoService
-      .getSuccessfulList(this.userWallet.walletId)
+      .getSuccessfulList(this.userWallet.publicKey)
       .subscribe(succesfulList => {
         this.successfulList = succesfulList;
       });
@@ -94,5 +96,12 @@ export class HomeComponent implements OnInit {
     });
     // this.pageRefresh();
     this.updateBalance(this.walletId);
+  }
+
+  getListHistory(){
+    this.userInfoService.getListHistory(this.userWallet.publicKey)
+      .subscribe(result => {this.listHistory = result});
+      console.log      
+      this.isDisplay = !this.isDisplay;
   }
 }

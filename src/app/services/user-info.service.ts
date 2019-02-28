@@ -17,11 +17,19 @@ export class UserInfoService {
     return this.http.get<UserWallet>(`http://localhost:3000/wallet/${id}`);
   }
 
-  getSuccessfulList(walletId: String){
-    return this.http.get<String>(`http://localhost:3000/user_wallet/successful_list/${walletId}`);
+  getSuccessfulList(publicKey: String){
+    return this.http.get<String>(`http://localhost:3000/user_wallet/successfulList/${publicKey}`);
   }
 
   getListTransaction(){
     return this.http.get<[]>('http://localhost:3000/user_wallet/getListTransaction');
+  }
+
+  getChargingList(){
+    return this.http.get<[]>("http://localhost:3000/user_wallet/getChargingList");
+  }
+
+  getListHistory(publicKey: String){
+    return this.http.get<[]>(`http://localhost:3000/user_wallet/getListHistory/${publicKey}`);
   }
 }
