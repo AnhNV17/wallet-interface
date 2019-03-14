@@ -1,0 +1,39 @@
+<div bsModal #viewUserDetailModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="viewUserDetailModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="top:185px;">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>Detail for UserID: {{ userWallet._id }}</span>
+                </h4>
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="middle">
+                    <h6>WalletId</h6>
+                    {{userWallet.walletId}}
+                </div>
+                <hr />
+
+                <div class="middle">
+                    <h6>Public Key</h6>
+                    {{userWallet.publicKey}}
+                </div>
+                <hr />
+
+                <div class="middle">
+                    <h6>Balance</h6>
+                    {{userWallet.balance}}
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary blue" (click)="close()">Close</button>
+            </div>
+        </div>
+    </div>
+
+</div>

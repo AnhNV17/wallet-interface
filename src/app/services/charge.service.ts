@@ -11,8 +11,8 @@ export class TransferCoinsService {
   transferCoins(amount: Number, walletId: String, receiver: String){
     return this.http.post<Number>('http://localhost:3000/user_wallet/charge', {
       amount: amount,
-      receiver: receiver,
-      walletId: walletId
+      walletId: walletId,
+      receiver: receiver
     })
   }
 }

@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { UserWallet } from '../models/user-wallet';
 import { TransferCoinsService } from '../services/charge.service';
 import { Router } from '@angular/router';
 import { UserInfoService } from '../services/user-info.service';
+import { ChargeModalComponent } from '../charge/charge.component';
+import { viewUserDetailModalComponent } from '../userDetail/user-detail.component';
+import { Paginator } from 'primeng/components/paginator/paginator';
+import { Table } from 'primeng/components/table/table';
 
 @Component({
   selector: 'app-admin-home',
   templateUrl: './admin-home.component.html',
-  styleUrls: ['./admin-home.component.css']
+  styleUrls: ['./admin-home.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AdminHomeComponent implements OnInit {
+  @ViewChild('dataTable') dataTable: Table;
+  @ViewChild('paginator') paginator: Paginator;
+
+  @ViewChild('chargeModal') chargeModal: ChargeModalComponent;
+  @ViewChild('viewUserDetailModal') viewUserDetailModal: viewUserDetailModalComponent;
+
+  @Output() editInforAttribute: EventEmitter<number> = new EventEmitter<number>();
 
   userWallet: UserWallet;
   listUser: UserWallet[];
@@ -24,10 +36,10 @@ export class AdminHomeComponent implements OnInit {
   isShow = true;
   isDisplay = true;
   coinBase = "Coin Base";
-  constructor(private transferingCoins: TransferCoinsService, private router: Router, private userInfo: UserInfoService) {
+  constructor(private router: Router, private userInfo: UserInfoService) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
   }
-  
+
   ngOnInit() {
     this.getListTransaction();
     this.getAllUsers();
@@ -38,46 +50,44 @@ export class AdminHomeComponent implements OnInit {
     this.router.navigate([""]);
   }
 
-  transferCoins(){
-    debugger
-    if (this.amount && this.userWallet.publicKey){
-      this.transferingCoins.transferCoins(this.amount, this.userWallet.walletId, this.userWallet.publicKey)
-        .subscribe(result => {
-          alert(result);
-        }, error => {
-          alert("The information you filled is not correct" +error);
-        })
-    } else {
-      alert("Please transfer again");
-    }
-  }
-
-  getAllUsers(): void{
+  getAllUsers(): void {
     this.userInfo.showAllUsers()
       .subscribe(listUsers => this.listUser = listUsers);
   }
 
+  openChargeModal(walletId: String): void {
+    this.chargeModal.show(walletId);
+  }
+
+  openViewDetailModal(id: String): void {
+    this.viewUserDetailModal.show();
+    this.viewUserDetailModal.getUserDetail(id);
+  }
+
   getUserDetail(walletId: String): void {
-    debugger
     this.userInfo.showUserDetail(walletId)
-      .subscribe(userWallet => {this.userWallet = userWallet});
+      .subscribe(userWallet => { this.userWallet = userWallet });
   }
 
-  getSuccessfulList(){
-    debugger
-    this.userInfo.getSuccessfulList("Coin Base")
-      .subscribe(succesfulList => {this.successfulList = succesfulList});
+  getSuccessfulList() {
     this.isShow = !this.isShow;
+    this.userInfo.getSuccessfulList("Coin Base")
+      .subscribe(succesfulList => { this.successfulList = succesfulList });
   }
 
-  getListTransaction(){
+  getListTransaction() {
     this.userInfo.getListTransaction()
-      .subscribe(result => {this.listTransaction = result});
+      .subscribe(result => { this.listTransaction = result });
   }
 
-  getChargingList(){
+  updateHistory() {
     this.userInfo.getChargingList()
-      .subscribe(result => {this.listCharging = result});
-      this.isDisplay = !this.isDisplay;
+      .subscribe(result => { this.listCharging = result });
+  }
+
+  getChargingList() {
+    this.isDisplay = !this.isDisplay;
+    this.userInfo.getChargingList()
+      .subscribe(result => { this.listCharging = result });
   }
 }

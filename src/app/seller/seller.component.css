@@ -1,0 +1,44 @@
+.fixed-modal-heigh {
+    max-height: calc(100vh - 132px);
+    overflow-y: auto;
+}
+
+.body-title {
+    position: relative; 
+    padding: 0.5em 0; 
+    margin-bottom: 0.9375em;
+}
+
+.body-header {
+    text-align:center; 
+    margin-bottom: 0;
+}
+
+.body-button-row {
+    position: absolute; 
+    right: 0; 
+    top: 50%; 
+    transform: translateY(-50%);
+}
+
+.valid-height{
+    height: 1em;
+}
+
+.fixed-icon {
+    position: absolute; 
+    right: 0.9375em; 
+    bottom: 1.5em;
+}
+
+.label-pos {
+    margin-top: 0.5em;
+}
+
+.table-header {
+    text-align: center;
+}
+
+.form-data-table {
+    padding: 0 1rem;
+}

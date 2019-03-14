@@ -1,109 +1,118 @@
-<div
-  class="container-login100"
-  style="background-image: url('../assets/images/bg-01.jpg');"
->
+<div class="container-login100" style="background-image: url('../assets/images/bg-01.jpg');">
   <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
-    <span class="page-home-title"
-      >Welcome {{ userWallet.username }}
-      <a routerLink="/logout">
-        <button id="logout" (click)="logout()" type="button">
-          Logout
-        </button>
-      </a>
-    </span>
-    <table class="table-home">
-      <tr>
-        <th style="text-align: left" class="form-buying-title">
-          <h3>Balance available: {{ walletBalance?.balance_available }}</h3>
-        </th>
-        <th style="text-align: center" class="form-buying-title">
-          <h3>Real balance: {{ walletBalance?.real_balance }}</h3>
-        </th>
-      </tr>
-      <tr>
-        <td></td>
-        <td style="text-align: center">Some transactions haven't done yet</td>
-      </tr>
-    </table>
 
-    <form method="post" class="form-buying">
-      <label for="amount" class="form-charging-title"> Item: </label>
-      <ng-select
-        [items]="simpleItems"
-        [(ngModel)]="userchoice"
-        [ngModelOptions]="{ standalone: true }"
-        class="form-buying-btn"
-      >
-      </ng-select>
+    <div class="header-title">
+      <span class="page-admin-title">Welcome {{ userWallet.username }}
+      </span>
+      <button class="btn btn-outline-danger header-button-row" (click)="logout()" type="button"><i
+          class="fa fa-sign-out"></i>Logout</button>
+    </div>
 
-      <label for="quantity" class="form-buying-title"> Quantity: </label>
-      <input
-        name="quantity"
-        [(ngModel)]="quantity"
-        type="number"
-        min="1"
-        id="form-buying-quantity"
-        placeholder="Number you want"
-        required
-        autofocus
-      />
-      <button
-        (click)="buy(quantity, userchoice, walletBalance.real_balance)"
-        type="submit"
-        class="submit-buy-btn"
-      >
-        Buy
-      </button>
+    <div>
+      <h5>Balance available: </h5>
+      <h5>Real balance: </h5>
+    </div>
+
+    <form [formGroup]="formHome" (onShown)="shown()" novalidate autocomplete="off">
+
+      <div class="form-row">
+        <div class="form-group div-align-1 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
+          <label for="userChoice"
+            [class]="formHome.get('userChoice').errors && formHome.get('userChoice').touched ? 'mess-error' : 'mess-ok'">Item</label>
+          <ng-select #UserOptions [items]="simpleItems" id="userChoice" [(ngModel)]="userChoice"
+            formControlName="userChoice" name="userChoice" placeholder="--Choose ur item--">
+          </ng-select>
+          <div class="valid-height">
+            <validation [control]="formHome.get('userChoice')"></validation>
+          </div>
+
+          <label for="quantity"
+            [class]="formHome.get('quantity').errors && formHome.get('quantity').touched ? 'mess-error' : 'mess-ok'">Quantity</label>
+          <input name="quantity" [(ngModel)]="buyQuantity" formControlName="quantity" id="quantity" type="number"
+            class="form-control item-form-control" min="1" placeholder="--Number you want--" required />
+          <div class="valid-height">
+            <validation [control]="formHome.get('quantity')"></validation>
+          </div>
+          <br />
+
+          <button (click)="buy()" type="button" class="btn btn-primary blue btn-align"><i
+              class="fa fa-cart-arrow-down"></i>
+            Buy
+          </button>
+        </div>
+
+        <hr style="border: none; border-left: 1px solid hsla(200, 10%, 50%,100); height: 30vh; width: 1px;">
+
+        <div class="form-group div-align-2 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
+          <label for="amount"
+            [class]="formHome.get('amount').errors && formHome.get('amount').touched ? 'mess-error' : 'mess-ok'">Amount</label>
+          <input name="amount" [(ngModel)]="transferAmount" formControlName="amount" id="amount" type="number"
+            class="form-control item-form-control" min="0.1" placeholder="--The amount of money--" required />
+          <div class="valid-height">
+            <validation [control]="formHome.get('amount')"></validation>
+          </div>
+
+          <label for="receiver"
+            [class]="formHome.get('receiver').errors && formHome.get('receiver').touched ? 'mess-error' : 'mess-ok'">Receiver's
+            Address</label>
+          <input name="receiver" [(ngModel)]="transferReceiver" formControlName="receiver" id="receiver" type="text"
+            class="form-control item-form-control" placeholder="--Receiver's Address--" required />
+          <div class="valid-height">
+            <validation [control]="formHome.get('receiver')"></validation>
+          </div>
+
+          <br />
+
+          <button (click)="transfer()" type="button" class="btn btn-primary blue btn-align"><i
+              class="fa fa-share-square-o"></i>
+            Transfer
+          </button>
+        </div>
+
+      </div>
+
+
+
     </form>
 
-    <form method="post" class="form-charging">
-      <label for="amount" class="form-charging-title"> Amount: </label>
-      <input
-        name="amount"
-        [(ngModel)]="amount"
-        type="number"
-        min="0.1"
-        id="form-buying-quantity"
-        placeholder="The amount of money"
-        required
-      />
-      <label for="receiver" class="form-charging-title">
-        Receiver's Address:
-      </label>
-      <input
-        name="receiver"
-        [(ngModel)]="receiver"
-        type="text"
-        id="form-buying-quantity"
-        placeholder="Receiver's Address"
-        required
-      />
-      <button
-        (click)="transfer(amount, receiver, walletBalance.real_balance)"
-        type="submit"
-        class="submit-transfer-btn"
-      >
-        Transfer
-      </button>
-    </form>
+    <!-- <form [formGroup]="formHomeTransfer" novalidate autocomplete="off">
+          <div class="form-group div-align-2 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
+            <label for="amount"
+              [class]="formHomeTransfer.get('amount').errors && formHomeTransfer.get('amount').touched ? 'mess-error' : 'mess-ok'">Amount</label>
+            <input name="amount" [(ngModel)]="transferAmount" formControlName="amount" id="amount" type="number"
+              class="form-control item-form-control" min="0.1" placeholder="--The amount of money--" required />
+            <div class="valid-height">
+              <validation [control]="formHomeTransfer.get('amount')"></validation>
+            </div>
+  
+            <label for="receiver"
+              [class]="formHomeTransfer.get('receiver').errors && formHomeTransfer.get('receiver').touched ? 'mess-error' : 'mess-ok'">Receiver's
+              Address</label>
+            <input name="receiver" [(ngModel)]="transferReceiver" formControlName="receiver" id="receiver" type="text"
+              class="form-control item-form-control" placeholder="--Receiver's Address--" required />
+            <div class="valid-height">
+              <validation [control]="formHomeTransfer.get('receiver')"></validation>
+            </div>
+  
+            <br />
+  
+            <button (click)="transfer()" type="button" class="btn btn-primary blue btn-align"><i
+                class="fa fa-share-square-o"></i>
+              Transfer
+            </button>
+          </div>
+  
+      </form> -->
 
     <div class="history">
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-          <button
-            (click)="getListHistory()"
-            type="button"
-            class="btn btn-outline-primary historyBtn"
-          >
+          <button (click)="getListHistory()" type="button" class="btn btn-outline-primary historyBtn">
             History
           </button>
         </li>
         <li class="nav-item">
-          <button
-            (click)="getSuccessfulList()"
-            type="button"
-            class="btn btn-outline-success successListBtn"
-          >
+          <button (click)="getSuccessfulList()" type="button" class="btn btn-outline-success successListBtn">
             Successful Transactions
           </button>
         </li>
@@ -118,3 +127,5 @@
     </div>
   </div>
 </div>
+
+<sellerModal #sellerModal></sellerModal>

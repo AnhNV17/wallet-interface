@@ -1,3 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
-/* @import "~@ng-select/ng-select/themes/default.theme.css"; */
-@import "~@ng-select/ng-select/themes/material.theme.css";
+/* @import "~@ng-select/ng-select/themes/material.theme.css"; */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+.valid-height{
+    height: 1em;
+}
+
+.mess-error{
+    color:  #f4516c;
+}
+ 
+.mess-ok{
+    color:  #212529;
+}

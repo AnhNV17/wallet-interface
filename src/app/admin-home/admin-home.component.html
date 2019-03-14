@@ -1,188 +1,109 @@
-<div
-  class="container-login100"
-  style="background-image: url('../assets/images/bg-01.jpg');"
->
+<div class="container-login100" style="background-image: url('../assets/images/bg-01.jpg');">
   <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
-    <span class="page-admin-title"
-      >Welcome {{ userWallet.username }}
-      <a routerLink="/logout">
-        <button id="logout" (click)="logout()" type="button">Logout</button>
-      </a>
-    </span>
-
-    <table class="table-home">
-      <tr>
-        <th style="text-align: center" class="form-buying-title">Id</th>
-        <th style="text-align: center" class="form-buying-title">Username</th>
-        <th style="text-align: center" class="form-buying-title">WalletId</th>
-      </tr>
-      <tr *ngFor="let user of listUser">
-        <td style="text-align: center">{{ user._id }}</td>
-        <td style="text-align: center">{{ user.username }}</td>
-        <td style="text-align: center">{{ user.walletId }}</td>
-        <td>
-          <button
-            (click)="getUserDetail(user.walletId)"
-            type="button"
-            class="btn btn-primary"
-            data-toggle="modal"
-            data-target="#detail"
-          >
-            Detail
-          </button>
-          &nbsp;&nbsp;&nbsp;
-          <span *ngIf="user.username !== 'Admin'">
-            <button
-              (click)="getUserDetail(user.walletId)"
-              type="button"
-              class="btn btn-primary"
-              data-toggle="modal"
-              data-target="#myModal"
-            >
-              Charge
-            </button>
-          </span>
-        </td>
-      </tr>
-    </table>
-
-    <div class="modal fade" id="detail" data-backdrop="false">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">Detail for UserID: {{ userWallet._id }}</h4>
-            <button type="button" class="close" data-dismiss="modal">
-              &times;
-            </button>
-          </div>
-
-          <!-- Modal body -->
-          <div class="modal-body">
-            <form class="form-charging">
-              <label for="amount" class="form-charging-title"> WalletId: {{userWallet.walletId}}</label
-              >&nbsp;
-              <label for="amount" class="form-charging-title" style="width: 300px; word-wrap: break-word;"> Public Key: {{userWallet.publicKey}}</label>
-              <label for="amount" class="form-charging-title"> Balance: {{userWallet.balance}}</label
-                >
-              <!-- <input
-                name="amount"
-                [(ngModel)]="userWallet.balance"
-                type="text"
-                required
-              />
-              <input
-                name="amount"
-                [(ngModel)]="userWallet.password"
-                type="text"
-                required
-              /> -->
-              <!-- <button
-                class="btn btn-info btn-sm"
-                (click)="transferCoins()"
-                type="button"
-              >
-                Charge
-              </button> -->
-            </form>
-          </div>
-
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      </div>
+    <div class="header-title">
+      <span class="page-admin-title">Welcome {{ userWallet.username }}
+      </span>
+      <button class="btn btn-outline-danger header-button-row" (click)="logout()" type="button"><i
+          class="fa fa-sign-out"></i>Logout</button>
+          <!-- btn-danger -->
     </div>
 
-    <div class="modal fade" id="myModal" data-backdrop="false">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">Charge</h4>
-            <button type="button" class="close" data-dismiss="modal">
-              &times;
-            </button>
-          </div>
+    <div class="row align-items-center">
+      <!--<Primeng-Datatable-Start>-->
+      <div class="primeng-datatable-container">
+        <p-table #dataTable (onLazyLoad)="getAllUsers()" [value]="listUser" [paginator]="false" [lazy]="true"
+          [scrollable]="true" ScrollWidth="100%" scrollHeight="265px">
+          <ng-template pTemplate="header">
+            <tr>
+              <th style="width: 60px; text-align: center;">Action</th>
+              <th style="width: 150px">
+                _id
+              </th>
+              <th style="width: 150px">
+                Username
+              </th>
+              <th style="width: 150px">
+                WalletId
+              </th>
 
-          <!-- Modal body -->
-          <div class="modal-body">
-            <form class="form-charging">
-              <label for="amount" class="form-charging-title"> Amount: </label
-              >&nbsp;&nbsp;
-              <input
-                name="amount"
-                [(ngModel)]="amount"
-                type="number"
-                min="0.1"
-                id="form-buying-quantity"
-                placeholder="The amount of money"
-                required
-              />
-              <input
-                type="hidden"
-                name="receiver"
-                [(ngModel)]="userWallet.publicKey"
-              />
-              <button
-                class="btn btn-info btn-sm"
-                (click)="transferCoins()"
-                type="button"
-              >
-                Charge
-              </button>
-            </form>
-          </div>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-record="$implicit">
+            <tr>
+              <td style="width: 60px; text-align: center;">
+                <div class="btn-group dropdown" normalizePosition>
+                  <button class="dropdown-toggle btn btn-sm btn-primary" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false" style="text-align: center;">
+                    <i class="fa fa-exchange"></i>
+                    <span class="caret"></span> Action
+                  </button>
+                  <ul class="dropdown-menu">
+                    <a class="dropdown-item" (click)="openViewDetailModal(record.walletId)">View Detail</a>
+                    <a class="dropdown-item" *ngIf="record.username!=='Admin'"
+                      (click)="openChargeModal(record.walletId)">Charge</a>
+                  </ul>
+                </div>
 
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-          </div>
-        </div>
+
+              </td>
+              <td style="width:150px">
+                {{record._id}}
+              </td>
+              <td style="width:150px">
+                {{record.username}}
+              </td>
+              <td style="width:150px">
+                {{record.walletId}}
+              </td>
+
+            </tr>
+          </ng-template>
+        </p-table>
+        <!-- <div class="primeng-paging-container">
+          <p-paginator rows="10" #paginator
+            (onPageChange)="getAllUsers()" [totalRecords]="6"
+            [rowsPerPageOptions]="10">
+          </p-paginator>
+          <span class="total-records-count">
+            TotalRecordsCount
+          </span>
+        </div> -->
       </div>
+      <!--<Primeng-Datatable-End>-->
     </div>
 
     <div class="history">
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="nav-item">
-            <button
-              (click)="getChargingList()"
-              type="button"
-              class="btn btn-outline-primary historyBtn"
-            >
-              History
-            </button>
-          </li>
-          <li class="nav-item">
-            <button
-              (click)="getSuccessfulList()"
-              type="button"
-              class="btn btn-outline-success successListBtn"
-            >
-              Successful Transactions
-            </button>
-          </li>
-        </ul>
-  
-        <ul *ngFor="let transaction of listCharging" [hidden]="isDisplay">
-          <li>{{ transaction }}</li>
-        </ul>
-        <ul *ngFor="let output of successfulList" [hidden]="isShow">
-          <li>{{ output }}</li>
-        </ul>
+      <!-- <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+          <button (click)="getChargingList()" type="button" class="btn btn-outline-primary historyBtn">
+            History
+          </button>
+        </li>
+        <li class="nav-item">
+          <button (click)="getSuccessfulList()" type="button" class="btn btn-outline-success successListBtn">
+            Successful Transactions
+          </button>
+        </li>
+      </ul> -->
+
+      <div class="btn-group">
+        <button (click)="getChargingList()" type="button" class="btn btn-outline-primary historyBtn">
+          History
+        </button>
+        <button (click)="getSuccessfulList()" type="button" class="btn btn-outline-primary successListBtn">
+          Successful Transactions
+        </button>
       </div>
+
+      <ul *ngFor="let transaction of listCharging" [hidden]="isDisplay">
+        <li>{{ transaction }}</li>
+      </ul>
+      <ul *ngFor="let output of successfulList" [hidden]="isShow">
+        <li>{{ output }}</li>
+      </ul>
+    </div>
   </div>
 </div>
+
+<chargeModal #chargeModal (resetHistory)="updateHistory()"></chargeModal>
+<viewUserDetailModal #viewUserDetailModal></viewUserDetailModal>
