@@ -1,5 +1,5 @@
 import { OnInit, Component, Injector, ViewChild, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap';
 import { appModuleAnimation } from 'shared/animations/routerTransition';
 
@@ -37,10 +37,15 @@ export class SellerComponent implements OnInit {
     ngOnInit(): void {
         /** Declare formgroup, formcontrol */
         this.formSeller = new FormGroup({
-            product: new FormControl(),
-            quantity: new FormControl(),
-            series: new FormControl(),
-            manufacturer: new FormControl()
+            productName: new FormControl('', { validators: [Validators.required] }),
+            productCode: new FormControl('', { validators: [Validators.required] }),
+            expiry: new FormControl('', { validators: [Validators.required] }),
+            manufacturingDate: new FormControl('', { validators: [Validators.required] }),
+            soldDate: new FormControl('', { validators: [Validators.required] }),
+            quantity: new FormControl('', { validators: [Validators.required] }),
+            series: new FormControl('', { validators: [Validators.required] }),
+            manufacturer: new FormControl('', { validators: [Validators.required] }),
+
         }, { updateOn: 'change' });
     }
 

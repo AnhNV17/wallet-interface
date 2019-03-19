@@ -10,7 +10,7 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   validateLogin(username: String, password: String){
-    return this.http.post<UserWallet>('http://localhost:3000/user/login', {
+    return this.http.post<UserWallet>('http://localhost:3000/account/login', {
       username: username,
       password: password
     })

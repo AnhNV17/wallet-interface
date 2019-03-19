@@ -39,7 +39,7 @@
                   </button>
                   <ul class="dropdown-menu">
                     <a class="dropdown-item" (click)="openViewDetailModal(record.walletId)">View Detail</a>
-                    <a class="dropdown-item" *ngIf="record.username!=='Admin'"
+                    <a class="dropdown-item" *ngIf="record.username!=='admin'"
                       (click)="openChargeModal(record.walletId)">Charge</a>
                   </ul>
                 </div>

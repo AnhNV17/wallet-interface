@@ -10,7 +10,7 @@ export class UserInfoService {
   constructor(private http: HttpClient) { }
 
   showAllUsers(){
-    return this.http.get<UserWallet[]>('http://localhost:3000/user');
+    return this.http.get<UserWallet[]>('http://localhost:3000/account');
   }
 
   showUserDetail(id: String){
