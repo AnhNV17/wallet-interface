@@ -5,7 +5,7 @@
             <form [formGroup]="formCharge" novalidate *ngIf="active" (ngSubmit)="transferCoins()" autocomplete="off">
 
                 <div class="modal-header">
-                    <h4 class="modal-title">Charge to {{walletId}}</h4>
+                    <h4 class="modal-title">Charge to {{username}}</h4>
                     <button type="button" class="close" (click)="close()" (ngOnChannge)="refreshHistory()"
                         aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -14,8 +14,7 @@
                 <div class="modal-body">
                     <div class="form-row">
                         <div class="form-group text-center div-input">
-                            <label for="amount"
-                                [class]="formCharge.get('amount').errors && formCharge.get('amount').touched ? 'mess-error' : 'mess-ok'">Amount</label>
+                            <label for="amount">Amount</label>
                             <input #amountInput name="amount" [(ngModel)]="amount" formControlName="amount" id="amount"
                                 type="number" class="form-control" min="0.1" placeholder="--The amount of money--"
                                 required />

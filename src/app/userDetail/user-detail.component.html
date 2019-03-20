@@ -1,16 +1,28 @@
 <div bsModal #viewUserDetailModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
     aria-labelledby="viewUserDetailModal" aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content" style="top:185px;">
+        <div class="modal-content" style="top:140px;">
             <div class="modal-header">
                 <h4 class="modal-title">
-                    <span>Detail for UserID: {{ userWallet._id }}</span>
+                    <span>Detail for {{username}}</span>
                 </h4>
                 <button type="button" class="close" (click)="close()" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
+
+                <div class="middle">
+                    <h6>Username</h6>
+                    {{username}}
+                </div>
+                <hr />
+
+                <div class="middle">
+                    <h6>UserId</h6>
+                    {{userWallet._id}}
+                </div>
+                <hr />
 
                 <div class="middle">
                     <h6>WalletId</h6>

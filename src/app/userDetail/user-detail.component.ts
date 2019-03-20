@@ -21,6 +21,7 @@ export class viewUserDetailModalComponent implements OnInit {
     listCharging: any;
     userWallet: any;
     amount: number;
+    username: String;
 
     constructor(private userInfo: UserInfoService) {
         this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
@@ -37,7 +38,8 @@ export class viewUserDetailModalComponent implements OnInit {
             .subscribe(userWallet => { this.userWallet = userWallet });
     }
 
-    show(): void {
+    show(uname: String): void {
+        this.username = uname;
         this.active = true;
         this.modal.show();
     }

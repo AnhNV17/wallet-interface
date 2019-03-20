@@ -42,3 +42,16 @@
 .form-data-table {
     padding: 0 1rem;
 }
+
+.header-button-row {
+    position: absolute; 
+    right: 0; 
+    top: 50%; 
+    transform: translateY(-50%);
+}
+
+.header-title {
+    position: relative; 
+    /* padding: 0.5em 0;  */
+    margin-bottom: 0.9375em;
+}

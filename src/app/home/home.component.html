@@ -16,57 +16,61 @@
     <form [formGroup]="formHome" (onShown)="shown()" novalidate autocomplete="off">
 
       <div class="form-row">
-        <div class="form-group div-align-1 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
-          <label for="userChoice"
-            [class]="formHome.get('userChoice').errors && formHome.get('userChoice').touched ? 'mess-error' : 'mess-ok'">Item</label>
-          <ng-select #UserOptions [items]="simpleItems" id="userChoice" [(ngModel)]="userChoice"
-            formControlName="userChoice" name="userChoice" placeholder="--Choose ur item--">
-          </ng-select>
-          <div class="valid-height">
-            <validation [control]="formHome.get('userChoice')"></validation>
-          </div>
+        <div class="col-md-6 col-sm-12">
+          <div class="m-portlet m-portlet--full-height">
+            <div class="form-group div-align-1 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
+              <label for="userChoice">Item</label>
+              <ng-select #UserOptions [items]="simpleItems" id="userChoice" [(ngModel)]="userChoice"
+                formControlName="userChoice" name="userChoice" placeholder="--Choose ur item--">
+              </ng-select>
+              <div class="valid-height">
+                <validation [control]="formHome.get('userChoice')"></validation>
+              </div>
 
-          <label for="quantity"
-            [class]="formHome.get('quantity').errors && formHome.get('quantity').touched ? 'mess-error' : 'mess-ok'">Quantity</label>
-          <input name="quantity" [(ngModel)]="buyQuantity" formControlName="quantity" id="quantity" type="number"
-            class="form-control item-form-control" min="1" placeholder="--Number you want--" required />
-          <div class="valid-height">
-            <validation [control]="formHome.get('quantity')"></validation>
-          </div>
-          <br />
+              <label for="quantity">Quantity</label>
+              <input name="quantity" [(ngModel)]="buyQuantity" formControlName="quantity" id="quantity" type="number"
+                class="form-control item-form-control" min="1" placeholder="--Number you want--" required />
+              <div class="valid-height">
+                <validation [control]="formHome.get('quantity')"></validation>
+              </div>
+              <br />
 
-          <button (click)="buy()" type="button" class="btn btn-primary blue btn-align"><i
-              class="fa fa-cart-arrow-down"></i>
-            Buy
-          </button>
+              <button (click)="buy()" type="button" class="btn btn-primary blue btn-align"><i
+                  class="fa fa-cart-arrow-down"></i>
+                Buy
+              </button>
+            </div>
+          </div>
         </div>
 
-        <hr style="border: none; border-left: 1px solid hsla(200, 10%, 50%,100); height: 30vh; width: 1px;">
+        <!-- <hr style="border: none; border-left: 1px solid hsla(200, 10%, 50%,100); height: 30vh; width: 1px;"> -->
 
-        <div class="form-group div-align-2 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
-          <label for="amount"
-            [class]="formHome.get('amount').errors && formHome.get('amount').touched ? 'mess-error' : 'mess-ok'">Amount</label>
-          <input name="amount" [(ngModel)]="transferAmount" formControlName="amount" id="amount" type="number"
-            class="form-control item-form-control" min="0.1" placeholder="--The amount of money--" required />
-          <div class="valid-height">
-            <validation [control]="formHome.get('amount')"></validation>
+        <div class="col-md-6 col-sm-12">
+          <div class="m-portlet m-portlet--full-height">
+            <div class="form-group div-align-2 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
+              <label for="amount">Amount</label>
+              <input name="amount" [(ngModel)]="transferAmount" formControlName="amount" id="amount" type="number"
+                class="form-control item-form-control" min="0.1" placeholder="--The amount of money--" required />
+              <div class="valid-height">
+                <validation [control]="formHome.get('amount')"></validation>
+              </div>
+
+              <label for="receiver">Receiver's
+                Address</label>
+              <input name="receiver" [(ngModel)]="transferReceiver" formControlName="receiver" id="receiver" type="text"
+                class="form-control item-form-control" placeholder="--Receiver's Address--" required />
+              <div class="valid-height">
+                <validation [control]="formHome.get('receiver')"></validation>
+              </div>
+
+              <br />
+
+              <button (click)="transfer()" type="button" class="btn btn-primary blue btn-align"><i
+                  class="fa fa-share-square-o"></i>
+                Transfer
+              </button>
+            </div>
           </div>
-
-          <label for="receiver"
-            [class]="formHome.get('receiver').errors && formHome.get('receiver').touched ? 'mess-error' : 'mess-ok'">Receiver's
-            Address</label>
-          <input name="receiver" [(ngModel)]="transferReceiver" formControlName="receiver" id="receiver" type="text"
-            class="form-control item-form-control" placeholder="--Receiver's Address--" required />
-          <div class="valid-height">
-            <validation [control]="formHome.get('receiver')"></validation>
-          </div>
-
-          <br />
-
-          <button (click)="transfer()" type="button" class="btn btn-primary blue btn-align"><i
-              class="fa fa-share-square-o"></i>
-            Transfer
-          </button>
         </div>
 
       </div>
@@ -127,5 +131,3 @@
     </div>
   </div>
 </div>
-
-<sellerModal #sellerModal></sellerModal>

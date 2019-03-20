@@ -20,11 +20,12 @@ import { PaginatorModule } from 'primeng/primeng';
 import { EditorModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
-import { SellerComponent } from './seller/seller.component';
 import { SideBarMenuComponent } from './shared/layout/nav/side-bar-menu.component';
 import { TopBarMenuComponent } from './shared/layout/nav/top-bar-menu.component';
 import { AppCommonModule } from './shared/common/app-common.module';
 import { ValidationComponent } from './shared/ifichain/validation-messages.component';
+import { SellerHomeComponent } from './seller-home/seller-home.component';
+import { SellerInputComponent } from './seller-home/seller-input/seller-input.component';
 
 @NgModule({
   exports: [ChargeModalComponent],
@@ -36,7 +37,8 @@ import { ValidationComponent } from './shared/ifichain/validation-messages.compo
     LogoutComponent,
     ChargeModalComponent,
     viewUserDetailModalComponent,
-    SellerComponent,
+    SellerHomeComponent,
+    SellerInputComponent,
     SideBarMenuComponent,
     TopBarMenuComponent,
     ValidationComponent

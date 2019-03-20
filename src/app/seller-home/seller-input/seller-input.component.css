@@ -1,0 +1,97 @@
+.fixed-modal-heigh {
+    max-height: calc(100vh - 132px);
+    overflow-y: auto;
+}
+
+.body-title {
+    position: relative; 
+    padding: 0.5em 0; 
+    margin-bottom: 0.9375em;
+}
+
+.body-header {
+    text-align:center; 
+    margin-bottom: 0;
+}
+
+.body-button-row {
+    position: absolute; 
+    right: 0; 
+    top: 50%; 
+    transform: translateY(-50%);
+}
+
+.valid-height{
+    height: 1em;
+}
+
+.fixed-icon {
+    position: absolute; 
+    right: 0.9375em; 
+    bottom: 1.5em;
+}
+
+.label-pos {
+    margin-top: 0.5em;
+}
+
+.table-header {
+    text-align: center;
+}
+
+.form-data-table {
+    padding: 0 1rem;
+}
+
+/* for datetitme picket */
+datetime-popup.dropdown .glyphicon {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+datetime-popup.dropdown timepicker {
+    display: flex;
+    justify-content: center;
+}
+
+datetime-popup.dropdown .bg-faded {
+    border:0;
+    background-color: #fff;
+}
+
+datetime-popup.dropdown datepicker button {
+    border:0;
+    background-color: #fff;
+}
+
+datetime-popup.dropdown datepicker button.active {
+    background-color: #ddd;
+}
+
+datetime-popup.dropdown .glyphicon.glyphicon-remove-circle:before {
+    content: "\f05c";
+}
+
+datetime-popup.dropdown .glyphicon.glyphicon-chevron-down:before {
+    content: "\f078";
+}
+
+datetime-popup.dropdown .glyphicon.glyphicon-chevron-up:before {
+    content: "\f077";
+}
+
+datetime-popup.dropdown .glyphicon.glyphicon-chevron-left:before {
+    content: "\f053";
+}
+
+datetime-popup.dropdown .glyphicon.glyphicon-chevron-right:before {
+    content: "\f054";
+}
+
+datetime-popup.dropdown .glyphicon.hidden {
+    display: none !important;
+}

@@ -14,7 +14,7 @@ export class UserInfoService {
   }
 
   showUserDetail(id: String){
-    return this.http.get<UserWallet>(`http://localhost:3000/wallet/${id}`);
+    return this.http.get<UserWallet>(`http://localhost:3000/account/${id}`);
   }
 
   getSuccessfulList(publicKey: String){

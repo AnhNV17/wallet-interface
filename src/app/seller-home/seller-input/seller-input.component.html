@@ -1,0 +1,106 @@
+<div bsModal (onShown)="shown()" #sellerInputComponentModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="sellerInputComponentModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="top:140px;">
+
+            <form [formGroup]="formSeller" novalidate (ngSubmit)="save()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <label>Sellet Input</label>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-row">
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="productName">Product Name</label>
+                            <ng-select #ProductName [items]="userChoices" id="productName" bindValue="id"
+                                bindLabel="displayName" [searchable]="true" placeholder="--Choose ur product--"
+                                formControlName="productName">
+                            </ng-select>
+                            <div class="valid-height">
+                                <validation [control]="formSeller.get('productName')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="productCode">Product Code</label>
+                            <input type="text" id="productCode" formControlName="productCode" class="form-control"
+                                name="productCode" minlength="0" maxlength="50" />
+                            <div class="valid-height">
+                                <validation [control]="formSeller.get('productCode')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Expiry</label>
+                            <input type="datetime" id="expiry" #SampleDatePicker formControlName="expiry"
+                                class="form-control" name="expiry" />
+                            <div class="valid-height">
+                                <validation [control]="formSeller.get('expiry')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Manufacturing Date</label>
+                            <input type="datetime" id="manufacturingDate" formControlName="manufacturingDate"
+                                class="form-control" name="manufacturingDate" />
+                            <div class="valid-height">
+                                <validation [control]="formSeller.get('manufacturingDate')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Sold Date</label>
+                            <input type="datetime" id="soldDate" formControlName="soldDate" class="form-control"
+                                name="soldDate" />
+                            <div class="valid-height">
+                                <validation [control]="formSeller.get('soldDate')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Quantity</label>
+                            <input type="text" id="quantity" formControlName="quantity" class="form-control"
+                                name="quantity" />
+                            <div class="valid-height">
+                                <validation [control]="formSeller.get('quantity')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Series</label>
+                            <input type="text" id="series" formControlName="series" class="form-control" name="series"
+                                maxlength="50" />
+                            <div class="valid-height">
+                                <validation [control]="formSeller.get('series')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Manufacturer</label>
+                            <input type="text" id="manufacturer" formControlName="manufacturer" class="form-control"
+                                name="manufacturer" maxlength="255" />
+                            <div class="valid-height">
+                                <validation [control]="formSeller.get('manufacturer')"></validation>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary blue">
+                        <i class="fa fa-save"></i>
+                        <span>Save</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

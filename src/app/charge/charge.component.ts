@@ -23,6 +23,7 @@ export class ChargeModalComponent implements OnInit {
     amount: number;
     walletId: String;
     walletUser: any;
+    username: String;
 
     constructor(private transferingCoins: TransferCoinsService, private userInfor: UserInfoService, ) {
         this.walletAdmin = JSON.parse(localStorage.getItem("userWallet"));
@@ -59,7 +60,9 @@ export class ChargeModalComponent implements OnInit {
         this.amountNativeElement.nativeElement.focus();
     }
 
-    show(wId: String): void {
+    show(wId: String, uname: String): void {
+        console.log(64, uname)
+        this.username = uname;
         this.getUserDetail(wId);
         this.walletId = wId;
         this.active = true;

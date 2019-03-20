@@ -2,6 +2,10 @@ import { OnInit, Component, Injector, ViewChild, ViewEncapsulation } from '@angu
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap';
 import { appModuleAnimation } from 'shared/animations/routerTransition';
+import { UserWallet } from '../models/user-wallet';
+import { Router } from '@angular/router';
+import { UserInfoService } from '../services/user-info.service';
+import { SellerInputComponent } from './seller-input/seller-input.component';
 
 export class SelectItem {
     id: number;
@@ -9,18 +13,21 @@ export class SelectItem {
 }
 
 @Component({
-    selector: 'sellerModal',
-    templateUrl: './seller.component.html',
-    styleUrls: ['./seller.component.css'],
+    selector: 'sellerHomeModal',
+    templateUrl: './seller-home.component.html',
+    styleUrls: ['./seller-home.component.css'],
     animations: [appModuleAnimation()]
 })
 
-export class SellerComponent implements OnInit {
-    @ViewChild('sellerComponentModal') modal: ModalDirective;
+export class SellerHomeComponent implements OnInit {
+    @ViewChild('sellerHomeComponentModal') modal: ModalDirective;
+    @ViewChild('sellerInputModal') sellerInputModal: SellerInputComponent;
 
     formSeller: FormGroup;
     active = false;
     saving = false;
+    userWallet: UserWallet;
+    pendingTransactions: any;
 
     userChoices: any[] = [
         { id: 0, displayName: "Tea" },
@@ -30,8 +37,10 @@ export class SellerComponent implements OnInit {
 
     constructor(
         injector: Injector,
+        private router: Router,
+        private userInfo: UserInfoService
     ) {
-
+        this.userWallet = JSON.parse(localStorage.getItem("userWallet"))
     }
 
     ngOnInit(): void {
@@ -48,24 +57,19 @@ export class SellerComponent implements OnInit {
 
         }, { updateOn: 'change' });
     }
-
-    /** show data when modal is shown */
-    show(): void {
-        this.active = true;
-        this.modal.show();
+    
+    openInput(): void {
+        this.sellerInputModal.show();
     }
 
-    /**
-     * save data for ProductInforAttributes
-     */
-    save(): void {
-        this.saving = true;
+    logout() {
+        localStorage.removeItem("userWallet");
+        this.router.navigate([""]);
     }
 
-    /** close modal and reset form */
-    close(): void {
-        this.active = false;
-        this.modal.hide();
+    getUserDetail(walletId: String): void {
+        this.userInfo.showUserDetail(walletId)
+            .subscribe(userWallet => { this.userWallet = userWallet });
     }
 
 }
