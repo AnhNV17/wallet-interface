@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NgModule } from '@angular/core';
+import { SellerHomeComponent } from './seller-home/seller-home.component';
 
 // export const AppRoutes: Routes = [
 //     {
@@ -41,6 +42,7 @@ import { NgModule } from '@angular/core';
                     { path: '', component: LoginComponent, data: {}  },
                     { path: 'home', component: HomeComponent, data: {}  },
                     { path: 'admin_home', component: AdminHomeComponent, data: {}  },
+                    { path: 'seller_home', component: SellerHomeComponent, data: {}  },
                     { path: 'user_detail/:walletId', component: AdminHomeComponent, data: {}  },
                     { path: 'logout', component: LogoutComponent, data: {} }
                 // ]

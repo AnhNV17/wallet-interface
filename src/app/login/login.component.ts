@@ -18,25 +18,24 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
-  validateLogin(){
-    debugger
-    if (this.username && this.password){
+  validateLogin() {
+    if (this.username && this.password) {
       this.loginService.validateLogin(this.username, this.password)
         .subscribe(userWallet => {
-          if (userWallet.role === "user"){
+          if (userWallet.role === "user") {
             localStorage.setItem("userWallet", JSON.stringify(userWallet));
             this.router.navigate(['home']);
           } else if (userWallet.role === "admin") {
             localStorage.setItem("userWallet", JSON.stringify(userWallet));
             this.router.navigate(['admin_home']);
-          } else if (userWallet.role == "seller"){
+          } else if (userWallet.role === "seller") {
             localStorage.setItem("userWallet", JSON.stringify(userWallet));
-            this.router.navigate([]);
+            this.router.navigate(['seller_home']);
           } else {
             alert('Username or Password is wrong');
           }
         }, error => {
-          alert('There is an error' +error);
+          alert('There is an error' + error);
         })
     } else {
       alert('Username or Password is wrong. Please enter again')

@@ -28,8 +28,10 @@ export class AdminHomeComponent implements OnInit {
   listTransaction = [];
   listCharging = [];
   successfulList: String;
-  balanceAvailable: Number;
-  realBalance: Number;
+  // balanceAvailable: Number;
+  // realBalance: Number;
+  balance: Number;
+  address: String;
   amount: Number;
   receiver: String;
   walletId: String;
@@ -41,7 +43,7 @@ export class AdminHomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getListTransaction();
+    // this.getListTransaction();
     this.getAllUsers();
   }
 
@@ -53,21 +55,22 @@ export class AdminHomeComponent implements OnInit {
   getAllUsers(): void {
     this.userInfo.showAllUsers()
       .subscribe(listUsers => this.listUser = listUsers);
+      console.log(58, this.listUser);
   }
 
-  openChargeModal(walletId: String): void {
-    this.chargeModal.show(walletId);
+  openChargeModal(walletId: String, uname: String): void {
+    this.chargeModal.show(walletId, uname);
   }
 
-  openViewDetailModal(id: String): void {
-    this.viewUserDetailModal.show();
+  openViewDetailModal(id: String, uname: String): void {
+    this.viewUserDetailModal.show(uname);
     this.viewUserDetailModal.getUserDetail(id);
   }
 
-  getUserDetail(walletId: String): void {
-    this.userInfo.showUserDetail(walletId)
-      .subscribe(userWallet => { this.userWallet = userWallet });
-  }
+  // getUserDetail(walletId: String): void {
+  //   this.userInfo.showUserDetail(walletId)
+  //     .subscribe(userWallet => { this.userWallet = userWallet });
+  // }
 
   getSuccessfulList() {
     this.isShow = !this.isShow;
@@ -75,10 +78,10 @@ export class AdminHomeComponent implements OnInit {
       .subscribe(succesfulList => { this.successfulList = succesfulList });
   }
 
-  getListTransaction() {
-    this.userInfo.getListTransaction()
-      .subscribe(result => { this.listTransaction = result });
-  }
+  // getListTransaction() {
+  //   this.userInfo.getListTransaction()
+  //     .subscribe(result => { this.listTransaction = result });
+  // }
 
   updateHistory() {
     this.userInfo.getChargingList()

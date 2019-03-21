@@ -1,0 +1,81 @@
+<div class="container-login100" style="background-image: url('../assets/images/bg.jpg');">
+    <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
+
+        <div class="header-title">
+            <span class="page-admin-title">Welcome {{userWallet.username}}
+            </span>
+            <button class="btn btn-outline-danger header-button-row" (click)="logout()" type="button"><i
+                    class="fa fa-sign-out"></i>Logout</button>
+        </div>
+
+        <!-- <div class="row align-items-center">
+            <button class="btn btn-outline-primary" (click)="openInput()" type="button"></button>
+        </div> -->
+
+        <div class="row align-items-center">
+            <!--<Primeng-Datatable-Start>-->
+            <div class="primeng-datatable-container">
+                <p-table #dataTable [value]="pendingTransactions" [paginator]="false" [lazy]="true" [scrollable]="true"
+                    ScrollWidth="100%" scrollHeight="265px">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 60px; text-align: center;">
+                                <!-- Action -->
+                                <button class="btn btn-outline-primary" (click)="openInput()" type="button"
+                                    style="text-align: center;">
+                                    <i class="fa fa-reply"></i>
+                                    <span class="caret"></span> Handle
+                                </button>
+                            </th>
+                            <th style="width: 150px">
+                                transactionID
+                            </th>
+                            <th style="width: 150px">
+                                From
+                            </th>
+                            <th style="width: 150px">
+                                To
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-record="$implicit">
+                        <tr>
+                            <td style="width: 60px; text-align: center;">
+                                <!-- <div class="btn-group dropdown" normalizePosition>
+                                    <button class="dropdown-toggle btn btn-sm btn-primary" data-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false" style="text-align: center;">
+                                        <i class="fa fa-exchange"></i>
+                                        <span class="caret"></span> Action
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <a class="dropdown-item"
+                                            (click)="openViewDetailModal(record.walletId, record.username)">View
+                                            Detail</a>
+                                        <a class="dropdown-item" *ngIf="record.username!=='admin'"
+                                            (click)="openChargeModal(record.walletId, record.username)">Charge</a>
+                                    </ul>
+                                </div> -->
+                                <button class="btn btn-outline-primary" (click)="openInput()" type="button"
+                                    style="text-align: center;">
+                                    <i class="fa fa-reply"></i>
+                                    <span class="caret"></span> Handle
+                                </button>
+                            </td>
+                            <td style="width:150px">
+                                Empty
+                            </td>
+                            <td style="width:150px">
+                                Empty
+                            </td>
+                            <td style="width:150px">
+                                Empty
+                            </td>
+
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>
+<sellerInputModal #sellerInputModal></sellerInputModal>

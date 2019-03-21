@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, ElementRef } from "@angular/core";
+import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { UserWallet } from "../models/user-wallet";
 import { UpdateBalanceService } from "../services/update-balance.service";
 import { BuyService } from "../services/buy.service";
 import { TransferService } from "../services/transfer.service";
 import { UserInfoService } from "../services/user-info.service";
-import { SellerComponent } from '../seller/seller.component';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
@@ -18,7 +17,6 @@ import { ModalDirective } from 'ngx-bootstrap';
 })
 export class HomeComponent implements OnInit {
   @ViewChild('AppHomeModal') modal: ModalDirective;
-  @ViewChild('sellerModal') sellerModal: SellerComponent;
   @ViewChild('UserOptions') userOptions: NgSelectComponent;
 
   userWallet: UserWallet;
@@ -42,6 +40,9 @@ export class HomeComponent implements OnInit {
   transferReceiver: String;
   real_balance: Number;
 
+  userPublicKey: String;
+  userWalletInfor: UserWallet;
+
   constructor(
     private updateBalanceService: UpdateBalanceService,
     private buyService: BuyService,
@@ -50,7 +51,6 @@ export class HomeComponent implements OnInit {
     private router: Router
   ) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
-    this.walletId = this.userWallet.walletId;
   }
 
   ngOnInit() {
@@ -66,12 +66,13 @@ export class HomeComponent implements OnInit {
     this.updateBalance(this.walletId);
     this.getListTransaction();
     this.formHome.reset();
-    this.userOptions.focus();
-
+    this.getUserDetail(this.userWallet.walletId);
+    // this.userOptions.focus();
   }
 
-  openSellerModal(): void {
-    this.sellerModal.show();
+  getUserDetail(walletId: String): void {
+    this.userInfoService.showUserDetail(walletId)
+      .subscribe(userWallet => { this.userPublicKey = userWallet.publicKey });
   }
 
   updateBalance(walletId: String) {
@@ -99,21 +100,20 @@ export class HomeComponent implements OnInit {
         this.walletBalance = balance;
         alert(this.walletBalance.message);
       });
-    this.updateBalance(this.walletId);
+    this.updateBalance(this.userWallet.walletId);
     this.updateListHistory();
   }
 
   transfer() {
     this.getValueForTransfer();
     this.transferService
-      .transfer(this.transferAmount, this.transferReceiver, this.userWallet.publicKey, this.real_balance)
+      .transfer(this.transferAmount, this.transferReceiver, this.userPublicKey)
       .subscribe(balance => {
-        // console.log(103, this.userWallet.publicKey)
         this.walletBalance = balance;
         alert(this.walletBalance.message);
       });
-    this.updateBalance(this.walletId);
-    this.updateListHistory();
+    // this.updateBalance(this.walletId);
+    // this.updateListHistory();
   }
 
   getSuccessfulList() {
@@ -123,14 +123,14 @@ export class HomeComponent implements OnInit {
         this.successfulList = succesfulList;
       });
     this.isShow = !this.isShow;
-    this.updateBalance(this.walletId);
+    this.updateBalance(this.userWallet.walletId);
   }
 
   getListTransaction() {
     this.userInfoService.getListTransaction().subscribe(result => {
       this.listTransaction = result;
     });
-    this.updateBalance(this.walletId);
+    this.updateBalance(this.userWallet.walletId);
   }
 
   updateListHistory() {

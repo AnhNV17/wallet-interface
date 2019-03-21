@@ -134,7 +134,7 @@ iframe {
   font-family: SourceSansPro-Regular;
   font-size: 16px;
   line-height: 1.4;
-  color: #4b2354;
+  color: #0501fc;
 }
 
 .hov1:hover {
@@ -192,7 +192,7 @@ iframe {
 
 .wrap-login100 {
   width: 390px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.555);
   border-radius: 10px;
   overflow: hidden;
 
@@ -205,7 +205,7 @@ iframe {
 
 .wrap-home {
   width: 75%;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 10px;
   overflow: hidden;
 
@@ -228,7 +228,7 @@ iframe {
   display: block;
   font-family: SourceSansPro-Bold;
   font-size: 30px;
-  color: #4b2354;
+  color: #ffffff;
   line-height: 1.2;
   text-align: center;
 }
@@ -327,7 +327,7 @@ iframe {
   padding: 0 20px;
   min-width: 160px;
   height: 50px;
-  background-color: #bd59d4;
+  background-color: #5466da;
   border-radius: 25px;
 
   font-family: SourceSansPro-SemiBold;

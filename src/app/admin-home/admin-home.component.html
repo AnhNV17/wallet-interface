@@ -1,11 +1,10 @@
-<div class="container-login100" style="background-image: url('../assets/images/bg-01.jpg');">
+<div class="container-login100" style="background-image: url('../assets/images/bg.jpg');">
   <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
     <div class="header-title">
       <span class="page-admin-title">Welcome {{ userWallet.username }}
       </span>
       <button class="btn btn-outline-danger header-button-row" (click)="logout()" type="button"><i
           class="fa fa-sign-out"></i>Logout</button>
-          <!-- btn-danger -->
     </div>
 
     <div class="row align-items-center">
@@ -25,7 +24,6 @@
               <th style="width: 150px">
                 WalletId
               </th>
-
             </tr>
           </ng-template>
           <ng-template pTemplate="body" let-record="$implicit">
@@ -38,13 +36,12 @@
                     <span class="caret"></span> Action
                   </button>
                   <ul class="dropdown-menu">
-                    <a class="dropdown-item" (click)="openViewDetailModal(record.walletId)">View Detail</a>
-                    <a class="dropdown-item" *ngIf="record.username!=='Admin'"
-                      (click)="openChargeModal(record.walletId)">Charge</a>
+                    <a class="dropdown-item" (click)="openViewDetailModal(record.walletId, record.username)">View
+                      Detail</a>
+                    <a class="dropdown-item" *ngIf="record.username!=='admin'"
+                      (click)="openChargeModal(record.walletId, record.username)">Charge</a>
                   </ul>
                 </div>
-
-
               </td>
               <td style="width:150px">
                 {{record._id}}
