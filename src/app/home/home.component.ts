@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
   walletId: String;
   balance_available: Number;
   userchoices = ["Tea", "Coffee", "Yogurt"];
-  // userchoice = "Tea";
   simpleItems = [];
   successfulList: String;
   isShow = true;
@@ -40,8 +39,13 @@ export class HomeComponent implements OnInit {
   transferReceiver: String;
   real_balance: Number;
 
-  userPublicKey: String;
-  userWalletInfor: UserWallet;
+  // userPublicKey: String;
+  // userWalletInfor: UserWallet;
+
+  transferingBtn = false;
+  buyingBtn = false;
+  showBuyError = false;
+  showTransferError = false;
 
   constructor(
     private updateBalanceService: UpdateBalanceService,
@@ -51,6 +55,7 @@ export class HomeComponent implements OnInit {
     private router: Router
   ) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
+
   }
 
   ngOnInit() {
@@ -63,16 +68,9 @@ export class HomeComponent implements OnInit {
     }, { updateOn: 'change' });
 
     this.simpleItems = ["Tea", "Coffee", "Yogurt"];
-    this.updateBalance(this.userWallet.walletId);
-    this.getListTransaction();
+    // this.updateBalance(this.userWallet.walletId);
+    // this.getListTransaction();
     this.formHome.reset();
-    this.getUserDetail(this.userWallet.walletId);
-    // this.userOptions.focus();
-  }
-
-  getUserDetail(walletId: String): void {
-    this.userInfoService.showUserDetail(walletId)
-      .subscribe(userWallet => { this.userPublicKey = userWallet.publicKey });
   }
 
   updateBalance(walletId: String) {
@@ -92,28 +90,80 @@ export class HomeComponent implements OnInit {
   }
 
   buy() {
-    this.getValueForBuy();
-    this.buyService
-      .buy(this.buyQuantity, this.userChoice, this.userWallet.publicKey, this.real_balance)
-      .subscribe(balance => {
-        // console.log(86, this.userWallet.publicKey)
-        this.walletBalance = balance;
-        alert(this.walletBalance.message);
-      });
-    this.updateBalance(this.userWallet.walletId);
-    this.updateListHistory();
+    let check = '';
+    let formControlNames = { userChoice: FormControl, quantity: FormControl };
+    for (var control in formControlNames) {
+      if (this.formHome.get(control).errors) {
+        check = control;
+        this.showBuyError = true;
+        break;
+      }
+    }
+    if (check != '') {
+      for (var control in formControlNames) {
+        this.formHome.get(control).markAsTouched({ onlySelf: true });
+      }
+      $('#' + check).focus();
+      if (check == "userChoice") {
+        this.userOptions.focus();
+      }
+    } else {
+      this.showBuyError = false;
+      this.getValueForBuy();
+      if (this.buyQuantity && this.userChoice && this.userWallet.publicKey) {
+        this.buyService
+          .buy(this.buyQuantity, this.userChoice, this.userWallet.publicKey, this.real_balance)
+          .subscribe(balance => {
+            this.walletBalance = balance;
+            alert(this.walletBalance.message);
+          });
+        // this.updateBalance(this.userWallet.walletId);
+        // this.updateListHistory();
+      } else {
+        alert("enter enough data");
+      }
+      this.formHome.get('userChoice').reset();
+      this.formHome.get('quantity').reset();
+    }
+
   }
 
   transfer() {
-    this.getValueForTransfer();
-    this.transferService
-      .transfer(this.transferAmount, this.transferReceiver, this.userPublicKey)
-      .subscribe(balance => {
-        this.walletBalance = balance;
-        alert(this.walletBalance.message);
-      });
-    // this.updateBalance(this.walletId);
-    // this.updateListHistory();
+    let check = '';
+    let formControls = { amount: FormControl, receiver: FormControl };
+    for (var control in formControls) {
+      if (this.formHome.get(control).errors) {
+        check = control;
+        this.showTransferError = true;
+        break;
+      }
+    }
+    if (check != '') {
+      for (var control in formControls) {
+        this.formHome.get(control).markAsTouched({ onlySelf: true });
+      }
+      $('#' + check).focus();
+    } else {
+      this.showTransferError = false;
+      this.transferingBtn = true;
+      this.getValueForTransfer();
+      if (this.transferAmount && this.transferReceiver && this.userWallet.publicKey) {
+        this.transferService
+          .transfer(this.transferAmount, this.transferReceiver, this.userWallet.publicKey)
+          // .pipe(finalize(() => { this.transferingBtn = false; }))
+          .subscribe(balance => {
+            this.walletBalance = balance;
+            alert(this.walletBalance.message);
+          });
+        // this.updateBalance(this.walletId);
+        // this.updateListHistory();
+      } else {
+        alert("enter enough data!!!")
+      }
+      this.formHome.get('amount').reset();
+      this.formHome.get('receiver').reset();
+    }
+
   }
 
   getSuccessfulList() {

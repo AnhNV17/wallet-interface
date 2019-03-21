@@ -61,7 +61,7 @@ export class ChargeModalComponent implements OnInit {
     }
 
     show(wId: String, uname: String): void {
-        console.log(64, uname)
+        // console.log(64, uname)
         this.username = uname;
         this.getUserDetail(wId);
         this.walletId = wId;

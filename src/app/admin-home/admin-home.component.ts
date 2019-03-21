@@ -55,7 +55,7 @@ export class AdminHomeComponent implements OnInit {
   getAllUsers(): void {
     this.userInfo.showAllUsers()
       .subscribe(listUsers => this.listUser = listUsers);
-      console.log(58, this.listUser);
+      // console.log(58, this.listUser);
   }
 
   openChargeModal(walletId: String, uname: String): void {

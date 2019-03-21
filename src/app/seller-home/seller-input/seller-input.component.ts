@@ -3,7 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap';
 import { appModuleAnimation } from 'shared/animations/routerTransition';
 import { NgSelectComponent } from '@ng-select/ng-select';
-// import * as $ from "jquery";
+import { DateTimeComponent } from 'src/app/shared/ifichain/datetime.component';
+import * as $ from 'jquery';
 
 export class SelectItem {
     id: number;
@@ -20,11 +21,14 @@ export class SelectItem {
 export class SellerInputComponent implements OnInit {
     @ViewChild('sellerInputComponentModal') modal: ModalDirective;
     @ViewChild('ProductName') ProductName: NgSelectComponent;
-    @ViewChild('SampleDatePicker') sampleDatePicker: ElementRef;
+    @ViewChild('sampleDatePickerManDate') sampleDatePickerManDate: ElementRef;
+    @ViewChild('SampleDatePickerExpiry') SampleDatePickerExpiry: ElementRef;
 
     formSeller: FormGroup;
     active = false;
     saving = false;
+    showError = false;
+    isShowCalendar = 'hide';
 
     userChoices: any[] = [
         { id: 0, displayName: "Coffee-1" },
@@ -55,16 +59,24 @@ export class SellerInputComponent implements OnInit {
         }, { updateOn: 'change' });
     }
 
-    // ngAfterViewInit(): void {
+    // formatDate() {
+    //     DateTimeComponent.formatFullDate(this.sampleDatePickerManDate);
+    //     DateTimeComponent.formatFullDate(this.SampleDatePickerExpiry);
+    // }
 
-    //     // default date picker
-    //     $(this.sampleDatePicker.nativeElement).datetimepicker({
-    //         format: 'L'
+    // showCalendar() {
+    //     $(document).ready(function () {
+    //         this.isShowCalendar = !this.isShowCalendar;
+    //         $('#manufacturingDate').datetimepicker(this.isShowCalendar ? 'show' : 'hide');
+    //         $('#manufacturingDate').datetimepicker({
+    //             format: 'LT'
+    //         });
     //     });
     // }
 
     /** show data when modal is shown */
     show(): void {
+        this.formSeller.get('productName').reset();
         this.active = true;
         this.modal.show();
     }
@@ -77,13 +89,35 @@ export class SellerInputComponent implements OnInit {
      * save data for ProductInforAttributes
      */
     save(): void {
-        this.saving = true;
+        let check = '';
+        for (var control in this.formSeller.controls) {
+            if (this.formSeller.get(control).errors) {
+                check = control;
+                this.showError = true;
+                break;
+            }
+        }
+        if (check != '') {
+            for (var control in this.formSeller.controls) {
+                this.formSeller.get(control).markAsTouched({ onlySelf: true });
+            }
+            $('#' + check).focus();
+            if (check == 'productName')
+                this.ProductName.focus();
+        } else {
+            // this.notify.info('UpdateSuccessfully');
+            alert('successfully');
+            this.showError = false;
+            // this.saving = true;
+            this.close();
+        }
     }
 
     /** close modal and reset form */
     close(): void {
         this.active = false;
         this.modal.hide();
+        this.formSeller.reset();
     }
 
 }

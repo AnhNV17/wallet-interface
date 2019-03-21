@@ -1,4 +1,4 @@
-<div class="container-login100" style="background-image: url('../assets/images/bg-01.jpg');">
+<div class="container-login100" style="background-image: url('../assets/images/bg-06.jpg');">
   <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
 
     <div class="header-title">
@@ -33,13 +33,13 @@
           </div>
           <br />
 
-          <button (click)="buy()" type="button" class="btn btn-primary blue btn-align"><i
+          <button (click)="buy()" type="button" class="btn btn-primary blue btn-align" [disabled]="buyingBtn"><i
               class="fa fa-cart-arrow-down"></i>
             Buy
           </button>
         </div>
 
-        <hr style="border: none; border-left: 1px solid hsla(200, 10%, 50%,100); height: 30vh; width: 1px;">
+        <hr style="border: none; border-left: 1px solid #140148; height: 30vh; width: 1px;">
 
         <div class="form-group div-align-2 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
           <label for="amount">Amount</label>
@@ -59,8 +59,8 @@
 
           <br />
 
-          <button (click)="transfer()" type="button" class="btn btn-primary blue btn-align"><i
-              class="fa fa-share-square-o"></i>
+          <button (click)="transfer()" type="button" class="btn btn-primary blue btn-align" [disabled]="transferingBtn">
+            <i class="fa fa-share-square-o"></i>
             Transfer
           </button>
         </div>
@@ -100,7 +100,7 @@
   
       </form> -->
 
-    <div class="history">
+    <!-- <div class="history">
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
           <button (click)="getListHistory()" type="button" class="btn btn-outline-primary historyBtn">
@@ -120,6 +120,27 @@
       <ul *ngFor="let output of successfulList" [hidden]="isShow">
         <li>{{ output }}</li>
       </ul>
+    </div> -->
+
+    <div class="history">
+
+      <div class="btn-group">
+        <button (click)="getListHistory()" type="button" class="btn btn-outline-primary historyBtn">
+          History
+        </button>
+        <button (click)="getSuccessfulList()" type="button" class="btn btn-outline-primary successListBtn">
+          Successful Transactions
+        </button>
+      </div>
+
+      <ul *ngFor="let transaction of listHistory" [hidden]="isDisplay">
+        <li>{{ transaction }}</li>
+      </ul>
+      <ul *ngFor="let output of successfulList" [hidden]="isShow">
+        <li>{{ output }}</li>
+      </ul>
     </div>
+
+
   </div>
 </div>
