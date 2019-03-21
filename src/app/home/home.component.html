@@ -1,20 +1,26 @@
 <div class="container-login100" style="background-image: url('../assets/images/bg-06.jpg');">
   <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
-
     <div class="header-title">
-      <span class="page-admin-title">Welcome {{ userWallet.username }}
-      </span>
-      <button class="btn btn-outline-danger header-button-row" (click)="logout()" type="button"><i
-          class="fa fa-sign-out"></i>Logout</button>
+      <span class="page-admin-title">Welcome {{ userWallet.username }} </span>
+      <button
+        class="btn btn-outline-danger header-button-row"
+        (click)="logout()"
+        type="button"
+      >
+        <i class="fa fa-sign-out"></i>Logout
+      </button>
     </div>
 
     <div>
-      <h5>Balance available: </h5>
-      <h5>Real balance: </h5>
+      <h5>Balance:</h5>
     </div>
 
-    <form [formGroup]="formHome" (onShown)="shown()" novalidate autocomplete="off">
-
+    <form
+      [formGroup]="formHome"
+      (onShown)="shown()"
+      novalidate
+      autocomplete="off"
+    >
       <div class="form-row">
         <div class="form-group div-align-1 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
           <label for="userChoice">Item</label>
@@ -64,11 +70,7 @@
             Transfer
           </button>
         </div>
-
       </div>
-
-
-
     </form>
 
     <!-- <form [formGroup]="formHomeTransfer" novalidate autocomplete="off">
@@ -103,12 +105,20 @@
     <!-- <div class="history">
       <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item">
-          <button (click)="getListHistory()" type="button" class="btn btn-outline-primary historyBtn">
+          <button
+            (click)="getListHistory()"
+            type="button"
+            class="btn btn-outline-primary historyBtn"
+          >
             History
           </button>
         </li>
         <li class="nav-item">
-          <button (click)="getSuccessfulList()" type="button" class="btn btn-outline-success successListBtn">
+          <button
+            (click)="getSuccessfulList()"
+            type="button"
+            class="btn btn-outline-success successListBtn"
+          >
             Successful Transactions
           </button>
         </li>
@@ -144,3 +154,5 @@
 
   </div>
 </div>
+
+<sellerModal #sellerModal></sellerModal>
