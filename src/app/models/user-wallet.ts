@@ -3,8 +3,7 @@ export class UserWallet {
      role: String;
      username: String;
      walletId: String;
-     real_balance: Number;
-     balance_available: Number;
+     balance: Number;
      publicKey: String;
      message: String;
 }

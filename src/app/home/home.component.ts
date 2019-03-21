@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
       receiver: new FormControl('', { validators: [Validators.required] }),
     }, { updateOn: 'change' });
 
-    this.simpleItems = ["Tea", "Coffee", "Yogurt"];
+    this.simpleItems = ["Abrica", "Robusta", "Culi"];
     this.updateBalance(this.walletId);
     this.getListTransaction();
     this.formHome.reset();

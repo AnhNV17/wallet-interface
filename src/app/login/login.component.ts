@@ -19,6 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   validateLogin(){
+    debugger
     if (this.username && this.password){
       this.loginService.validateLogin(this.username, this.password)
         .subscribe(userWallet => {
@@ -28,6 +29,9 @@ export class LoginComponent implements OnInit {
           } else if (userWallet.role === "admin") {
             localStorage.setItem("userWallet", JSON.stringify(userWallet));
             this.router.navigate(['admin_home']);
+          } else if (userWallet.role == "seller"){
+            localStorage.setItem("userWallet", JSON.stringify(userWallet));
+            this.router.navigate([]);
           } else {
             alert('Username or Password is wrong');
           }
