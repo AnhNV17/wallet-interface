@@ -25,9 +25,8 @@ export class HomeComponent implements OnInit {
   listHistory = [];
   balance: Number;
   walletId: String;
-  balance_available: Number;
-  userchoices = ["Tea", "Coffee", "Yogurt"];
-  // userchoice = "Tea";
+  userchoices = ["Abrica", "Robusta", "Culi"];
+
   simpleItems = [];
   successfulList: String;
   isShow = true;
@@ -77,7 +76,7 @@ export class HomeComponent implements OnInit {
 
   updateBalance(walletId: String) {
     this.updateBalanceService.updateBalance(walletId).subscribe(balance => {
-      this.walletBalance = balance;
+      this.userWallet.balance = balance;
     });
   }
 
@@ -93,27 +92,39 @@ export class HomeComponent implements OnInit {
 
   buy() {
     this.getValueForBuy();
-    this.buyService
-      .buy(this.buyQuantity, this.userChoice, this.userWallet.publicKey, this.real_balance)
-      .subscribe(balance => {
-        // console.log(86, this.userWallet.publicKey)
-        this.walletBalance = balance;
-        alert(this.walletBalance.message);
-      });
-    this.updateBalance(this.userWallet.walletId);
-    this.updateListHistory();
+    console.log(95, this.userWallet.publicKey)
+    if (this.buyQuantity && this.userChoice){
+      this.buyService
+        .buy(this.buyQuantity, this.userChoice, this.userWallet.publicKey)
+        .subscribe(balance => {
+          this.walletBalance = balance;
+          alert(this.walletBalance.message);
+        });
+      this.updateBalance(this.userWallet.walletId);
+      this.updateListHistory();
+    } else {
+      alert('Please fill the form to transfer');
+    }
+    this.formHome.get("userChoice").reset();
+    this.formHome.get("quantity").reset();
   }
 
   transfer() {
     this.getValueForTransfer();
-    this.transferService
-      .transfer(this.transferAmount, this.transferReceiver, this.userPublicKey)
-      .subscribe(balance => {
-        this.walletBalance = balance;
-        alert(this.walletBalance.message);
-      });
-    // this.updateBalance(this.walletId);
-    // this.updateListHistory();
+    if (this.transferAmount && this.transferReceiver){
+      this.transferService
+        .transfer(this.transferAmount, this.transferReceiver, this.userPublicKey)
+        .subscribe(balance => {
+          this.walletBalance = balance;
+          alert(this.walletBalance.message);
+        });
+      // this.updateBalance(this.walletId);
+      // this.updateListHistory();
+    } else {
+      alert('Please fill the form to transfer');
+    }
+    this.formHome.get("amount").reset();
+    this.formHome.get("receiver").reset();
   }
 
   getSuccessfulList() {

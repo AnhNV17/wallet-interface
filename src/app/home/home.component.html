@@ -15,7 +15,7 @@
     </div>
 
     <div>
-      <h5>Balance:</h5>
+      <h5>Balance: {{userWallet.balance}}</h5>
     </div>
 
     <form
@@ -28,7 +28,7 @@
         <div class="form-group div-align-1 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
           <label for="userChoice">Item</label>
           <ng-select #UserOptions [items]="simpleItems" id="userChoice" [(ngModel)]="userChoice"
-            formControlName="userChoice" name="userChoice" placeholder="--Choose ur item--">
+            formControlName="userChoice" name="userChoice" placeholder="--Choose your item--">
           </ng-select>
           <div class="valid-height">
             <validation [control]="formHome.get('userChoice')"></validation>
@@ -114,10 +114,4 @@
       </ul>
     </div>
   </div>
-<<<<<<< HEAD
 </div>
-
-<sellerModal #sellerModal></sellerModal>
-=======
-</div>
->>>>>>> 486da60cbb41cef49aa133aeb7137a819adcd5b0
