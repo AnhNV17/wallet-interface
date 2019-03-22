@@ -37,22 +37,26 @@
                         </div>
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Manufacturing Date</label>
+                            <input #sampleDatePickerManDate type="text" id="manufacturingDate"
+                                formControlName="manufacturingDate" class="form-control m-input"
+                                name="manufacturingDate" maxlength="20" />
+                            <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"></i>
+                            <div class="valid-height">
+                                <validation [control]="formSeller.get('manufacturingDate')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Expiry</label>
-                            <input type="datetime" id="expiry" #SampleDatePicker formControlName="expiry"
+                            <input type="datetime" id="expiry" #SampleDatePickerExpiry formControlName="expiry"
                                 class="form-control" name="expiry" />
+                            <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"></i>
                             <div class="valid-height">
                                 <validation [control]="formSeller.get('expiry')"></validation>
                             </div>
                         </div>
 
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Manufacturing Date</label>
-                            <input type="datetime" id="manufacturingDate" formControlName="manufacturingDate"
-                                class="form-control" name="manufacturingDate" />
-                            <div class="valid-height">
-                                <validation [control]="formSeller.get('manufacturingDate')"></validation>
-                            </div>
-                        </div>
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Sold Date</label>
@@ -95,9 +99,9 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary blue">
+                    <button type="submit" class="btn btn-primary blue" [disabled]="saving">
                         <i class="fa fa-save"></i>
-                        <span>Save</span>
+                        <span class="caret"></span> Save
                     </button>
                 </div>
             </form>

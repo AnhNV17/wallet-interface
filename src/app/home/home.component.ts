@@ -25,8 +25,13 @@ export class HomeComponent implements OnInit {
   listHistory = [];
   balance: Number;
   walletId: String;
+<<<<<<< HEAD
   userchoices = ["Abrica", "Robusta", "Culi"];
 
+=======
+  balance_available: Number;
+  userchoices = ["Tea", "Coffee", "Yogurt"];
+>>>>>>> caa153b342802f9690e53f49c82a7bb545d80059
   simpleItems = [];
   successfulList: String;
   isShow = true;
@@ -39,8 +44,13 @@ export class HomeComponent implements OnInit {
   transferReceiver: String;
   real_balance: Number;
 
-  userPublicKey: String;
-  userWalletInfor: UserWallet;
+  // userPublicKey: String;
+  // userWalletInfor: UserWallet;
+
+  transferingBtn = false;
+  buyingBtn = false;
+  showBuyError = false;
+  showTransferError = false;
 
   constructor(
     private updateBalanceService: UpdateBalanceService,
@@ -50,6 +60,7 @@ export class HomeComponent implements OnInit {
     private router: Router
   ) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
+
   }
 
   ngOnInit() {
@@ -61,17 +72,10 @@ export class HomeComponent implements OnInit {
       receiver: new FormControl('', { validators: [Validators.required] }),
     }, { updateOn: 'change' });
 
-    this.simpleItems = ["Abrica", "Robusta", "Culi"];
-    this.updateBalance(this.walletId);
-    this.getListTransaction();
+    this.simpleItems = ["Tea", "Coffee", "Yogurt"];
+    // this.updateBalance(this.userWallet.walletId);
+    // this.getListTransaction();
     this.formHome.reset();
-    this.getUserDetail(this.userWallet.walletId);
-    // this.userOptions.focus();
-  }
-
-  getUserDetail(walletId: String): void {
-    this.userInfoService.showUserDetail(walletId)
-      .subscribe(userWallet => { this.userPublicKey = userWallet.publicKey });
   }
 
   updateBalance(walletId: String) {
