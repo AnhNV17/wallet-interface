@@ -5,6 +5,7 @@ import { TransferCoinsService } from '../services/charge.service';
 import { UserInfoService } from '../services/user-info.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ValidationComponent } from '../shared/ifichain/validation-messages.component';
+import { UserWallet } from '../models/user-wallet';
 
 @Component({
     selector: 'chargeModal',
@@ -19,7 +20,7 @@ export class ChargeModalComponent implements OnInit {
 
     formCharge: FormGroup;
     active = false;
-    walletAdmin: any;
+    walletAdmin: UserWallet;
     amount: number;
     walletId: String;
     walletUser: any;
@@ -47,7 +48,8 @@ export class ChargeModalComponent implements OnInit {
         if (this.amount && this.walletUser.publicKey) {
             this.transferingCoins.transferCoins(this.amount, this.walletUser.walletId, this.walletUser.publicKey)
                 .subscribe(result => {
-                    alert(result);
+                    this.walletAdmin = result;
+                    alert(this.walletAdmin.message);
                 }, error => {
                     alert("The information you filled is not correct" + error);
                 })

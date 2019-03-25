@@ -18,18 +18,18 @@ export class UserInfoService {
   }
 
   getSuccessfulList(publicKey: String){
-    return this.http.get<String>(`http://localhost:3000/user_wallet/successfulList/${publicKey}`);
+    return this.http.get<String>(`http://localhost:3000/wallet/success_list/${publicKey}`);
   }
 
-  getListTransaction(){
-    return this.http.get<[]>('http://localhost:3000/user_wallet/getListTransaction');
+  getUserRequests(){
+    return this.http.get<[]>('http://localhost:3000/wallet/user_requests');
   }
 
   getChargingList(){
-    return this.http.get<[]>("http://localhost:3000/user_wallet/getChargingList");
+    return this.http.get<[]>("http://localhost:3000/wallet/charging_list");
   }
 
   getListHistory(publicKey: String){
-    return this.http.get<[]>(`http://localhost:3000/user_wallet/getListHistory/${publicKey}`);
+    return this.http.get<[]>(`http://localhost:3000/wallet/pending_list/${publicKey}`);
   }
 }

@@ -39,7 +39,7 @@
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-record="$implicit">
-                        <tr>
+                        <tr *ngFor="let request of userRequests">
                             <td style="width: 60px; text-align: center;">
                                 <!-- <div class="btn-group dropdown" normalizePosition>
                                     <button class="dropdown-toggle btn btn-sm btn-primary" data-toggle="dropdown"
@@ -62,13 +62,13 @@
                                 </button>
                             </td>
                             <td style="width:150px">
-                                Empty
+                                {{request.requestId}}
                             </td>
                             <td style="width:150px">
-                                Empty
+                                {{request.userAddress}}
                             </td>
                             <td style="width:150px">
-                                Empty
+                                {{request.seller}}
                             </td>
 
                         </tr>

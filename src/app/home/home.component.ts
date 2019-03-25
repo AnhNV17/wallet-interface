@@ -25,13 +25,8 @@ export class HomeComponent implements OnInit {
   listHistory = [];
   balance: Number;
   walletId: String;
-<<<<<<< HEAD
   userchoices = ["Abrica", "Robusta", "Culi"];
 
-=======
-  balance_available: Number;
-  userchoices = ["Tea", "Coffee", "Yogurt"];
->>>>>>> caa153b342802f9690e53f49c82a7bb545d80059
   simpleItems = [];
   successfulList: String;
   isShow = true;
@@ -72,7 +67,7 @@ export class HomeComponent implements OnInit {
       receiver: new FormControl('', { validators: [Validators.required] }),
     }, { updateOn: 'change' });
 
-    this.simpleItems = ["Tea", "Coffee", "Yogurt"];
+    this.simpleItems = ["Abrica", "Robusta", "Culi"];
     // this.updateBalance(this.userWallet.walletId);
     // this.getListTransaction();
     this.formHome.reset();
@@ -117,7 +112,7 @@ export class HomeComponent implements OnInit {
     this.getValueForTransfer();
     if (this.transferAmount && this.transferReceiver){
       this.transferService
-        .transfer(this.transferAmount, this.transferReceiver, this.userPublicKey)
+        .transfer(this.transferAmount, this.transferReceiver, this.userWallet.publicKey)
         .subscribe(balance => {
           this.walletBalance = balance;
           alert(this.walletBalance.message);
@@ -138,13 +133,6 @@ export class HomeComponent implements OnInit {
         this.successfulList = succesfulList;
       });
     this.isShow = !this.isShow;
-    this.updateBalance(this.userWallet.walletId);
-  }
-
-  getListTransaction() {
-    this.userInfoService.getListTransaction().subscribe(result => {
-      this.listTransaction = result;
-    });
     this.updateBalance(this.userWallet.walletId);
   }
 

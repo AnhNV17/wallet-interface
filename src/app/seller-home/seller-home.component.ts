@@ -28,11 +28,12 @@ export class SellerHomeComponent implements OnInit {
     saving = false;
     userWallet: UserWallet;
     pendingTransactions: any;
+    userRequests = [];
 
     userChoices: any[] = [
-        { id: 0, displayName: "Tea" },
-        { id: 1, displayName: "Coffee" },
-        { id: 2, displayName: "Yogurt" },
+        { id: 0, displayName: "Abrica" },
+        { id: 1, displayName: "Robusta" },
+        { id: 2, displayName: "Culi" },
     ];
 
     constructor(
@@ -72,4 +73,8 @@ export class SellerHomeComponent implements OnInit {
             .subscribe(userWallet => { this.userWallet = userWallet });
     }
 
+    getUserRequests(): void {
+        this.userInfo.getUserRequests()
+            .subscribe(listRequest => {this.userRequests = listRequest});
+    }
 }

@@ -67,11 +67,6 @@ export class AdminHomeComponent implements OnInit {
     this.viewUserDetailModal.getUserDetail(id);
   }
 
-  // getUserDetail(walletId: String): void {
-  //   this.userInfo.showUserDetail(walletId)
-  //     .subscribe(userWallet => { this.userWallet = userWallet });
-  // }
-
   getSuccessfulList() {
     this.isShow = !this.isShow;
     this.userInfo.getSuccessfulList("Coin Base")
