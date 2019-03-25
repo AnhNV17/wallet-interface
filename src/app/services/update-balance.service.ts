@@ -10,7 +10,7 @@ export class UpdateBalanceService {
   constructor(private http: HttpClient) { }
 
   updateBalance(walletId: String){
-    return this.http.get<UserWallet>(`http://localhost:3000/user_wallet/update_balance/${walletId}`);
+    return this.http.get<Number>(`http://localhost:3000/wallet/update_balance/${walletId}`);
   }
   
 }

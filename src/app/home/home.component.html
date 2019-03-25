@@ -8,7 +8,7 @@
     </div>
 
     <div>
-      <h5>Balance:</h5>
+      <h5>Balance: {{userWallet.balance}}</h5>
     </div>
 
     <form [formGroup]="formHome" (onShown)="shown()" novalidate autocomplete="off">
@@ -16,7 +16,7 @@
         <div class="form-group div-align-1 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
           <label for="userChoice">Item</label>
           <ng-select #UserOptions [items]="simpleItems" id="userChoice" [(ngModel)]="userChoice"
-            formControlName="userChoice" name="userChoice" placeholder="--Choose ur item--">
+            formControlName="userChoice" name="userChoice" placeholder="--Choose your item--">
           </ng-select>
           <div class="valid-height">
             <validation [control]="formHome.get('userChoice')"></validation>
