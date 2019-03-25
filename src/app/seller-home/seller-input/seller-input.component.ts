@@ -57,6 +57,15 @@ export class SellerInputComponent implements OnInit {
             manufacturer: new FormControl('', { validators: [Validators.required] }),
 
         }, { updateOn: 'change' });
+
+        // $('#manufacturingDate').datetimepicker({
+
+        //     format: 'DD/MM/YYYY'
+        // });
+
+        // $('.datepicker').datepicker({
+        //     startDate: '-3d'
+        // });
     }
 
     // formatDate() {
@@ -65,13 +74,13 @@ export class SellerInputComponent implements OnInit {
     // }
 
     // showCalendar() {
-    //     $(document).ready(function () {
-    //         this.isShowCalendar = !this.isShowCalendar;
-    //         $('#manufacturingDate').datetimepicker(this.isShowCalendar ? 'show' : 'hide');
-    //         $('#manufacturingDate').datetimepicker({
-    //             format: 'LT'
-    //         });
+    //     // $(document).ready(function () {
+    //     //     this.isShowCalendar = !this.isShowCalendar;
+    //     // $('#manufacturingDate').datetimepicker(this.isShowCalendar ? 'show' : 'hide');
+    //     $('#manufacturingDate').datetimepicker({
+    //         format: 'LT'
     //     });
+    //     // });
     // }
 
     /** show data when modal is shown */

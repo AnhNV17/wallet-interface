@@ -2,11 +2,7 @@
   <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
     <div class="header-title">
       <span class="page-admin-title">Welcome {{ userWallet.username }} </span>
-      <button
-        class="btn btn-outline-danger header-button-row"
-        (click)="logout()"
-        type="button"
-      >
+      <button class="btn btn-outline-danger header-button-row" (click)="logout()" type="button">
         <i class="fa fa-sign-out"></i>Logout
       </button>
     </div>
@@ -15,12 +11,7 @@
       <h5>Balance: {{userWallet.balance}}</h5>
     </div>
 
-    <form
-      [formGroup]="formHome"
-      (onShown)="shown()"
-      novalidate
-      autocomplete="off"
-    >
+    <form [formGroup]="formHome" (onShown)="shown()" novalidate autocomplete="off">
       <div class="form-row">
         <div class="form-group div-align-1 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
           <label for="userChoice">Item</label>
@@ -154,5 +145,3 @@
 
   </div>
 </div>
-
-<!-- <sellerModal #sellerModal></sellerModal> -->

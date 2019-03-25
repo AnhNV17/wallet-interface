@@ -1,6 +1,7 @@
-import { Directive, ElementRef, AfterViewInit, Input } from '@angular/core';
+import { Directive, ElementRef, AfterViewInit, Input, EventEmitter, OnInit, Renderer } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { DateTimeComponent } from './datetime.component';
+import { Moment } from 'moment';
 // import * as $ from 'jquery';
 
 @Directive({
