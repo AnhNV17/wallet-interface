@@ -38,9 +38,10 @@
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Manufacturing Date</label>
-                            <input #sampleDatePickerManDate type="text" id="manufacturingDate"
-                                formControlName="manufacturingDate" class="form-control m-input"
-                                name="manufacturingDate" maxlength="20" />
+                            <input #sampleDatePickerManDate type="datetime" datePicker id="manufacturingDate"
+                                formControlName="manufacturingDate" class="form-control" name="manufacturingDate"
+                                maxlength="20" />
+                            <!-- <input class="datepicker" data-date-format="mm/dd/yyyy"> -->
                             <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"></i>
                             <div class="valid-height">
                                 <validation [control]="formSeller.get('manufacturingDate')"></validation>

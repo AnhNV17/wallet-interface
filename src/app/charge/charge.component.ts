@@ -1,10 +1,8 @@
-import { ModalDirective, TabHeadingDirective } from 'ngx-bootstrap';
+import { ModalDirective } from 'ngx-bootstrap';
 import { Component, ViewChild, OnInit, ElementRef, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
 import { TransferCoinsService } from '../services/charge.service';
 import { UserInfoService } from '../services/user-info.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ValidationComponent } from '../shared/ifichain/validation-messages.component';
 
 @Component({
     selector: 'chargeModal',
@@ -61,7 +59,6 @@ export class ChargeModalComponent implements OnInit {
     }
 
     show(wId: String, uname: String): void {
-        // console.log(64, uname)
         this.username = uname;
         this.getUserDetail(wId);
         this.walletId = wId;
