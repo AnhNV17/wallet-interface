@@ -141,7 +141,7 @@ export class SellerInputComponent implements OnInit {
             //     this.ProductName.focus();
         } else {
             this.getValueForSave();
-            this.sellerService.createTransaction(this.userRequest.productName, this.productCode, this.series, this.manufacturer, this.userRequest.seller, this.userRequest.userAddress, this.userRequest.total)
+            this.sellerService.createTransaction(this.userRequest.requestId ,this.userRequest.productName, this.productCode, this.series, this.manufacturer, this.userRequest.seller, this.userRequest.userAddress, this.userRequest.total)
                 .subscribe(balance => {
                     this.walletBalance = balance;
                     alert(this.walletBalance.message);
