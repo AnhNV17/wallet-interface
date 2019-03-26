@@ -28,7 +28,9 @@ export class SellerHomeComponent implements OnInit {
     saving = false;
     userWallet: UserWallet;
     pendingTransactions: any;
-    userRequests = [];
+    userRequests: any;
+    visible = true;
+    // uname: any;
 
     userChoices: any[] = [
         { id: 0, displayName: "Abrica" },
@@ -37,9 +39,8 @@ export class SellerHomeComponent implements OnInit {
     ];
 
     constructor(
-        injector: Injector,
         private router: Router,
-        private userInfo: UserInfoService
+        private userInfo: UserInfoService,
     ) {
         this.userWallet = JSON.parse(localStorage.getItem("userWallet"))
     }
@@ -57,10 +58,15 @@ export class SellerHomeComponent implements OnInit {
             manufacturer: new FormControl('', { validators: [Validators.required] }),
 
         }, { updateOn: 'change' });
+        this.getUserRequests();
+        // console.log(60, this.userRequests)
+        // for (let i = 0; i < this.userRequests.length; i++) {
+        //     console.log(62, this.userRequests[i])
+        // }
     }
-    
-    openInput(): void {
-        this.sellerInputModal.show();
+
+    openInput(uRequests): void {
+        this.sellerInputModal.show(uRequests);
     }
 
     logout() {
@@ -73,8 +79,26 @@ export class SellerHomeComponent implements OnInit {
             .subscribe(userWallet => { this.userWallet = userWallet });
     }
 
+    // getUserName(wId: String): void {
+    //     this.userInfo.showUserDetail(wId)
+    //         .subscribe(username => {
+    //             this.uname = username
+    //         })
+    // }
+
+    updateTable(): void {
+        // this.userInfo.getUserRequests()
+        //     .subscribe(result => { this.userRequests = result });
+        // this.userRequests.slice();
+        this.visible = false;
+        setTimeout(() => this.visible = true, 0);
+    }
+
     getUserRequests(): void {
         this.userInfo.getUserRequests()
-            .subscribe(listRequest => {this.userRequests = listRequest});
+            .subscribe(listRequest => {
+                this.userRequests = listRequest,
+                    console.log(93, this.userRequests)
+            });
     }
 }

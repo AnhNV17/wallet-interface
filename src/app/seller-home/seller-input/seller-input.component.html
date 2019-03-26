@@ -6,7 +6,7 @@
             <form [formGroup]="formSeller" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <label>Sellet Input</label>
+                        <label>{{userRequest.username}} 's Transaction</label>
                     </h4>
                     <button type="button" class="close" (click)="close()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -16,7 +16,7 @@
 
                     <div class="form-row">
 
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <!-- <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label for="productName">Product Name</label>
                             <ng-select #ProductName [items]="userChoices" id="productName" bindValue="id"
                                 bindLabel="displayName" [searchable]="true" placeholder="--Choose ur product--"
@@ -25,11 +25,11 @@
                             <div class="valid-height">
                                 <validation [control]="formSeller.get('productName')"></validation>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label for="productCode">Product Code</label>
-                            <input type="text" id="productCode" formControlName="productCode" class="form-control"
+                            <input type="text" id="productCode" formControlName="productCode" [(ngModel)]="productCode" class="form-control"
                                 name="productCode" minlength="0" maxlength="50" />
                             <div class="valid-height">
                                 <validation [control]="formSeller.get('productCode')"></validation>
@@ -38,7 +38,7 @@
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Manufacturing Date</label>
-                            <input #sampleDatePickerManDate type="datetime" datePicker id="manufacturingDate"
+                            <input #sampleDatePickerManDate type="datetime" datePicker [(ngModel)]="manufacturingDate" id="manufacturingDate"
                                 formControlName="manufacturingDate" class="form-control" name="manufacturingDate"
                                 maxlength="20" />
                             <!-- <input class="datepicker" data-date-format="mm/dd/yyyy"> -->
@@ -50,7 +50,7 @@
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Expiry</label>
-                            <input type="datetime" id="expiry" #SampleDatePickerExpiry formControlName="expiry"
+                            <input type="datetime" id="expiry" [(ngModel)]="expiry" #SampleDatePickerExpiry formControlName="expiry"
                                 class="form-control" name="expiry" />
                             <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"></i>
                             <div class="valid-height">
@@ -61,25 +61,25 @@
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Sold Date</label>
-                            <input type="datetime" id="soldDate" formControlName="soldDate" class="form-control"
+                            <input type="datetime" id="soldDate" [(ngModel)]="soldDate" formControlName="soldDate" class="form-control"
                                 name="soldDate" />
                             <div class="valid-height">
                                 <validation [control]="formSeller.get('soldDate')"></validation>
                             </div>
                         </div>
 
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <!-- <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Quantity</label>
-                            <input type="text" id="quantity" formControlName="quantity" class="form-control"
+                            <input type="text" id="quantity" [(ngModel)]="quantity" formControlName="quantity" class="form-control"
                                 name="quantity" />
                             <div class="valid-height">
                                 <validation [control]="formSeller.get('quantity')"></validation>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Series</label>
-                            <input type="text" id="series" formControlName="series" class="form-control" name="series"
+                            <input type="text" id="series" formControlName="series" [(ngModel)]="series" class="form-control" name="series"
                                 maxlength="50" />
                             <div class="valid-height">
                                 <validation [control]="formSeller.get('series')"></validation>
@@ -88,7 +88,7 @@
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Manufacturer</label>
-                            <input type="text" id="manufacturer" formControlName="manufacturer" class="form-control"
+                            <input type="text" id="manufacturer" [(ngModel)]="manufacturer" formControlName="manufacturer" class="form-control"
                                 name="manufacturer" maxlength="255" />
                             <div class="valid-height">
                                 <validation [control]="formSeller.get('manufacturer')"></validation>

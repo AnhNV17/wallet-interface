@@ -15,60 +15,54 @@
         <div class="row align-items-center">
             <!--<Primeng-Datatable-Start>-->
             <div class="primeng-datatable-container">
-                <p-table #dataTable [value]="pendingTransactions" [paginator]="false" [lazy]="true" [scrollable]="true"
+                <p-table *ngIf="visible" #dataTable [value]="userRequests" [paginator]="false" [lazy]="true" [scrollable]="true"
                     ScrollWidth="100%" scrollHeight="265px">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th style="width: 60px; text-align: center;">
-                                <!-- Action -->
-                                <button class="btn btn-outline-primary" (click)="openInput()" type="button"
+                            <th style="width: 80px; text-align: center;">
+                                Action
+                            </th>
+                            <th style="width: 150px;">
+                                User Address
+                            </th>
+                            <th style="width: 150px;">
+                                UserName
+                            </th>
+                            <th style="width: 150px;">
+                                Product Name
+                            </th>
+                            <th style="width: 150px;">
+                                Quantity
+                            </th>
+                            <th style="width: 150px;">
+                                Total
+                            </th>
+
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-record="$implicit">
+                        <tr>
+                            <td style="width: 80px; text-align: center;">
+                                <button class="btn btn-outline-primary" (click)="openInput(record)" type="button"
                                     style="text-align: center;">
                                     <i class="fa fa-cogs"></i>
                                     <span class="caret"></span> Handle
                                 </button>
-                            </th>
-                            <th style="width: 150px">
-                                transactionID
-                            </th>
-                            <th style="width: 150px">
-                                From
-                            </th>
-                            <th style="width: 150px">
-                                To
-                            </th>
-                        </tr>
-                    </ng-template>
-                    <ng-template pTemplate="body" let-record="$implicit">
-                        <tr *ngFor="let request of userRequests">
-                            <td style="width: 60px; text-align: center;">
-                                <!-- <div class="btn-group dropdown" normalizePosition>
-                                    <button class="dropdown-toggle btn btn-sm btn-primary" data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false" style="text-align: center;">
-                                        <i class="fa fa-exchange"></i>
-                                        <span class="caret"></span> Action
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <a class="dropdown-item"
-                                            (click)="openViewDetailModal(record.walletId, record.username)">View
-                                            Detail</a>
-                                        <a class="dropdown-item" *ngIf="record.username!=='admin'"
-                                            (click)="openChargeModal(record.walletId, record.username)">Charge</a>
-                                    </ul>
-                                </div> -->
-                                <button class="btn btn-outline-primary" (click)="openInput()" type="button"
-                                    style="text-align: center;">
-                                    <i class="fa fa-reply"></i>
-                                    <span class="caret"></span> Handle
-                                </button>
                             </td>
-                            <td style="width:150px">
-                                {{request.requestId}}
+                            <td style="width: 150px; word-wrap: break-word;">
+                                {{record.userAddress}}
                             </td>
-                            <td style="width:150px">
-                                {{request.userAddress}}
+                            <td style="width: 150px; word-wrap: break-word;">
+                                {{record.username}}
                             </td>
-                            <td style="width:150px">
-                                {{request.seller}}
+                            <td style="width: 150px; word-wrap: break-word;">
+                                {{record.productName}}
+                            </td>
+                            <td style="width: 150px; word-wrap: break-word;">
+                                {{record.quantity}}
+                            </td>
+                            <td style="width: 150px; word-wrap: break-word;">
+                                {{record.total}}
                             </td>
 
                         </tr>
@@ -78,4 +72,4 @@
         </div>
     </div>
 </div>
-<sellerInputModal #sellerInputModal></sellerInputModal>
+<sellerInputModal #sellerInputModal (resetList)="updateTable()"></sellerInputModal>
