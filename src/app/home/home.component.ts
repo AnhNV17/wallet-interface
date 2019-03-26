@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
     }, { updateOn: 'change' });
 
     this.simpleItems = ["Abrica", "Robusta", "Culi"];
-    // this.updateBalance(this.userWallet.walletId);
+    this.updateBalance(this.userWallet.walletId);
     // this.getListTransaction();
     this.formHome.reset();
   }
