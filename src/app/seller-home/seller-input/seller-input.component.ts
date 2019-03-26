@@ -1,10 +1,13 @@
-import { OnInit, Component, Injector, ViewChild, ElementRef } from '@angular/core';
+import { OnInit, Component, Injector, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap';
 import { appModuleAnimation } from 'shared/animations/routerTransition';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { DateTimeComponent } from 'src/app/shared/ifichain/datetime.component';
 import * as $ from 'jquery';
+import { ProductInfor } from 'src/app/models/productInfor';
+import { SellerService } from 'src/app/services/seller.service';
+import { UserWallet } from 'src/app/models/user-wallet';
 
 export class SelectItem {
     id: number;
@@ -20,15 +23,25 @@ export class SelectItem {
 
 export class SellerInputComponent implements OnInit {
     @ViewChild('sellerInputComponentModal') modal: ModalDirective;
-    @ViewChild('ProductName') ProductName: NgSelectComponent;
     @ViewChild('sampleDatePickerManDate') sampleDatePickerManDate: ElementRef;
     @ViewChild('SampleDatePickerExpiry') SampleDatePickerExpiry: ElementRef;
+    @Output() resetList: EventEmitter<any> = new EventEmitter<any>();
 
     formSeller: FormGroup;
     active = false;
     saving = false;
     showError = false;
     isShowCalendar = 'hide';
+    requestId: String;
+    productInfor: ProductInfor;
+    userRequest: any;
+    walletBalance: UserWallet;
+    productCode: String;
+    expiry: Date;
+    manufacturingDate: Date;
+    soldDate: Date;
+    series: String;
+    manufacturer: String;
 
     userChoices: any[] = [
         { id: 0, displayName: "Coffee-1" },
@@ -41,20 +54,20 @@ export class SellerInputComponent implements OnInit {
 
     constructor(
         injector: Injector,
+        private sellerService: SellerService,
     ) {
     }
 
     ngOnInit(): void {
         /** Declare formgroup, formcontrol */
         this.formSeller = new FormGroup({
-            productName: new FormControl('', { validators: [Validators.required] }),
+            // productName: new FormControl('', { }),
             productCode: new FormControl('', { validators: [Validators.required] }),
-            expiry: new FormControl('', { validators: [Validators.required] }),
-            manufacturingDate: new FormControl('', { validators: [Validators.required] }),
-            soldDate: new FormControl('', { validators: [Validators.required] }),
-            quantity: new FormControl('', { validators: [Validators.required] }),
-            series: new FormControl('', { validators: [Validators.required] }),
-            manufacturer: new FormControl('', { validators: [Validators.required] }),
+            expiry: new FormControl('', {}),
+            manufacturingDate: new FormControl('', {}),
+            soldDate: new FormControl('', {}),
+            series: new FormControl('', { }),
+            manufacturer: new FormControl('', {}),
 
         }, { updateOn: 'change' });
 
@@ -65,7 +78,9 @@ export class SellerInputComponent implements OnInit {
 
         // $('.datepicker').datepicker({
         //     startDate: '-3d'
-        // });
+        // });  
+        // this.productInfor;
+        // this.userRequest.username;
     }
 
     // formatDate() {
@@ -84,14 +99,25 @@ export class SellerInputComponent implements OnInit {
     // }
 
     /** show data when modal is shown */
-    show(): void {
-        this.formSeller.get('productName').reset();
+    show(requests: any): void {
+        this.userRequest = requests;
+        console.log(88, this.userRequest.username)
         this.active = true;
         this.modal.show();
     }
 
     shown() {
-        this.ProductName.focus();
+        $('#productCode').focus();
+    }
+
+    getValueForSave() {
+        // this.formSeller.get('productName').setValue(this.productInfor.productName);
+        this.formSeller.get('productCode').setValue(this.productCode);
+        this.formSeller.get('expiry').setValue(this.expiry);
+        this.formSeller.get('manufacturingDate').setValue(this.manufacturingDate);
+        this.formSeller.get('soldDate').setValue(this.soldDate);
+        this.formSeller.get('series').setValue(this.series);
+        this.formSeller.get('manufacturer').setValue(this.manufacturer);
     }
 
     /**
@@ -111,11 +137,16 @@ export class SellerInputComponent implements OnInit {
                 this.formSeller.get(control).markAsTouched({ onlySelf: true });
             }
             $('#' + check).focus();
-            if (check == 'productName')
-                this.ProductName.focus();
+            // if (check == 'productName')
+            //     this.ProductName.focus();
         } else {
-            // this.notify.info('UpdateSuccessfully');
-            alert('successfully');
+            this.getValueForSave();
+            this.sellerService.createTransaction(this.userRequest.productName, this.productCode, this.series, this.manufacturer, this.userRequest.seller, this.userRequest.userAddress, this.userRequest.total)
+                .subscribe(balance => {
+                    this.walletBalance = balance;
+                    alert(this.walletBalance.message);
+                });
+            // alert('successfully');
             this.showError = false;
             // this.saving = true;
             this.close();
@@ -124,6 +155,7 @@ export class SellerInputComponent implements OnInit {
 
     /** close modal and reset form */
     close(): void {
+        this.resetList.emit(null);
         this.active = false;
         this.modal.hide();
         this.formSeller.reset();
