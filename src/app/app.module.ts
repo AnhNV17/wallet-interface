@@ -26,6 +26,8 @@ import { AppCommonModule } from './shared/common/app-common.module';
 import { ValidationComponent } from './shared/ifichain/validation-messages.component';
 import { SellerHomeComponent } from './seller-home/seller-home.component';
 import { SellerInputComponent } from './seller-home/seller-input/seller-input.component';
+// import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 
 @NgModule({
   exports: [ChargeModalComponent],
@@ -41,9 +43,11 @@ import { SellerInputComponent } from './seller-home/seller-input/seller-input.co
     SellerInputComponent,
     SideBarMenuComponent,
     TopBarMenuComponent,
-    ValidationComponent
+    ValidationComponent,
   ],
   imports: [
+    // NKDatetimeModule,
+    NgxMyDatePickerModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
     NoopAnimationsModule,

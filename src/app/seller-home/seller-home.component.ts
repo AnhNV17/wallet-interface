@@ -59,10 +59,6 @@ export class SellerHomeComponent implements OnInit {
 
         }, { updateOn: 'change' });
         this.getUserRequests();
-        // console.log(60, this.userRequests)
-        // for (let i = 0; i < this.userRequests.length; i++) {
-        //     console.log(62, this.userRequests[i])
-        // }
     }
 
     openInput(uRequests): void {
@@ -79,26 +75,22 @@ export class SellerHomeComponent implements OnInit {
             .subscribe(userWallet => { this.userWallet = userWallet });
     }
 
-    // getUserName(wId: String): void {
-    //     this.userInfo.showUserDetail(wId)
-    //         .subscribe(username => {
-    //             this.uname = username
-    //         })
-    // }
-
     updateTable(): void {
-        // this.userInfo.getUserRequests()
-        //     .subscribe(result => { this.userRequests = result });
+        this.userInfo.getUserRequests()
+            .subscribe(result => { this.userRequests = result });
+        // this.getUserRequests();
         // this.userRequests.slice();
         this.visible = false;
-        setTimeout(() => this.visible = true, 0);
+        setTimeout(() => this.visible = true,
+        this.userRequests.slice(),
+        0);
     }
 
     getUserRequests(): void {
         this.userInfo.getUserRequests()
             .subscribe(listRequest => {
-                this.userRequests = listRequest,
-                    console.log(93, this.userRequests)
+                this.userRequests = listRequest
+                    // console.log(93, this.userRequests)
             });
     }
 }

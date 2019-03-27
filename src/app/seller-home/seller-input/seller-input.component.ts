@@ -2,12 +2,13 @@ import { OnInit, Component, Injector, ViewChild, ElementRef, Output, EventEmitte
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap';
 import { appModuleAnimation } from 'shared/animations/routerTransition';
-import { NgSelectComponent } from '@ng-select/ng-select';
 import { DateTimeComponent } from 'src/app/shared/ifichain/datetime.component';
 import * as $ from 'jquery';
 import { ProductInfor } from 'src/app/models/productInfor';
 import { SellerService } from 'src/app/services/seller.service';
 import { UserWallet } from 'src/app/models/user-wallet';
+import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
+import * as moment from 'moment';
 
 export class SelectItem {
     id: number;
@@ -23,8 +24,9 @@ export class SelectItem {
 
 export class SellerInputComponent implements OnInit {
     @ViewChild('sellerInputComponentModal') modal: ModalDirective;
-    @ViewChild('sampleDatePickerManDate') sampleDatePickerManDate: ElementRef;
-    @ViewChild('SampleDatePickerExpiry') SampleDatePickerExpiry: ElementRef;
+    @ViewChild('dpManDate') dpManDate: ElementRef;
+    @ViewChild('dpExpiry') dpExpiry: ElementRef;
+    @ViewChild('dpSoldDate') dpSoldDate: ElementRef;
     @Output() resetList: EventEmitter<any> = new EventEmitter<any>();
 
     formSeller: FormGroup;
@@ -36,12 +38,23 @@ export class SellerInputComponent implements OnInit {
     productInfor: ProductInfor;
     userRequest: any;
     walletBalance: UserWallet;
+
     productCode: String;
-    expiry: Date;
-    manufacturingDate: Date;
-    soldDate: Date;
+    manufacturingDate: string = '';
+    expiry: string = '';
+    soldDate: string = '';
     series: String;
     manufacturer: String;
+
+    myOptions: INgxMyDpOptions = {
+        // todayBtnTxt: 'Today',
+        dateFormat: 'dd/mm/yyyy',
+        // firstDayOfWeek: 'mo',
+        // sunHighlight: true,
+        // disableUntil: { year: 2016, month: 8, day: 10 }
+    };
+
+    // datetimepicker: DateTimePicker = new DateTimePicker({});
 
     userChoices: any[] = [
         { id: 0, displayName: "Coffee-1" },
@@ -61,60 +74,74 @@ export class SellerInputComponent implements OnInit {
     ngOnInit(): void {
         /** Declare formgroup, formcontrol */
         this.formSeller = new FormGroup({
-            // productName: new FormControl('', { }),
             productCode: new FormControl('', { validators: [Validators.required] }),
             expiry: new FormControl('', {}),
             manufacturingDate: new FormControl('', {}),
             soldDate: new FormControl('', {}),
-            series: new FormControl('', { }),
+            series: new FormControl('', {}),
             manufacturer: new FormControl('', {}),
 
         }, { updateOn: 'change' });
-
-        // $('#manufacturingDate').datetimepicker({
-
-        //     format: 'DD/MM/YYYY'
-        // });
-
-        // $('.datepicker').datepicker({
-        //     startDate: '-3d'
-        // });  
-        // this.productInfor;
-        // this.userRequest.username;
     }
 
-    // formatDate() {
-    //     DateTimeComponent.formatFullDate(this.sampleDatePickerManDate);
-    //     DateTimeComponent.formatFullDate(this.SampleDatePickerExpiry);
-    // }
+    setDate(): void {
+        // Set today date using the patchValue function
+        let date = new Date();
+        this.formSeller.patchValue({
+            manufacturingDate: {
+                date: {
+                    year: date.getFullYear(),
+                    month: date.getMonth() + 1,
+                    day: date.getDate()
+                }
+            }
+        });
+    }
 
-    // showCalendar() {
-    //     // $(document).ready(function () {
-    //     //     this.isShowCalendar = !this.isShowCalendar;
-    //     // $('#manufacturingDate').datetimepicker(this.isShowCalendar ? 'show' : 'hide');
-    //     $('#manufacturingDate').datetimepicker({
-    //         format: 'LT'
-    //     });
-    //     // });
-    // }
+    clearDate(): void {
+        // Clear the date using the patchValue function
+        this.formSeller.patchValue({ manufacturingDate: null, expiry: null, soldeDate: null });
+    }
+
+
+    onDateChanged(event: IMyDateModel): void {
+        // event.formatted;
+        this.manufacturingDate = event.formatted;
+        this.expiry = event.formatted;
+        this.soldDate = event.formatted
+        // date selected
+    }
 
     /** show data when modal is shown */
     show(requests: any): void {
         this.userRequest = requests;
         console.log(88, this.userRequest.username)
+
+        // DateTimeComponent.formatFullDate(this.dpManDate.dateFormat);
+        this.manufacturingDate = null;
+        this.expiry = null;
+        this.soldDate = null;
+
         this.active = true;
         this.modal.show();
     }
 
     shown() {
         $('#productCode').focus();
-    }
+    } 
 
     getValueForSave() {
-        // this.formSeller.get('productName').setValue(this.productInfor.productName);
         this.formSeller.get('productCode').setValue(this.productCode);
-        this.formSeller.get('expiry').setValue(this.expiry);
         this.formSeller.get('manufacturingDate').setValue(this.manufacturingDate);
+        this.formSeller.get('expiry').setValue(this.expiry);
+        // try {
+        //     this.manufacturingDate = DateTimeComponent.getDateNull(this.dpManDate) == null ? null : DateTimeComponent.getDateInsert(this.dpManDate);
+        //     this.expiry = DateTimeComponent.getDateNull(this.dpExpiry) == null ? null : DateTimeComponent.getDateInsert(this.dpExpiry);
+        //     this.soldDate = DateTimeComponent.getDateNull(this.dpSoldDate) == null ? null : DateTimeComponent.getDateInsert(this.dpSoldDate);
+        // } catch (error) {
+
+        // }
+
         this.formSeller.get('soldDate').setValue(this.soldDate);
         this.formSeller.get('series').setValue(this.series);
         this.formSeller.get('manufacturer').setValue(this.manufacturer);
@@ -141,7 +168,15 @@ export class SellerInputComponent implements OnInit {
             //     this.ProductName.focus();
         } else {
             this.getValueForSave();
-            this.sellerService.createTransaction(this.userRequest.productName, this.productCode, this.series, this.manufacturer, this.userRequest.seller, this.userRequest.userAddress, this.userRequest.total)
+            console.log(168, this.manufacturingDate)
+            this.sellerService.createTransaction(
+                this.userRequest.productName,
+                this.productCode,
+                this.series,
+                this.manufacturer,
+                this.userRequest.seller,
+                this.userRequest.userAddress,
+                this.userRequest.total)
                 .subscribe(balance => {
                     this.walletBalance = balance;
                     alert(this.walletBalance.message);
