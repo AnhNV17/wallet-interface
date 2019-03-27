@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
 
   userWallet: UserWallet;
   walletBalance: UserWallet;
-  listTransaction = [];
+  listRequest = [];
   listHistory = [];
   balance: Number;
   walletId: String;
@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
     }, { updateOn: 'change' });
 
     this.simpleItems = ["Abrica", "Robusta", "Culi"];
-    // this.updateBalance(this.userWallet.walletId);
+    this.updateBalance(this.userWallet.walletId);
     // this.getListTransaction();
     this.formHome.reset();
   }
@@ -144,6 +144,12 @@ export class HomeComponent implements OnInit {
   getListHistory() {
     this.userInfoService.getListHistory(this.userWallet.publicKey)
       .subscribe(result => { this.listHistory = result });
+    this.isDisplay = !this.isDisplay;
+  }
+
+  getRequests() {
+    this.userInfoService.getRequestList(this.userWallet.publicKey)
+      .subscribe(result => {this.listRequest = result});
     this.isDisplay = !this.isDisplay;
   }
 

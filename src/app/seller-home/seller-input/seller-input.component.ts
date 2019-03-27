@@ -170,7 +170,9 @@ export class SellerInputComponent implements OnInit {
             this.getValueForSave();
             console.log(168, this.manufacturingDate)
             this.sellerService.createTransaction(
+                this.userRequest.requestId,
                 this.userRequest.productName,
+                this.userRequest.quantity,
                 this.productCode,
                 this.series,
                 this.manufacturer,
