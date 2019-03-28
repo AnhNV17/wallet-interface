@@ -91,7 +91,7 @@ export class HomeComponent implements OnInit {
 
   buy() {
     this.getValueForBuy();
-    console.log(95, this.userWallet.publicKey)
+    // console.log(95, this.userWallet.publicKey)
     if (this.buyQuantity && this.userChoice){
       this.buyService
         .buy(this.userWallet.username ,this.buyQuantity, this.userChoice, this.userWallet.publicKey)

@@ -43,10 +43,6 @@
     padding: 0 1rem;
 }
 
-.ngxmdp .selectorarrow {
-    top: 80px;
-}
-
 /* for datetitme picket */
 datetime-popup.dropdown .glyphicon {
     display: inline-block;

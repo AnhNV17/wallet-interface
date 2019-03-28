@@ -13,3 +13,7 @@
 .mess-ok{
     color:  #212529;
 }
+
+.selector.selectorarrow.selectorarrowleft {
+    top: 80px !important;
+}

@@ -18,8 +18,9 @@
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label for="productCode">Product Code</label>
-                            <input type="text" id="productCode" formControlName="productCode" [(ngModel)]="productCode"
-                                class="form-control" name="productCode" minlength="0" maxlength="50" />
+                            <input type="text" id="productCode" (input)="uppercaseAll($event)"
+                                formControlName="productCode" [(ngModel)]="productCode" class="form-control"
+                                name="productCode" minlength="0" maxlength="50" />
                             <div class="valid-height">
                                 <validation [control]="formSeller.get('productCode')"></validation>
                             </div>
@@ -30,11 +31,9 @@
 
                             <input #dpManDate type="text" class="form-control" style="float:none"
                                 placeholder="Select a date" ngx-mydatepicker name="manufacturingDate"
-                                formControlName="manufacturingDate" [(ngModel)]="manufacturingDate"
-                                id="manufacturingDate" [options]="myOptions" #dp="ngx-mydatepicker"
-                                (dateChanged)="onDateChanged($event)" (click)="dp.toggleCalendar()" minlength="0"
-                                maxlength="20" />
-
+                                formControlName="manufacturingDate" id="manufacturingDate" [options]="dpOptions"
+                                #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)"
+                                (click)="dp.toggleCalendar()" minlength="0" maxlength="20" />
 
                             <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"
                                 (click)="dp.toggleCalendar()"></i>
@@ -46,10 +45,10 @@
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Expiry</label>
 
-                            <input #dpExpiry type="text" class="form-control" style="float: none"
-                                placeholder="Select a date" ngx-mydatepicker name="expiry" formControlName="expiry"
-                                [(ngModel)]="expiry" id="expiry" [options]="myOptions" #dp1="ngx-mydatepicker"
-                                (dateChanged)="onDateChanged($event)" (click)="dp1.toggleCalendar()" />
+                            <input #dpExpiry type="text" class="form-control" style="float: none" placeholder="Select a date"
+                                ngx-mydatepicker name="expiry" formControlName="expiry" id="expiry"
+                                [options]="dpOptions" #dp1="ngx-mydatepicker" (dateChanged)="onDateChanged1($event)"
+                                (click)="dp1.toggleCalendar()" />
                             <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"
                                 (click)="dp1.toggleCalendar()"></i>
                             <div class="valid-height">
@@ -60,13 +59,12 @@
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Sold Date</label>
-                            <!-- <input type="datetime" id="soldDate" [(ngModel)]="soldDate" formControlName="soldDate"
-                                class="form-control" name="soldDate" /> -->
                             <input #dpSoldDate type="text" class="form-control" style="float:none"
                                 placeholder="Select a date" ngx-mydatepicker name="soldDate" formControlName="soldDate"
-                                [(ngModel)]="soldDate" id="soldDate" [options]="myOptions" #dp2="ngx-mydatepicker"
-                                (dateChanged)="onDateChanged($event)" (click)="dp2.toggleCalendar()" />
-                            <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;" (click)="dp2.toggleCalendar()"></i>
+                                id="soldDate" [options]="dpOptions" #dp2="ngx-mydatepicker"
+                                (dateChanged)="onDateChanged2($event)" (click)="dp2.toggleCalendar()" />
+                            <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"
+                                (click)="dp2.toggleCalendar()"></i>
                             <div class="valid-height">
                                 <validation [control]="formSeller.get('soldDate')"></validation>
                             </div>

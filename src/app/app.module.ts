@@ -43,7 +43,7 @@ import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
     SellerInputComponent,
     SideBarMenuComponent,
     TopBarMenuComponent,
-    ValidationComponent,
+    ValidationComponent
   ],
   imports: [
     // NKDatetimeModule,

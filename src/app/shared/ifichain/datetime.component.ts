@@ -50,5 +50,50 @@ export class DateTimeComponent {
         return $(id.nativeElement).data('DateTimePicker').date();
     }
 
+    // dùng để so sánh xem thời gian sau có nhỏ hơn thời gian trước hay không
+    public static compareDate1(Start, End) {
+
+        if (Start && End) {
+            if (Start > End)
+                return true;
+            else
+                return false;
+
+
+        }
+        else
+            return false;
+    }
+
+    public static compareDate2(Start, End) {
+        var x1 = new Date(Start);
+        var x2 = new Date(End);
+        if (ktra(x1, x2)) {
+            return false;
+        }
+        else {
+            if (Start && End) {
+
+                if (Start < End)
+                    return true;
+                else
+                    return false;
+            }
+            else
+                return false
+        }
+
+        function ktra(start, end) {
+            if (start.getDate() == end.getDate() && start.getFullYear() == end.getFullYear() && start.getMonth() == end.getMonth()) {
+                return true;
+            }
+            else {
+                return false;
+            }
+
+        }
+    }
+
+
 }
 
