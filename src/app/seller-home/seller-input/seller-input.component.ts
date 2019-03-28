@@ -10,6 +10,7 @@ import { UserWallet } from 'src/app/models/user-wallet';
 import { INgxMyDpOptions, IMyDateModel, NgxMyDatePickerDirective } from 'ngx-mydatepicker';
 import * as moment from 'moment';
 import { FormatStringComponent } from 'src/app/shared/ifichain/formatString.component';
+import Swal from 'sweetalert2';
 import { ShareFuncComponent } from 'src/app/shared/ifichain/sharedFunc.component';
 import { ValidationComponent } from 'src/app/shared/ifichain/validation-messages.component';
 
@@ -284,7 +285,10 @@ export class SellerInputComponent implements OnInit {
                 this.userRequest.total)
                 .subscribe(balance => {
                     this.walletBalance = balance;
-                    alert(this.walletBalance.message);
+                    Swal.fire({
+                        type: 'success',
+                        title: String(this.walletBalance.message)
+                      })
                 });
             // alert('successfully');
             this.showError = false;

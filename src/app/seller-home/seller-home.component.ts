@@ -61,7 +61,7 @@ export class SellerHomeComponent implements OnInit {
         this.getUserRequests();
     }
 
-    openInput(uRequests): void {
+    openInput(uRequests: any): void {
         this.sellerInputModal.show(uRequests);
     }
 
