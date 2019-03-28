@@ -124,65 +124,6 @@
       </div>
     </form>
 
-    <!-- <form [formGroup]="formHomeTransfer" novalidate autocomplete="off">
-          <div class="form-group div-align-2 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
-            <label for="amount"
-              [class]="formHomeTransfer.get('amount').errors && formHomeTransfer.get('amount').touched ? 'mess-error' : 'mess-ok'">Amount</label>
-            <input name="amount" [(ngModel)]="transferAmount" formControlName="amount" id="amount" type="number"
-              class="form-control item-form-control" min="0.1" placeholder="--The amount of money--" required />
-            <div class="valid-height">
-              <validation [control]="formHomeTransfer.get('amount')"></validation>
-            </div>
-  
-            <label for="receiver"
-              [class]="formHomeTransfer.get('receiver').errors && formHomeTransfer.get('receiver').touched ? 'mess-error' : 'mess-ok'">Receiver's
-              Address</label>
-            <input name="receiver" [(ngModel)]="transferReceiver" formControlName="receiver" id="receiver" type="text"
-              class="form-control item-form-control" placeholder="--Receiver's Address--" required />
-            <div class="valid-height">
-              <validation [control]="formHomeTransfer.get('receiver')"></validation>
-            </div>
-  
-            <br />
-  
-            <button (click)="transfer()" type="button" class="btn btn-primary blue btn-align"><i
-                class="fa fa-share-square-o"></i>
-              Transfer
-            </button>
-          </div>
-  
-      </form> -->
-
-    <!-- <div class="history">
-      <ul class="nav nav-tabs" role="tablist">
-        <li class="nav-item">
-          <button
-            (click)="getListHistory()"
-            type="button"
-            class="btn btn-outline-primary historyBtn"
-          >
-            History
-          </button>
-        </li>
-        <li class="nav-item">
-          <button
-            (click)="getSuccessfulList()"
-            type="button"
-            class="btn btn-outline-success successListBtn"
-          >
-            Successful Transactions
-          </button>
-        </li>
-      </ul>
-
-      <ul *ngFor="let transaction of listHistory" [hidden]="isDisplay">
-        <li>{{ transaction }}</li>
-      </ul>
-      <ul *ngFor="let output of successfulList" [hidden]="isShow">
-        <li>{{ output }}</li>
-      </ul>
-    </div> -->
-
     <div class="history">
       <div class="btn-group">
         <button
