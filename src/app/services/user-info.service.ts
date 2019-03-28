@@ -33,6 +33,10 @@ export class UserInfoService {
     return this.http.get<[]>(`http://localhost:3000/wallet/pending_list/${publicKey}`);
   }
 
+  getHistory(publicKey: String){
+    return this.http.get<[]>(`http://localhost:3000/wallet/history/${publicKey}`);
+  }
+
   getRequestList(publicKey: String){
     return this.http.get<[]>(`http://localhost:3000/wallet/requests/${publicKey}`);
   }

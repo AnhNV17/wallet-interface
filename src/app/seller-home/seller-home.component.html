@@ -69,6 +69,32 @@
                     </ng-template>
                 </p-table>
             </div>
+
+            <div class="history">
+                <div class="btn-group">
+                  <button
+                    (click)="getListHistory()"
+                    type="button"
+                    class="btn btn-outline-primary historyBtn"
+                  >
+                    History
+                  </button>
+                  <button
+                    (click)="getSuccessfulList()"
+                    type="button"
+                    class="btn btn-outline-primary successListBtn"
+                  >
+                    Successful Transactions
+                  </button>
+                </div>
+          
+                <ul *ngFor="let transaction of listHistory" [hidden]="isDisplay">
+                  <li>{{ transaction }}</li>
+                </ul>
+                <ul *ngFor="let output of successfulList" [hidden]="isShow">
+                  <li>{{ output }}</li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>
