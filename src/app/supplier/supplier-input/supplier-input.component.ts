@@ -1,8 +1,7 @@
-import { OnInit, Component, Injector, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { OnInit, Component, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap';
 import { appModuleAnimation } from 'shared/animations/routerTransition';
-import { DateTimeComponent } from 'src/app/shared/ifichain/datetime.component';
 import * as $ from 'jquery';
 import { ProductInfor } from 'src/app/models/productInfor';
 import { SellerService } from 'src/app/services/seller.service';
@@ -11,8 +10,6 @@ import { INgxMyDpOptions, IMyDateModel, NgxMyDatePickerDirective } from 'ngx-myd
 import * as moment from 'moment';
 import { FormatStringComponent } from 'src/app/shared/ifichain/formatString.component';
 import Swal from 'sweetalert2';
-import { ShareFuncComponent } from 'src/app/shared/ifichain/sharedFunc.component';
-import { ValidationComponent } from 'src/app/shared/ifichain/validation-messages.component';
 
 export class SelectItem {
     id: number;
@@ -20,21 +17,21 @@ export class SelectItem {
 }
 
 @Component({
-    selector: 'sellerInputModal',
-    templateUrl: './seller-input.component.html',
-    styleUrls: ['./seller-input.component.css'],
+    selector: 'supplierInputModal',
+    templateUrl: './supplier-input.component.html',
+    styleUrls: ['./supplier-input.component.css'],
     animations: [appModuleAnimation()]
 })
 
-export class SellerInputComponent implements OnInit {
-    @ViewChild('sellerInputComponentModal') modal: ModalDirective;
+export class SupplierInputComponent implements OnInit {
+    @ViewChild('supplierInputComponentModal') modal: ModalDirective;
     @ViewChild('dpManDate') dpManDate: ElementRef;
     @ViewChild('dpExpiry') dpExpiry: ElementRef;
     @ViewChild('dpSoldDate') dpSoldDate: ElementRef;
     @ViewChild('dp') ngxdp: NgxMyDatePickerDirective;
     @Output() resetList: EventEmitter<any> = new EventEmitter<any>();
 
-    formSeller: FormGroup;
+    formSupplierInput: FormGroup;
     active = false;
     saving = false;
     showError = false;
@@ -44,6 +41,7 @@ export class SellerInputComponent implements OnInit {
     userRequest: any;
     walletBalance: UserWallet;
 
+    productPackage: Number;
     productCode: String;
     manufacturingDate: String;
     expiry: String;
@@ -68,14 +66,15 @@ export class SellerInputComponent implements OnInit {
     ];
 
     constructor(
-        injector: Injector,
+        // injector: Injector,
         private sellerService: SellerService,
     ) {
     }
 
     ngOnInit(): void {
         /** Declare formgroup, formcontrol */
-        this.formSeller = new FormGroup({
+        this.formSupplierInput = new FormGroup({
+            productPackage: new FormControl("", { validators: [Validators.required] }),
             productCode: new FormControl('', { validators: [Validators.required] }),
             manufacturingDate: new FormControl('', { validators: [Validators.required] }),
             expiry: new FormControl('', { validators: [Validators.required] }),
@@ -98,23 +97,23 @@ export class SellerInputComponent implements OnInit {
                 var Start = moment(st, "DD/MM/YYYY");
                 var End = moment(en, "DD/MM/YYYY");
 
-                // debugger
+                debugger
 
                 if (Start > End) {
-                    if ($el.formSeller.get('manufacturingDate').touched) {
-                        $el.formSeller.get('manufacturingDate').setErrors({ isStartMax: true });
-                        $el.formSeller.get('expiry').setErrors(null);
-                        $el.formSeller.get('manufacturingDate').markAsTouched({ onlySelf: true });
-                    } else if ($el.formSeller.get('expiry').touched) {
-                        $el.formSeller.get('expiry').setErrors({ isEndMin: true });
-                        $el.formSeller.get('expiry').markAsTouched({ onlySelf: true });
-                        $el.formSeller.get('manufacturingDate').setErrors(null);
+                    if ($el.formSupplierInput.get('manufacturingDate').touched) {
+                        $el.formSupplierInput.get('manufacturingDate').setErrors({ isStartMax: true });
+                        $el.formSupplierInput.get('expiry').setErrors(null);
+                        $el.formSupplierInput.get('manufacturingDate').markAsTouched({ onlySelf: true });
+                    } else if ($el.formSupplierInput.get('expiry').touched) {
+                        $el.formSupplierInput.get('expiry').setErrors({ isEndMin: true });
+                        $el.formSupplierInput.get('expiry').markAsTouched({ onlySelf: true });
+                        $el.formSupplierInput.get('manufacturingDate').setErrors(null);
                     }
                     // return;
                 }
                 else {
-                    $el.formSeller.get('expiry').setErrors(null);
-                    $el.formSeller.get('manufacturingDate').setErrors(null);
+                    $el.formSupplierInput.get('expiry').setErrors(null);
+                    $el.formSupplierInput.get('manufacturingDate').setErrors(null);
                 }
             }
             // }
@@ -133,35 +132,35 @@ export class SellerInputComponent implements OnInit {
                 var endDate = moment(end, 'DD/MM/YYYY');
                 var btwDate = moment(btw, 'DD/MM/YYYY');
 
-                // debugger
+                debugger
 
                 if (btwDate < startDate) {
-                    if (this.formSeller.get('soldDate').touched) {
+                    if (this.formSupplierInput.get('soldDate').touched) {
                         console.log("isEndMin")
-                        this.formSeller.get('soldDate').setErrors({ isEndMin: true });
-                        this.formSeller.get('manufacturingDate').setErrors(null);
-                        this.formSeller.get('soldDate').markAsTouched({ onlySelf: true });
-                    } else if (this.formSeller.get('manufacturingDate').touched) {
-                        this.formSeller.get('manufacturingDate').setErrors({ isEndMin: true });
-                        this.formSeller.get('manufacturingDate').markAsTouched({ onlySelf: true });
-                        this.formSeller.get('soldDate').setErrors(null);
+                        this.formSupplierInput.get('soldDate').setErrors({ isEndMin: true });
+                        this.formSupplierInput.get('manufacturingDate').setErrors(null);
+                        this.formSupplierInput.get('soldDate').markAsTouched({ onlySelf: true });
+                    } else if (this.formSupplierInput.get('manufacturingDate').touched) {
+                        this.formSupplierInput.get('manufacturingDate').setErrors({ isEndMin: true });
+                        this.formSupplierInput.get('manufacturingDate').markAsTouched({ onlySelf: true });
+                        this.formSupplierInput.get('soldDate').setErrors(null);
                     }
                     // return null;
                 } else if (btwDate > endDate) {
-                    if (this.formSeller.get('soldDate').touched) {
+                    if (this.formSupplierInput.get('soldDate').touched) {
                         console.log("isStartMax")
-                        this.formSeller.get('soldDate').setErrors({ isStartMax: true });
-                        this.formSeller.get('expiry').setErrors(null);
-                        this.formSeller.get('soldDate').markAsTouched({ onlySelf: true });
-                    } else if (this.formSeller.get('expiry').touched) {
-                        this.formSeller.get('expiry').setErrors({ isEndMin: true });
-                        this.formSeller.get('expiry').markAsTouched({ onlySelf: true });
-                        this.formSeller.get('soldDate').setErrors(null);
+                        this.formSupplierInput.get('soldDate').setErrors({ isStartMax: true });
+                        this.formSupplierInput.get('expiry').setErrors(null);
+                        this.formSupplierInput.get('soldDate').markAsTouched({ onlySelf: true });
+                    } else if (this.formSupplierInput.get('expiry').touched) {
+                        this.formSupplierInput.get('expiry').setErrors({ isEndMin: true });
+                        this.formSupplierInput.get('expiry').markAsTouched({ onlySelf: true });
+                        this.formSupplierInput.get('soldDate').setErrors(null);
                     }
                 } else {
-                    this.formSeller.get('soldDate').setErrors(null);
-                    this.formSeller.get('manufacturingDate').setErrors(null);
-                    this.formSeller.get('expiry').setErrors(null);
+                    this.formSupplierInput.get('soldDate').setErrors(null);
+                    this.formSupplierInput.get('manufacturingDate').setErrors(null);
+                    this.formSupplierInput.get('expiry').setErrors(null);
                 }
             }
         } catch (error) {
@@ -172,22 +171,22 @@ export class SellerInputComponent implements OnInit {
     onDateChangedTest(e: IMyDateModel, e1: IMyDateModel): void {
         if (e !== undefined && e1 !== undefined) {
             this.manufacturingDate = e.formatted;
-            this.formSeller.patchValue({ manufacturingDate: e.formatted });
+            this.formSupplierInput.patchValue({ manufacturingDate: e.formatted });
 
             this.manufacturingDate = e1.formatted;
-            this.formSeller.patchValue({ manufacturingDate: e1.formatted });
-            console.log(142, this.formSeller.get('manufacturingDate').value, this.formSeller.get('expiry').value);
-            this.validStartEnd(this.formSeller.get('manufacturingDate').value, this.formSeller.get('expiry'));
+            this.formSupplierInput.patchValue({ manufacturingDate: e1.formatted });
+            console.log(142, this.formSupplierInput.get('manufacturingDate').value, this.formSupplierInput.get('expiry').value);
+            this.validStartEnd(this.formSupplierInput.get('manufacturingDate').value, this.formSupplierInput.get('expiry'));
         }
     }
 
 
     onDateChanged(event: IMyDateModel): void {
         this.manufacturingDate = event.formatted;
-        this.formSeller.patchValue({ manufacturingDate: event.formatted });
+        this.formSupplierInput.patchValue({ manufacturingDate: event.formatted });
 
-        let start = this.formSeller.get('manufacturingDate').value;
-        let end = this.formSeller.get('expiry').value;
+        let start = this.formSupplierInput.get('manufacturingDate').value;
+        let end = this.formSupplierInput.get('expiry').value;
         // console.log(142, this.formSeller.get('manufacturingDate').value, this.formSeller.get('expiry').value);
         if (start !== '' && end !== '') {
             this.validStartEnd(this.manufacturingDate, this.expiry);
@@ -196,10 +195,10 @@ export class SellerInputComponent implements OnInit {
 
     onDateChanged1(event: IMyDateModel): void {
         this.expiry = event.formatted;
-        this.formSeller.patchValue({ expiry: event.formatted })
+        this.formSupplierInput.patchValue({ expiry: event.formatted })
 
-        let start = this.formSeller.get('manufacturingDate').value;
-        let end = this.formSeller.get('expiry').value;
+        let start = this.formSupplierInput.get('manufacturingDate').value;
+        let end = this.formSupplierInput.get('expiry').value;
         // console.log(172, this.formSeller.get('manufacturingDate').value, this.formSeller.get('expiry').value);
         // console.log(143, this.manufacturingDate, this.expiry);
         if (start !== '' && end !== '') {
@@ -209,13 +208,13 @@ export class SellerInputComponent implements OnInit {
 
     onDateChanged2(event: IMyDateModel): void {
         this.soldDate = event.formatted;
-        this.formSeller.patchValue({ soldDate: event.formatted })
+        this.formSupplierInput.patchValue({ soldDate: event.formatted })
 
-        let start = this.formSeller.get('manufacturingDate').value;
-        let end = this.formSeller.get('expiry').value;
-        let btw = this.formSeller.get('soldDate').value;
+        let start = this.formSupplierInput.get('manufacturingDate').value;
+        let end = this.formSupplierInput.get('expiry').value;
+        let btw = this.formSupplierInput.get('soldDate').value;
 
-        console.log(207, this.formSeller.get('soldDate').value);
+        console.log(207, this.formSupplierInput.get('soldDate').value);
         console.log(208, start, end, btw)
 
         if (start !== '' && end !== '' && btw !== '') {
@@ -237,16 +236,16 @@ export class SellerInputComponent implements OnInit {
     }
 
     shown() {
-        $('#productCode').focus();
+        $('#productPackage').focus();
     }
 
     getValueForSave() {
-        this.formSeller.get('productCode').setValue(this.productCode);
-        this.formSeller.get('manufacturingDate').setValue(this.manufacturingDate);
-        this.formSeller.get('expiry').setValue(this.expiry);
-        this.formSeller.get('soldDate').setValue(this.soldDate);
-        this.formSeller.get('series').setValue(this.series);
-        this.formSeller.get('manufacturer').setValue(this.manufacturer);
+        this.formSupplierInput.get('productCode').setValue(this.productCode);
+        this.formSupplierInput.get('manufacturingDate').setValue(this.manufacturingDate);
+        this.formSupplierInput.get('expiry').setValue(this.expiry);
+        this.formSupplierInput.get('soldDate').setValue(this.soldDate);
+        this.formSupplierInput.get('series').setValue(this.series);
+        this.formSupplierInput.get('manufacturer').setValue(this.manufacturer);
     }
 
     /**
@@ -254,16 +253,16 @@ export class SellerInputComponent implements OnInit {
      */
     save(): void {
         let check = '';
-        for (var control in this.formSeller.controls) {
-            if (this.formSeller.get(control).errors) {
+        for (var control in this.formSupplierInput.controls) {
+            if (this.formSupplierInput.get(control).errors) {
                 check = control;
                 this.showError = true;
                 break;
             }
         }
         if (check != '') {
-            for (var control in this.formSeller.controls) {
-                this.formSeller.get(control).markAsTouched({ onlySelf: true });
+            for (var control in this.formSupplierInput.controls) {
+                this.formSupplierInput.get(control).markAsTouched({ onlySelf: true });
             }
             $('#' + check).focus();
             // if (check == 'productName')
@@ -292,7 +291,6 @@ export class SellerInputComponent implements OnInit {
                 });
             // alert('successfully');
             this.showError = false;
-            // this.resetList.emit(null);
             // this.saving = true;
             this.close();
         }
@@ -303,7 +301,7 @@ export class SellerInputComponent implements OnInit {
         this.resetList.emit(null);
         this.active = false;
         this.modal.hide();
-        this.formSeller.reset();
+        this.formSupplierInput.reset();
     }
 
 }

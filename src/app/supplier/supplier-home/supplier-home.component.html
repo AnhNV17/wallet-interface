@@ -2,31 +2,24 @@
     <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
 
         <div class="header-title">
-            <span class="page-admin-title">Welcome {{userWallet.username}}
+            <span class="page-admin-title">Welcome
             </span>
             <button class="btn btn-outline-danger header-button-row" (click)="logout()" type="button"><i
                     class="fa fa-sign-out"></i>Logout</button>
         </div>
 
-        <!-- <div class="row align-items-center">
-            <button class="btn btn-outline-primary" (click)="openInput()" type="button"></button>
-        </div> -->
-
         <div class="row align-items-center">
             <!--<Primeng-Datatable-Start>-->
             <div class="primeng-datatable-container">
-                <!-- <p-table *ngIf="visible" #dataTable [value]="userRequests" [paginator]="false" [lazy]="true"
-                    [scrollable]="true" ScrollWidth="100%" scrollHeight="265px"> -->
-
-                <p-table #dataTable (onLazyLoad)="getUserRequests()" [value]="userRequests" rows="maxRows"
-                    [paginator]="false" [lazy]="true" [scrollable]="true" ScrollWidth="100%">
+                <p-table *ngIf="visible" #dataTable [value]="sellerRequest" [paginator]="false" [lazy]="true"
+                    [scrollable]="true" ScrollWidth="100%" scrollHeight="265px">
                     <ng-template pTemplate="header">
                         <tr>
                             <th style="width: 80px; text-align: center;">
                                 Action
                             </th>
                             <th style="width: 150px;">
-                                User Address
+                                Seller Address
                             </th>
                             <th style="width: 150px;">
                                 UserName
@@ -72,10 +65,11 @@
                     </ng-template>
                 </p-table>
                 <div class="primeng-paging-container">
-                    <div class="primeng-no-data" style="text-align: center; opacity: 0.8;" *ngIf="userRequests == null">
+                    <div class="primeng-no-data" style="text-align: center; opacity: 0.7;"
+                        *ngIf="sellerRequest == null">
                         No Request
-                    </div>
-                    <p-paginator rows="maxRows" #paginator (onPageChange)="getUserRequests()">
+                    </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                    <p-paginator rows="3" #paginator (onPageChange)="getSellerRequests()">
                     </p-paginator>
                     <span class="total-records-count">
                         Total: {{userRequests.length}}
@@ -103,4 +97,4 @@
         </div>
     </div>
 </div>
-<sellerInputModal #sellerInputModal (resetList)="reloadTable()"></sellerInputModal>
+<supplierInputModal #supplierInputModal></supplierInputModal>

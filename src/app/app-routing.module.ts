@@ -7,31 +7,7 @@ import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NgModule } from '@angular/core';
 import { SellerHomeComponent } from './seller-home/seller-home.component';
-
-// export const AppRoutes: Routes = [
-//     {
-//         path: '',
-//         component: LoginComponent
-//     }, 
-//     {
-//         path: 'home',
-//         component: HomeComponent
-//     },
-//     {
-//         path: 'admin_home',
-//         component: AdminHomeComponent
-//     },
-//     {
-//         path: 'logout',
-//         component: LogoutComponent
-//     },
-//     {
-//         path: 'user_detail/:walletId',
-//         component: AdminHomeComponent
-//     }
-// ];
-
-// export const ROUTING: ModuleWithProviders = RouterModule.forRoot(AppRoutes);
+import { SupplierHomeComponent } from './supplier/supplier-home/supplier-home.component';
 
 @NgModule({
     imports: [
@@ -43,6 +19,7 @@ import { SellerHomeComponent } from './seller-home/seller-home.component';
                     { path: 'home', component: HomeComponent, data: {}  },
                     { path: 'admin_home', component: AdminHomeComponent, data: {}  },
                     { path: 'seller_home', component: SellerHomeComponent, data: {}  },
+                    { path: 'supplier_home', component: SupplierHomeComponent, data: {} },
                     { path: 'user_detail/:walletId', component: AdminHomeComponent, data: {}  },
                     { path: 'logout', component: LogoutComponent, data: {} }
                 // ]
