@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserWallet } from '../models/user-wallet';
+import { RequestDetail } from '../models/table-detail';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,8 @@ export class UserInfoService {
     return this.http.get<String>(`http://localhost:3000/wallet/success_list/${publicKey}`);
   }
 
-  getUserRequests(){
-    return this.http.get<[]>('http://localhost:3000/wallet/user_requests');
+  getUserRequests(maxResultCount: number, pageNumber: number){
+    return this.http.get<RequestDetail>(`http://localhost:3000/wallet/user_requests/${maxResultCount}/${pageNumber}`);
   }
 
   getChargingList(){
@@ -39,5 +40,9 @@ export class UserInfoService {
 
   getRequestList(publicKey: String){
     return this.http.get<[]>(`http://localhost:3000/wallet/requests/${publicKey}`);
+  }
+
+  getDataBC() {
+    return this.http.get<[]>(`http://localhost:3000/wallet/getDataBlockchain`);
   }
 }

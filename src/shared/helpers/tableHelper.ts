@@ -5,7 +5,7 @@ import { Table } from 'primeng/components/table/table';
 export class PrimengTableHelper {
     predefinedRecordsCountPerPage = [5, 10, 25, 50, 100, 250, 500];
 
-    defaultRecordsCountPerPage = 3;
+    defaultRecordsCountPerPage = 5;
 
     isResponsive = true;
 

@@ -10,6 +10,7 @@ import { INgxMyDpOptions, IMyDateModel, NgxMyDatePickerDirective } from 'ngx-myd
 import * as moment from 'moment';
 import { FormatStringComponent } from 'src/app/shared/ifichain/formatString.component';
 import Swal from 'sweetalert2';
+import { NgSelectComponent } from '@ng-select/ng-select';
 
 export class SelectItem {
     id: number;
@@ -29,6 +30,7 @@ export class SupplierInputComponent implements OnInit {
     @ViewChild('dpExpiry') dpExpiry: ElementRef;
     @ViewChild('dpSoldDate') dpSoldDate: ElementRef;
     @ViewChild('dp') ngxdp: NgxMyDatePickerDirective;
+    @ViewChild('ConsignmentOptions') ConsignmentOptions: NgSelectComponent;
     @Output() resetList: EventEmitter<any> = new EventEmitter<any>();
 
     formSupplierInput: FormGroup;
@@ -41,7 +43,7 @@ export class SupplierInputComponent implements OnInit {
     userRequest: any;
     walletBalance: UserWallet;
 
-    productPackage: Number;
+    consignment: Number;
     productCode: String;
     manufacturingDate: String;
     expiry: String;
@@ -55,6 +57,14 @@ export class SupplierInputComponent implements OnInit {
         // todayBtnTxt: 'Today',
         dateFormat: 'dd/mm/yyyy',
     };
+
+    packageChoices: any[] = [
+        { id: 0, displayName: "Package 1"},
+        { id: 1, displayName: "Package 2"},
+        { id: 2, displayName: "Package 3"},
+        { id: 3, displayName: "Package 4"},
+        { id: 4, displayName: "Package 5"}
+    ];
 
     userChoices: any[] = [
         { id: 0, displayName: "Coffee-1" },
@@ -74,7 +84,7 @@ export class SupplierInputComponent implements OnInit {
     ngOnInit(): void {
         /** Declare formgroup, formcontrol */
         this.formSupplierInput = new FormGroup({
-            productPackage: new FormControl("", { validators: [Validators.required] }),
+            consignment: new FormControl("", { validators: [Validators.required] }),
             productCode: new FormControl('', { validators: [Validators.required] }),
             manufacturingDate: new FormControl('', { validators: [Validators.required] }),
             expiry: new FormControl('', { validators: [Validators.required] }),
@@ -225,7 +235,7 @@ export class SupplierInputComponent implements OnInit {
     /** show data when modal is shown */
     show(requests: any): void {
         this.userRequest = requests;
-        console.log(88, this.userRequest.username)
+        // console.log(88, this.userRequest.username)
 
         this.manufacturingDate = '';
         this.expiry = '';
@@ -236,10 +246,11 @@ export class SupplierInputComponent implements OnInit {
     }
 
     shown() {
-        $('#productPackage').focus();
+        this.ConsignmentOptions.focus();
     }
 
     getValueForSave() {
+        this.formSupplierInput.get('consignment').setValue(this.consignment);
         this.formSupplierInput.get('productCode').setValue(this.productCode);
         this.formSupplierInput.get('manufacturingDate').setValue(this.manufacturingDate);
         this.formSupplierInput.get('expiry').setValue(this.expiry);
@@ -265,8 +276,8 @@ export class SupplierInputComponent implements OnInit {
                 this.formSupplierInput.get(control).markAsTouched({ onlySelf: true });
             }
             $('#' + check).focus();
-            // if (check == 'productName')
-            //     this.ProductName.focus();
+            if (check == 'consignment')
+                this.ConsignmentOptions.focus();
         } else {
             this.getValueForSave();
             this.sellerService.createTransaction(
@@ -289,7 +300,6 @@ export class SupplierInputComponent implements OnInit {
                         title: String(this.walletBalance.message)
                     })
                 });
-            // alert('successfully');
             this.showError = false;
             // this.saving = true;
             this.close();

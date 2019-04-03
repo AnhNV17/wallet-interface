@@ -54,18 +54,8 @@ export class SellerInputComponent implements OnInit {
     format = 'dd/mm/yyyy';
 
     dpOptions: INgxMyDpOptions = {
-        // todayBtnTxt: 'Today',
         dateFormat: 'dd/mm/yyyy',
     };
-
-    userChoices: any[] = [
-        { id: 0, displayName: "Coffee-1" },
-        { id: 1, displayName: "Coffee-2" },
-        { id: 2, displayName: "Coffee-3" },
-        { id: 3, displayName: "Coffee-4" },
-        { id: 4, displayName: "Coffee-5" },
-        { id: 5, displayName: "Coffee-6" }
-    ];
 
     constructor(
         injector: Injector,
@@ -169,17 +159,17 @@ export class SellerInputComponent implements OnInit {
         }
     }
 
-    onDateChangedTest(e: IMyDateModel, e1: IMyDateModel): void {
-        if (e !== undefined && e1 !== undefined) {
-            this.manufacturingDate = e.formatted;
-            this.formSeller.patchValue({ manufacturingDate: e.formatted });
+    // onDateChangedTest(e: IMyDateModel, e1: IMyDateModel): void {
+    //     if (e !== undefined && e1 !== undefined) {
+    //         this.manufacturingDate = e.formatted;
+    //         this.formSeller.patchValue({ manufacturingDate: e.formatted });
 
-            this.manufacturingDate = e1.formatted;
-            this.formSeller.patchValue({ manufacturingDate: e1.formatted });
-            console.log(142, this.formSeller.get('manufacturingDate').value, this.formSeller.get('expiry').value);
-            this.validStartEnd(this.formSeller.get('manufacturingDate').value, this.formSeller.get('expiry'));
-        }
-    }
+    //         this.manufacturingDate = e1.formatted;
+    //         this.formSeller.patchValue({ manufacturingDate: e1.formatted });
+    //         console.log(142, this.formSeller.get('manufacturingDate').value, this.formSeller.get('expiry').value);
+    //         this.validStartEnd(this.formSeller.get('manufacturingDate').value, this.formSeller.get('expiry'));
+    //     }
+    // }
 
 
     onDateChanged(event: IMyDateModel): void {
