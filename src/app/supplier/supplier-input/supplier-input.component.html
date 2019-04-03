@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="top:140px;">
 
-            <form [formGroup]="formSeller" novalidate (ngSubmit)="save()" autocomplete="off">
+            <form [formGroup]="formSupplierInput" novalidate (ngSubmit)="save()" autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
                         <label>Transaction</label>
@@ -17,12 +17,22 @@
                     <div class="form-row">
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="productPackage">Product Package</label>
+                            <input type="number" id="productPackage" (input)="uppercaseAll($event)"
+                                formControlName="productPackage" [(ngModel)]="productPackage" class="form-control"
+                                name="productPackage" min="0.1" />
+                            <div class="valid-height">
+                                <validation [control]="formSupplierInput.get('productPackage')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label for="productCode">Product Code</label>
                             <input type="text" id="productCode" (input)="uppercaseAll($event)"
                                 formControlName="productCode" [(ngModel)]="productCode" class="form-control"
                                 name="productCode" minlength="0" maxlength="50" />
                             <div class="valid-height">
-                                <validation [control]="formSeller.get('productCode')"></validation>
+                                <validation [control]="formSupplierInput.get('productCode')"></validation>
                             </div>
                         </div>
 
@@ -38,21 +48,21 @@
                             <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"
                                 (click)="dp.toggleCalendar()"></i>
                             <div class="valid-height">
-                                <validation [control]="formSeller.get('manufacturingDate')"></validation>
+                                <validation [control]="formSupplierInput.get('manufacturingDate')"></validation>
                             </div>
                         </div>
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Expiry</label>
 
-                            <input #dpExpiry type="text" class="form-control" style="float: none" placeholder="Select a date"
-                                ngx-mydatepicker name="expiry" formControlName="expiry" id="expiry"
-                                [options]="dpOptions" #dp1="ngx-mydatepicker" (dateChanged)="onDateChanged1($event)"
-                                (click)="dp1.toggleCalendar()" />
+                            <input #dpExpiry type="text" class="form-control" style="float: none"
+                                placeholder="Select a date" ngx-mydatepicker name="expiry" formControlName="expiry"
+                                id="expiry" [options]="dpOptions" #dp1="ngx-mydatepicker"
+                                (dateChanged)="onDateChanged1($event)" (click)="dp1.toggleCalendar()" />
                             <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"
                                 (click)="dp1.toggleCalendar()"></i>
                             <div class="valid-height">
-                                <validation [control]="formSeller.get('expiry')"></validation>
+                                <validation [control]="formSupplierInput.get('expiry')"></validation>
                             </div>
                         </div>
 
@@ -66,7 +76,7 @@
                             <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"
                                 (click)="dp2.toggleCalendar()"></i>
                             <div class="valid-height">
-                                <validation [control]="formSeller.get('soldDate')"></validation>
+                                <validation [control]="formSupplierInput.get('soldDate')"></validation>
                             </div>
                         </div>
 
@@ -75,7 +85,7 @@
                             <input type="text" id="series" formControlName="series" [(ngModel)]="series"
                                 class="form-control" name="series" maxlength="50" />
                             <div class="valid-height">
-                                <validation [control]="formSeller.get('series')"></validation>
+                                <validation [control]="formSupplierInput.get('series')"></validation>
                             </div>
                         </div>
 
@@ -85,13 +95,13 @@
                                 formControlName="manufacturer" class="form-control" name="manufacturer"
                                 maxlength="255" />
                             <div class="valid-height">
-                                <validation [control]="formSeller.get('manufacturer')"></validation>
+                                <validation [control]="formSupplierInput.get('manufacturer')"></validation>
                             </div>
                         </div>
 
                     </div>
 
-                </div> 
+                </div>
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary blue" [disabled]="saving">

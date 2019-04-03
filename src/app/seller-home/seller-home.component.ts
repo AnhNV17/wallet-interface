@@ -12,7 +12,8 @@ import { UserWallet } from "../models/user-wallet";
 import { Router } from "@angular/router";
 import { UserInfoService } from "../services/user-info.service";
 import { SellerInputComponent } from "./seller-input/seller-input.component";
-import { UpdateBalanceService } from '../services/update-balance.service';
+import { PrimengTableHelper } from '../../shared/helpers/tableHelper';
+import { Paginator, LazyLoadEvent } from 'primeng/primeng';
 
 export class SelectItem {
   id: number;
@@ -28,6 +29,7 @@ export class SelectItem {
 export class SellerHomeComponent implements OnInit {
   @ViewChild("sellerHomeComponentModal") modal: ModalDirective;
   @ViewChild("sellerInputModal") sellerInputModal: SellerInputComponent;
+  @ViewChild('paginator') paginator: Paginator;
 
   formSeller: FormGroup;
   active = false;
@@ -40,6 +42,8 @@ export class SellerHomeComponent implements OnInit {
   successfulList: String;
   isDisplay = true;
   isShow = true;
+  primengTableHelper: PrimengTableHelper;
+  maxRows = 3;
   // uname: any;
 
   userChoices: any[] = [
@@ -54,23 +58,16 @@ export class SellerHomeComponent implements OnInit {
 
   ngOnInit(): void {
     /** Declare formgroup, formcontrol */
+    // this.getUserRequests();
     this.formSeller = new FormGroup(
       {
         productName: new FormControl("", { validators: [Validators.required] }),
         productCode: new FormControl("", { validators: [Validators.required] }),
-        expiry: new FormControl("", { validators: [Validators.required] }),
-        manufacturingDate: new FormControl("", {
-          validators: [Validators.required]
-        }),
-        soldDate: new FormControl("", { validators: [Validators.required] }),
         quantity: new FormControl("", { validators: [Validators.required] }),
-        series: new FormControl("", { validators: [Validators.required] }),
-        manufacturer: new FormControl("", { validators: [Validators.required] })
+        series: new FormControl("", { validators: [Validators.required] })
       },
       { updateOn: "change" }
     );
-    this.getUserRequests();
-    this.updateBalance(this.userWallet.walletId);
   }
 
   openInput(uRequests): void {
@@ -88,16 +85,32 @@ export class SellerHomeComponent implements OnInit {
     });
   }
 
-  updateBalance(walletId: String) {
-    this.updateBalanceService.updateBalance(walletId).subscribe(balance => {
-      this.userWallet.balance = balance;
+  getUserRequests() {
+    // getUserRequests(event?: LazyLoadEvent): void {
+    // if (this.primengTableHelper.shouldResetPaging(event)) {
+    //   this.paginator.changePage(0);
+    //   return;
+    // }
+
+    // this.primengTableHelper.showLoadingIndicator();
+
+    this.userInfo.getUserRequests().subscribe(listRequest => {
+      // this.primengTableHelper.records = listRequest;
+
+      this.userRequests = listRequest
     });
   }
 
-  getUserRequests(): void {
-    this.userInfo.getUserRequests().subscribe(listRequest => {
-      (this.userRequests = listRequest), console.log(93, this.userRequests);
-    });
+  reloadTable(): void {
+    // this.paginator.changePage(this.paginator.getPage());
+    // console.log("in")
+    // console.log(105, this.router.url)
+    // this.router.navigate(["/seller_home"]);
+    // this.getUserRequests();
+    setTimeout(() => {
+      this.getUserRequests();
+    }, 0);
+
   }
 
   getListHistory() {

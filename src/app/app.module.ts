@@ -28,6 +28,8 @@ import { SellerHomeComponent } from './seller-home/seller-home.component';
 import { SellerInputComponent } from './seller-home/seller-input/seller-input.component';
 // import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
+import { SupplierHomeComponent } from './supplier/supplier-home/supplier-home.component';
+import { SupplierInputComponent } from './supplier/supplier-input/supplier-input.component';
 
 @NgModule({
   exports: [ChargeModalComponent],
@@ -43,7 +45,9 @@ import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
     SellerInputComponent,
     SideBarMenuComponent,
     TopBarMenuComponent,
-    ValidationComponent
+    ValidationComponent,
+    SupplierHomeComponent,
+    SupplierInputComponent
   ],
   imports: [
     // NKDatetimeModule,

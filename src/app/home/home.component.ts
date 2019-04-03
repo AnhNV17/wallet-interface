@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { ModalDirective } from 'ngx-bootstrap';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: "app-home",
@@ -92,17 +93,24 @@ export class HomeComponent implements OnInit {
   buy() {
     this.getValueForBuy();
     // console.log(95, this.userWallet.publicKey)
-    if (this.buyQuantity && this.userChoice){
+    if (this.buyQuantity && this.userChoice) {
       this.buyService
-        .buy(this.userWallet.username ,this.buyQuantity, this.userChoice, this.userWallet.publicKey)
+        .buy(this.userWallet.username, this.buyQuantity, this.userChoice, this.userWallet.publicKey)
         .subscribe(balance => {
           this.walletBalance = balance;
-          alert(this.walletBalance.message);
+          Swal.fire({
+            type: 'success',
+            title: String(this.walletBalance.message)
+          })
         });
       this.updateBalance(this.userWallet.walletId);
       this.updateListHistory();
     } else {
-      alert('Please fill the form to transfer');
+      // alert('Please fill the form to transfer');
+      Swal.fire({
+        // type: 'error',
+        text: "Please fill the form to transfer",
+      })
     }
     this.formHome.get("userChoice").reset();
     this.formHome.get("quantity").reset();
@@ -110,17 +118,25 @@ export class HomeComponent implements OnInit {
 
   transfer() {
     this.getValueForTransfer();
-    if (this.transferAmount && this.transferReceiver){
+    if (this.transferAmount && this.transferReceiver) {
       this.transferService
         .transfer(this.transferAmount, this.transferReceiver, this.userWallet.publicKey)
         .subscribe(balance => {
           this.walletBalance = balance;
-          alert(this.walletBalance.message);
+          // alert(this.walletBalance.message);
+          Swal.fire({
+            // type: 'success',
+            title: String(this.walletBalance.message)
+          })
         });
       // this.updateBalance(this.walletId);
       // this.updateListHistory();
     } else {
-      alert('Please fill the form to transfer');
+      // alert('Please fill the form to transfer');
+      Swal.fire({
+        // type: 'error',
+        text: "Please fill the form to transfer",
+      })
     }
     this.formHome.get("amount").reset();
     this.formHome.get("receiver").reset();
@@ -149,7 +165,7 @@ export class HomeComponent implements OnInit {
 
   getRequests() {
     this.userInfoService.getRequestList(this.userWallet.publicKey)
-      .subscribe(result => {this.listRequest = result});
+      .subscribe(result => { this.listRequest = result });
     this.isDisplay = !this.isDisplay;
   }
 

@@ -4,6 +4,7 @@ import { TransferCoinsService } from '../services/charge.service';
 import { UserInfoService } from '../services/user-info.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserWallet } from '../models/user-wallet';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: 'chargeModal',
@@ -47,13 +48,24 @@ export class ChargeModalComponent implements OnInit {
             this.transferingCoins.transferCoins(this.amount, this.walletUser.walletId, this.walletUser.publicKey)
                 .subscribe(result => {
                     this.walletAdmin = result;
-                    alert(this.walletAdmin.message);
+                    Swal.fire({
+                        type: 'success',
+                        title: String(this.walletAdmin.message)
+                    })
                 }, error => {
-                    alert("The information you filled is not correct" + error);
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: "The information you filled is not correct" + error,
+                    })
                 })
         } else {
-            alert("Please transfer again");
+            Swal.fire({
+                type: 'error',
+                text: "Please transfer again",
+            })
         }
+        this.formCharge.get('amount').reset();
     }
 
     shown() {
