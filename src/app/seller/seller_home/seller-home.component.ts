@@ -42,7 +42,7 @@ export class SellerHomeComponent implements OnInit {
   totalRecord: Number;
 
 
-  constructor(private router: Router, private userInfo: UserInfoService) {
+  constructor(private router: Router, private userInfo: UserInfoService, private updateBalanceService: UpdateBalanceService) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
     this.primengTableHelper = new PrimengTableHelper();
   }
