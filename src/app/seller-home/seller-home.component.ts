@@ -12,6 +12,7 @@ import { UserWallet } from "../models/user-wallet";
 import { Router } from "@angular/router";
 import { UserInfoService } from "../services/user-info.service";
 import { SellerInputComponent } from "./seller-input/seller-input.component";
+import { UpdateBalanceService } from '../services/update-balance.service';
 
 export class SelectItem {
   id: number;
@@ -47,7 +48,7 @@ export class SellerHomeComponent implements OnInit {
     { id: 2, displayName: "Culi" }
   ];
 
-  constructor(private router: Router, private userInfo: UserInfoService) {
+  constructor(private router: Router, private userInfo: UserInfoService, private updateBalanceService: UpdateBalanceService) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
   }
 
@@ -69,10 +70,7 @@ export class SellerHomeComponent implements OnInit {
       { updateOn: "change" }
     );
     this.getUserRequests();
-    // console.log(60, this.userRequests)
-    // for (let i = 0; i < this.userRequests.length; i++) {
-    //     console.log(62, this.userRequests[i])
-    // }
+    this.updateBalance(this.userWallet.walletId);
   }
 
   openInput(uRequests): void {
@@ -87,6 +85,12 @@ export class SellerHomeComponent implements OnInit {
   getUserDetail(walletId: String): void {
     this.userInfo.showUserDetail(walletId).subscribe(userWallet => {
       this.userWallet = userWallet;
+    });
+  }
+
+  updateBalance(walletId: String) {
+    this.updateBalanceService.updateBalance(walletId).subscribe(balance => {
+      this.userWallet.balance = balance;
     });
   }
 

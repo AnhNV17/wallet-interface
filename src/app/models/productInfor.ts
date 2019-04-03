@@ -1,9 +1,8 @@
 export class ProductInfor {
     productCode: String;
     manufacturingDate: Date;
-    expiry: Date;
+    expiryDate: Date;
     soldDate: Date;
     quantity: Number;
-    series: String;
     manufacturer: String;
 }
