@@ -9,6 +9,8 @@ import { SupplierInputComponent } from '../supplier-input/supplier-input.compone
 import { Paginator, LazyLoadEvent } from 'primeng/primeng';
 import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
 import { Table } from 'primeng/table';
+import { SellerService } from 'src/app/services/seller.service';
+import { SupplierService } from 'src/app/services/supplier.service';
 
 export class SelectItem {
     id: number;
@@ -31,14 +33,13 @@ export class SupplierHomeComponent implements OnInit {
     active = false;
     saving = false;
     userWallet: UserWallet;
-    userWallet1: UserWallet;
     // visible = true;
     isDisplay = true;
     isShow = true;
     sellerRequest: any;
     primengTableHelper: PrimengTableHelper;
 
-    constructor(private router: Router, private userInfo: UserInfoService) {
+    constructor(private router: Router, private userInfo: UserInfoService, private supplierSerivce: SupplierService) {
         this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
         this.primengTableHelper = new PrimengTableHelper();
         console.log(41, this.userWallet)
@@ -66,23 +67,34 @@ export class SupplierHomeComponent implements OnInit {
         this.router.navigate([""]);
     }
 
-    getUserDetail(walletId: String): void {
-        this.userInfo.showUserDetail(walletId).subscribe(userWallet => {
-            this.userWallet1 = userWallet;
-            console.log(70, this.userWallet1)
-        });
-    }
-
     getSellerRequests(event?: LazyLoadEvent): void {
         if (this.primengTableHelper.shouldResetPaging(event)) {
             this.paginator.changePage(0);
             return;
         }
 
+        this.primengTableHelper.showLoadingIndicator();
 
+        if (isNaN(this.paginator.getPage())) {
+            var currentPageNumber = 1;
+        } else {
+            currentPageNumber = this.paginator.getPage() + 1; 
+        }
+
+        this.supplierSerivce.getSellerRequests(
+            this.primengTableHelper.getMaxResultCount(this.paginator, event),
+            currentPageNumber
+        )
+        .subscribe(result => {
+            console.log(89, result)
+            this.primengTableHelper.records = result.pageList,
+            this.primengTableHelper.totalRecordsCount = result.totalRecords;
+            this.primengTableHelper.hideLoadingIndicator();
+        })
     }
 
     reloadTable(): void {
+        this.paginator.changePage(this.paginator.getPage());
         setTimeout(() => {
             this.getSellerRequests();
         }, 0);

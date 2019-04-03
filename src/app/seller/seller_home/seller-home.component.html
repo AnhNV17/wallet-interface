@@ -9,11 +9,7 @@
         </div>
         <div>
             <h5>Balance: {{ userWallet.balance }}</h5>
-          </div>
-
-        <!-- <div class="row align-items-center">
-            <button class="btn btn-outline-primary" (click)="openInput()" type="button"></button>
-        </div> -->
+        </div>
 
         <div class="row align-items-center">
             <!--<Primeng-Datatable-Start>-->
@@ -76,13 +72,12 @@
                     </ng-template>
                 </p-table>
 
-                <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0">
+                <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0" style="text-align: center; opacity: 0.7;">
                     No Request
                 </div>
                 <div class="primeng-paging-container">
                     <p-paginator rows="{{primengTableHelper.defaultRecordsCountPerPage}}" #paginator
-                        (onPageChange)="getUserRequests($event)"
-                        [totalRecords]="primengTableHelper.totalRecordsCount"
+                        (onPageChange)="getUserRequests($event)" [totalRecords]="primengTableHelper.totalRecordsCount"
                         [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
                     </p-paginator>
                     <span class="total-records-count">

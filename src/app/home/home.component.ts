@@ -9,7 +9,9 @@ import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { ModalDirective } from 'ngx-bootstrap';
 import Swal from 'sweetalert2';
-import { Paginator } from 'primeng/primeng';
+import { Paginator, LazyLoadEvent } from 'primeng/primeng';
+import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
+import { Table } from 'primeng/components/table/table';
 
 @Component({
   selector: "app-home",
@@ -21,6 +23,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('AppHomeModal') modal: ModalDirective;
   @ViewChild('UserOptions') userOptions: NgSelectComponent;
   @ViewChild('paginator') paginator: Paginator;
+  @ViewChild('dataTable') dataTable: Table;
 
   userWallet: UserWallet;
   walletBalance: UserWallet;
@@ -47,6 +50,7 @@ export class HomeComponent implements OnInit {
   showBuyError = false;
   showTransferError = false;
 
+  primengTableHelper: PrimengTableHelper;
   dataBC: any;
 
   constructor(
@@ -57,7 +61,7 @@ export class HomeComponent implements OnInit {
     private router: Router
   ) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
-
+    this.primengTableHelper = new PrimengTableHelper();
   }
 
   ngOnInit() {
@@ -207,18 +211,30 @@ export class HomeComponent implements OnInit {
   }
 
   getDataBC(): void {
+
+    // if (this.primengTableHelper.shouldResetPaging(event)) {
+    //   this.paginator.changePage(0);
+    //   return;
+    // }
+
+    // this.primengTableHelper.showLoadingIndicator();
+
+    // if (isNaN(this.paginator.getPage())) {
+    //   var pageNumber = 1;
+    // } else {
+    //   pageNumber = this.paginator.getPage() + 1;
+    // }
+
     this.userInfoService.getDataBC()
       .subscribe(result => {
-        this.dataBC = result,
-          console.log(175, result)
+        this.dataBC = result[1],
+        console.log(231, this.dataBC)
       })
-    // for (let i = 0; i < this.dataBC.length; i++) {
-    //   console.log(178, this.dataBC[i])
-    // }
   }
 
   logout() {
     localStorage.removeItem("userWallet");
     this.router.navigate([""]);
   }
+
 }

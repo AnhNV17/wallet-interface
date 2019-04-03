@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { FormatStringComponent } from 'src/app/shared/ifichain/formatString.component';
 import Swal from 'sweetalert2';
 import { NgSelectComponent } from '@ng-select/ng-select';
+import { SupplierService } from 'src/app/services/supplier.service';
 
 export class SelectItem {
     id: number;
@@ -43,11 +44,11 @@ export class SupplierInputComponent implements OnInit {
     userRequest: any;
     walletBalance: UserWallet;
 
-    consignment: Number;
+    consignment: any;
     productCode: String;
     manufacturingDate: String;
     expiry: String;
-    soldDate: String;
+    // soldDate: String;
     series: String;
     manufacturer: String;
 
@@ -59,11 +60,11 @@ export class SupplierInputComponent implements OnInit {
     };
 
     packageChoices: any[] = [
-        { id: 0, displayName: "Package 1"},
-        { id: 1, displayName: "Package 2"},
-        { id: 2, displayName: "Package 3"},
-        { id: 3, displayName: "Package 4"},
-        { id: 4, displayName: "Package 5"}
+        { id: 0, displayName: "Consignment 1"},
+        { id: 1, displayName: "Consignment 2"},
+        { id: 2, displayName: "Consignment 3"},
+        { id: 3, displayName: "Consignment 4"},
+        { id: 4, displayName: "Consignment 5"}
     ];
 
     userChoices: any[] = [
@@ -77,7 +78,7 @@ export class SupplierInputComponent implements OnInit {
 
     constructor(
         // injector: Injector,
-        private sellerService: SellerService,
+        private supplierService: SupplierService,
     ) {
     }
 
@@ -88,7 +89,7 @@ export class SupplierInputComponent implements OnInit {
             productCode: new FormControl('', { validators: [Validators.required] }),
             manufacturingDate: new FormControl('', { validators: [Validators.required] }),
             expiry: new FormControl('', { validators: [Validators.required] }),
-            soldDate: new FormControl('', { validators: [Validators.required] }),
+            // soldDate: new FormControl('', { validators: [Validators.required] }),
             series: new FormControl('', {}),
             manufacturer: new FormControl('', {}),
 
@@ -107,7 +108,7 @@ export class SupplierInputComponent implements OnInit {
                 var Start = moment(st, "DD/MM/YYYY");
                 var End = moment(en, "DD/MM/YYYY");
 
-                debugger
+                // debugger
 
                 if (Start > End) {
                     if ($el.formSupplierInput.get('manufacturingDate').touched) {
@@ -134,15 +135,13 @@ export class SupplierInputComponent implements OnInit {
 
     validSoldDate(st: any, end: any, btw: any) {
         try {
-
-
             if (st !== '' && end !== '' && btw !== '') {
 
                 var startDate = moment(st, 'DD/MM/YYYY');
                 var endDate = moment(end, 'DD/MM/YYYY');
                 var btwDate = moment(btw, 'DD/MM/YYYY');
 
-                debugger
+                // debugger
 
                 if (btwDate < startDate) {
                     if (this.formSupplierInput.get('soldDate').touched) {
@@ -216,30 +215,30 @@ export class SupplierInputComponent implements OnInit {
         }
     }
 
-    onDateChanged2(event: IMyDateModel): void {
-        this.soldDate = event.formatted;
-        this.formSupplierInput.patchValue({ soldDate: event.formatted })
+    // onDateChanged2(event: IMyDateModel): void {
+    //     this.soldDate = event.formatted;
+    //     this.formSupplierInput.patchValue({ soldDate: event.formatted })
 
-        let start = this.formSupplierInput.get('manufacturingDate').value;
-        let end = this.formSupplierInput.get('expiry').value;
-        let btw = this.formSupplierInput.get('soldDate').value;
+    //     let start = this.formSupplierInput.get('manufacturingDate').value;
+    //     let end = this.formSupplierInput.get('expiry').value;
+    //     let btw = this.formSupplierInput.get('soldDate').value;
 
-        console.log(207, this.formSupplierInput.get('soldDate').value);
-        console.log(208, start, end, btw)
+    //     console.log(207, this.formSupplierInput.get('soldDate').value);
+    //     console.log(208, start, end, btw)
 
-        if (start !== '' && end !== '' && btw !== '') {
-            this.validSoldDate(this.manufacturingDate, this.expiry, this.soldDate);
-        }
-    }
+    //     if (start !== '' && end !== '' && btw !== '') {
+    //         this.validSoldDate(this.manufacturingDate, this.expiry, this.soldDate);
+    //     }
+    // }
 
     /** show data when modal is shown */
     show(requests: any): void {
         this.userRequest = requests;
-        // console.log(88, this.userRequest.username)
+        console.log(239, this.userRequest)
 
         this.manufacturingDate = '';
         this.expiry = '';
-        this.soldDate = '';
+        // this.soldDate = '';
 
         this.active = true;
         this.modal.show();
@@ -254,7 +253,7 @@ export class SupplierInputComponent implements OnInit {
         this.formSupplierInput.get('productCode').setValue(this.productCode);
         this.formSupplierInput.get('manufacturingDate').setValue(this.manufacturingDate);
         this.formSupplierInput.get('expiry').setValue(this.expiry);
-        this.formSupplierInput.get('soldDate').setValue(this.soldDate);
+        // this.formSupplierInput.get('soldDate').setValue(this.soldDate);
         this.formSupplierInput.get('series').setValue(this.series);
         this.formSupplierInput.get('manufacturer').setValue(this.manufacturer);
     }
@@ -280,26 +279,25 @@ export class SupplierInputComponent implements OnInit {
                 this.ConsignmentOptions.focus();
         } else {
             this.getValueForSave();
-            this.sellerService.createTransaction(
+            console.log(284, this.userRequest)
+            this.supplierService.createTransaction(
                 this.userRequest.requestId,
-                this.userRequest.productName,
-                this.userRequest.quantity,
+                this.userRequest.supplier,
+                this.userRequest.userAddress,
+                this.consignment,
                 this.productCode,
                 this.manufacturingDate,
                 this.expiry,
-                this.soldDate,
                 this.series,
-                this.manufacturer,
-                this.userRequest.seller,
-                this.userRequest.userAddress,
-                this.userRequest.total)
-                .subscribe(balance => {
-                    this.walletBalance = balance;
-                    Swal.fire({
-                        type: 'success',
-                        title: String(this.walletBalance.message)
-                    })
-                });
+                this.manufacturer
+            )
+            .subscribe(balance => {
+                this.walletBalance = balance;
+                Swal.fire({
+                    // type: 'success',
+                    title: String(this.walletBalance.message)
+                })
+            })
             this.showError = false;
             // this.saving = true;
             this.close();
@@ -308,7 +306,7 @@ export class SupplierInputComponent implements OnInit {
 
     /** close modal and reset form */
     close(): void {
-        this.resetList.emit(null);
+        this.resetList.emit();
         this.active = false;
         this.modal.hide();
         this.formSupplierInput.reset();

@@ -47,9 +47,9 @@ export class SellerInputComponent implements OnInit {
     productCode: String;
     manufacturingDate: String;
     expiry: String;
-    soldDate: String;
+    // soldDate: String;
     series: String;
-    manufacturer: String;
+    brand: String;
 
     format = 'dd/mm/yyyy';
 
@@ -69,9 +69,9 @@ export class SellerInputComponent implements OnInit {
             productCode: new FormControl('', { validators: [Validators.required] }),
             manufacturingDate: new FormControl('', { validators: [Validators.required] }),
             expiry: new FormControl('', { validators: [Validators.required] }),
-            soldDate: new FormControl('', { validators: [Validators.required] }),
+            // soldDate: new FormControl('', { validators: [Validators.required] }),
             series: new FormControl('', {}),
-            manufacturer: new FormControl('', {}),
+            brand: new FormControl('', {}),
 
         }, { updateOn: 'change' });
     }
@@ -197,21 +197,21 @@ export class SellerInputComponent implements OnInit {
         }
     }
 
-    onDateChanged2(event: IMyDateModel): void {
-        this.soldDate = event.formatted;
-        this.formSeller.patchValue({ soldDate: event.formatted })
+    // onDateChanged2(event: IMyDateModel): void {
+    //     this.soldDate = event.formatted;
+    //     this.formSeller.patchValue({ soldDate: event.formatted })
 
-        let start = this.formSeller.get('manufacturingDate').value;
-        let end = this.formSeller.get('expiry').value;
-        let btw = this.formSeller.get('soldDate').value;
+    //     let start = this.formSeller.get('manufacturingDate').value;
+    //     let end = this.formSeller.get('expiry').value;
+    //     let btw = this.formSeller.get('soldDate').value;
 
-        console.log(207, this.formSeller.get('soldDate').value);
-        console.log(208, start, end, btw)
+    //     console.log(207, this.formSeller.get('soldDate').value);
+    //     console.log(208, start, end, btw)
 
-        if (start !== '' && end !== '' && btw !== '') {
-            this.validSoldDate(this.manufacturingDate, this.expiry, this.soldDate);
-        }
-    }
+    //     if (start !== '' && end !== '' && btw !== '') {
+    //         this.validSoldDate(this.manufacturingDate, this.expiry, this.soldDate);
+    //     }
+    // }
 
     /** show data when modal is shown */
     show(requests: any): void {
@@ -220,7 +220,7 @@ export class SellerInputComponent implements OnInit {
 
         this.manufacturingDate = '';
         this.expiry = '';
-        this.soldDate = '';
+        // this.soldDate = '';
 
         this.active = true;
         this.modal.show();
@@ -234,9 +234,9 @@ export class SellerInputComponent implements OnInit {
         this.formSeller.get('productCode').setValue(this.productCode);
         this.formSeller.get('manufacturingDate').setValue(this.manufacturingDate);
         this.formSeller.get('expiry').setValue(this.expiry);
-        this.formSeller.get('soldDate').setValue(this.soldDate);
+        // this.formSeller.get('soldDate').setValue(this.soldDate);
         this.formSeller.get('series').setValue(this.series);
-        this.formSeller.get('manufacturer').setValue(this.manufacturer);
+        this.formSeller.get('brand').setValue(this.brand);
     }
 
     /**
@@ -260,6 +260,15 @@ export class SellerInputComponent implements OnInit {
             //     this.ProductName.focus();
         } else {
             this.getValueForSave();
+            this.sellerService.requestToSuppliers(
+                this.userRequest.productName,
+                this.userRequest.quantity,
+                this.userRequest.userAddress,
+                this.brand)
+                .subscribe(balance => {
+                    this.walletBalance = balance;
+                });
+
             this.sellerService.createTransaction(
                 this.userRequest.requestId,
                 this.userRequest.productName,
@@ -267,9 +276,9 @@ export class SellerInputComponent implements OnInit {
                 this.productCode,
                 this.manufacturingDate,
                 this.expiry,
-                this.soldDate,
+                // this.soldDate,
                 this.series,
-                this.manufacturer,
+                this.brand,
                 this.userRequest.seller,
                 this.userRequest.userAddress,
                 this.userRequest.total)
@@ -280,9 +289,10 @@ export class SellerInputComponent implements OnInit {
                         title: String(this.walletBalance.message)
                     })
                 });
+
             // alert('successfully');
             this.showError = false;
-            // this.resetList.emit(null);
+            // this.resetList.emit();
             // this.saving = true;
             this.close();
         }
@@ -290,7 +300,7 @@ export class SellerInputComponent implements OnInit {
 
     /** close modal and reset form */
     close(): void {
-        this.resetList.emit(null);
+        this.resetList.emit();
         this.active = false;
         this.modal.hide();
         this.formSeller.reset();

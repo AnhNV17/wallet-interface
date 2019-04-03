@@ -10,6 +10,7 @@ import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { Table } from 'primeng/table';
 import { UpdateBalanceService } from 'src/app/services/update-balance.service';
+import { SellerService } from 'src/app/services/seller.service';
 
 export class SelectItem {
   id: number;
@@ -43,14 +44,14 @@ export class SellerHomeComponent implements OnInit {
   totalRecord: Number;
 
 
-  constructor(private router: Router, private userInfo: UserInfoService, private updateBalanceService: UpdateBalanceService) {
+  constructor(private router: Router, private userInfo: UserInfoService, private sellerService: SellerService) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
+    // console.log(48, this.userWallet)
     this.primengTableHelper = new PrimengTableHelper();
   }
 
   ngOnInit(): void {
     /** Declare formgroup, formcontrol */
-    // this.getUserRequests();
     this.formSeller = new FormGroup(
       {
         productName: new FormControl("", { validators: [Validators.required] }),
@@ -71,12 +72,6 @@ export class SellerHomeComponent implements OnInit {
     this.router.navigate([""]);
   }
 
-  getUserDetail(walletId: String): void {
-    this.userInfo.showUserDetail(walletId).subscribe(userWallet => {
-      this.userWallet = userWallet;
-    });
-  }
-
   // getUserRequests() {
   getUserRequests(event?: LazyLoadEvent): void {
     if (this.primengTableHelper.shouldResetPaging(event)) {
@@ -85,13 +80,18 @@ export class SellerHomeComponent implements OnInit {
     }
 
     this.primengTableHelper.showLoadingIndicator();
-    // console.log(this.paginator.getPageCount());
-    console.log(this.paginator)
+
+    if (isNaN(this.paginator.getPage())) {
+      var pageNumber = 1;
+    } else {
+      pageNumber = this.paginator.getPage() + 1;
+    }
     
-    this.userInfo.getUserRequests(
+    this.sellerService.getUserRequests(
       this.primengTableHelper.getMaxResultCount(this.paginator, event),
-      this.paginator.getPage() + 1
+      pageNumber
     ).subscribe(listRequest => {
+      console.log(94, listRequest)
       this.primengTableHelper.records = listRequest.pageList;
       this.primengTableHelper.totalRecordsCount = listRequest.totalRecords;
       this.primengTableHelper.hideLoadingIndicator()
@@ -107,9 +107,9 @@ export class SellerHomeComponent implements OnInit {
   }
 
   getListHistory() {
-    console.log(103, this.userWallet.publicKey);
+    // console.log(103, this.userWallet.publicKey);
     this.userInfo.getHistory(this.userWallet.publicKey).subscribe(result => {
-      this.listHistory = result;
+      this.listHistory = result;  
     });
     this.isDisplay = !this.isDisplay;
   }
