@@ -9,6 +9,7 @@ import { UserWallet } from 'src/app/models/user-wallet';
 import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { Table } from 'primeng/table';
+import { UpdateBalanceService } from 'src/app/services/update-balance.service';
 
 export class SelectItem {
   id: number;
