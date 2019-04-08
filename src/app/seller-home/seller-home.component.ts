@@ -14,6 +14,7 @@ import { UserInfoService } from "../services/user-info.service";
 import { SellerInputComponent } from "./seller-input/seller-input.component";
 import { PrimengTableHelper } from '../../shared/helpers/tableHelper';
 import { Paginator, LazyLoadEvent } from 'primeng/primeng';
+import { UpdateBalanceService } from '../services/update-balance.service';
 
 export class SelectItem {
   id: number;

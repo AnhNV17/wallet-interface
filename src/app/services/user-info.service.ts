@@ -38,6 +38,6 @@ export class UserInfoService {
   }
 
   getRequestList(publicKey: String){
-    return this.http.get<[]>(`http://localhost:3000/wallet/requests/${publicKey}`);
+    return this.http.get<[]>(`http://localhost:3000/wallet/requests_to_sellers/${publicKey}`);
   }
 }
