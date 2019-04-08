@@ -4,11 +4,14 @@ import { UpdateBalanceService } from "../services/update-balance.service";
 import { BuyService } from "../services/buy.service";
 import { TransferService } from "../services/transfer.service";
 import { UserInfoService } from "../services/user-info.service";
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { ModalDirective } from 'ngx-bootstrap';
 import Swal from 'sweetalert2';
+import { Paginator, LazyLoadEvent } from 'primeng/primeng';
+import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
+import { Table } from 'primeng/components/table/table';
 
 @Component({
   selector: "app-home",
@@ -19,6 +22,8 @@ import Swal from 'sweetalert2';
 export class HomeComponent implements OnInit {
   @ViewChild('AppHomeModal') modal: ModalDirective;
   @ViewChild('UserOptions') userOptions: NgSelectComponent;
+  @ViewChild('paginator') paginator: Paginator;
+  @ViewChild('dataTable') dataTable: Table;
 
   userWallet: UserWallet;
   walletBalance: UserWallet;
@@ -26,7 +31,7 @@ export class HomeComponent implements OnInit {
   listHistory = [];
   balance: Number;
   walletId: String;
-  userchoices = ["Abrica", "Robusta", "Culi"];
+  showError = false;
 
   simpleItems = [];
   successfulList: String;
@@ -40,13 +45,13 @@ export class HomeComponent implements OnInit {
   transferReceiver: String;
   real_balance: Number;
 
-  // userPublicKey: String;
-  // userWalletInfor: UserWallet;
-
   transferingBtn = false;
   buyingBtn = false;
   showBuyError = false;
   showTransferError = false;
+
+  primengTableHelper: PrimengTableHelper;
+  dataBC: any;
 
   constructor(
     private updateBalanceService: UpdateBalanceService,
@@ -56,7 +61,7 @@ export class HomeComponent implements OnInit {
     private router: Router
   ) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
-
+    this.primengTableHelper = new PrimengTableHelper();
   }
 
   ngOnInit() {
@@ -68,9 +73,9 @@ export class HomeComponent implements OnInit {
       receiver: new FormControl('', { validators: [Validators.required] }),
     }, { updateOn: 'change' });
 
-    this.simpleItems = ["Abrica", "Robusta", "Culi"];
+    this.simpleItems = ["Abrica", "Robusta", "Culi", "TrungNguyen"];
     this.updateBalance(this.userWallet.walletId);
-    // this.getListTransaction();
+    // this.getDataBC();
     this.formHome.reset();
   }
 
@@ -91,55 +96,91 @@ export class HomeComponent implements OnInit {
   }
 
   buy() {
-    this.getValueForBuy();
-    // console.log(95, this.userWallet.publicKey)
-    if (this.buyQuantity && this.userChoice) {
-      this.buyService
-        .buy(this.userWallet.username, this.buyQuantity, this.userChoice, this.userWallet.publicKey)
-        .subscribe(balance => {
-          this.walletBalance = balance;
-          Swal.fire({
-            type: 'success',
-            title: String(this.walletBalance.message)
-          })
-        });
-      this.updateBalance(this.userWallet.walletId);
-      this.updateListHistory();
-    } else {
-      // alert('Please fill the form to transfer');
-      Swal.fire({
-        // type: 'error',
-        text: "Please fill the form to transfer",
-      })
+    let check = '';
+    let fControls = { userChoice: FormControl, quantity: FormControl }
+    for (var control in fControls) {
+      if (this.formHome.get(control).errors) {
+        check = control;
+        this.showError = true;
+        break;
+      }
     }
-    this.formHome.get("userChoice").reset();
-    this.formHome.get("quantity").reset();
+    if (check != '') {
+      for (var control in fControls) {
+        this.formHome.get(control).markAsTouched({ onlySelf: true });
+      }
+      $('#' + check).focus();
+      if (check == 'userChoice')
+        this.userOptions.focus();
+    } else {
+
+      this.getValueForBuy();
+      // console.log(95, this.userWallet.publicKey)
+      if (this.buyQuantity && this.userChoice) {
+        this.buyService
+          .buy(this.userWallet.username, this.buyQuantity, this.userChoice, this.userWallet.publicKey)
+          .subscribe(balance => {
+            this.walletBalance = balance;
+            Swal.fire({
+              type: 'success',
+              title: String(this.walletBalance.message)
+            })
+          });
+        this.updateBalance(this.userWallet.walletId);
+        this.updateListHistory();
+        this.formHome.get("userChoice").reset();
+        this.formHome.get("quantity").reset();
+      } else {
+        // alert('Please fill the form to transfer');
+        Swal.fire({
+          // type: 'error',
+          text: "Please fill the form to transfer",
+        })
+      }
+    }
   }
 
   transfer() {
-    this.getValueForTransfer();
-    if (this.transferAmount && this.transferReceiver) {
-      this.transferService
-        .transfer(this.transferAmount, this.transferReceiver, this.userWallet.publicKey)
-        .subscribe(balance => {
-          this.walletBalance = balance;
-          // alert(this.walletBalance.message);
-          Swal.fire({
-            // type: 'success',
-            title: String(this.walletBalance.message)
-          })
-        });
-      // this.updateBalance(this.walletId);
-      // this.updateListHistory();
-    } else {
-      // alert('Please fill the form to transfer');
-      Swal.fire({
-        // type: 'error',
-        text: "Please fill the form to transfer",
-      })
+    let check = '';
+    let fControls = { amount: FormControl, receiver: FormControl }
+    for (var control in fControls) {
+      if (this.formHome.get(control).errors) {
+        check = control;
+        this.showError = true;
+        break;
+      }
     }
-    this.formHome.get("amount").reset();
-    this.formHome.get("receiver").reset();
+    if (check != '') {
+      for (var control in fControls) {
+        this.formHome.get(control).markAsTouched({ onlySelf: true });
+      }
+      $('#' + check).focus();
+    } else {
+
+      this.getValueForTransfer();
+      if (this.transferAmount && this.transferReceiver) {
+        this.transferService
+          .transfer(this.transferAmount, this.transferReceiver, this.userWallet.publicKey)
+          .subscribe(balance => {
+            this.walletBalance = balance;
+            // alert(this.walletBalance.message);
+            Swal.fire({
+              // type: 'success',
+              title: String(this.walletBalance.message)
+            })
+          });
+        // this.updateBalance(this.walletId);
+        // this.updateListHistory();
+        this.formHome.get("amount").reset();
+        this.formHome.get("receiver").reset();
+      } else {
+        Swal.fire({
+          // type: 'error',
+          text: "Please fill the form to transfer",
+        })
+      }
+
+    }
   }
 
   getSuccessfulList() {
@@ -169,8 +210,31 @@ export class HomeComponent implements OnInit {
     this.isDisplay = !this.isDisplay;
   }
 
+  getDataBC(): void {
+
+    // if (this.primengTableHelper.shouldResetPaging(event)) {
+    //   this.paginator.changePage(0);
+    //   return;
+    // }
+
+    // this.primengTableHelper.showLoadingIndicator();
+
+    // if (isNaN(this.paginator.getPage())) {
+    //   var pageNumber = 1;
+    // } else {
+    //   pageNumber = this.paginator.getPage() + 1;
+    // }
+
+    this.userInfoService.getDataBC()
+      .subscribe(result => {
+        this.dataBC = result[1],
+        console.log(231, this.dataBC)
+      })
+  }
+
   logout() {
     localStorage.removeItem("userWallet");
     this.router.navigate([""]);
   }
+
 }

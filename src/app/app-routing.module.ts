@@ -6,8 +6,8 @@ import { HomeComponent } from './home/home.component';
 import { AdminHomeComponent } from './admin-home/admin-home.component';
 import { LogoutComponent } from './logout/logout.component';
 import { NgModule } from '@angular/core';
-import { SellerHomeComponent } from './seller-home/seller-home.component';
 import { SupplierHomeComponent } from './supplier/supplier-home/supplier-home.component';
+import { SellerHomeComponent } from './seller/seller_home/seller-home.component';
 
 @NgModule({
     imports: [

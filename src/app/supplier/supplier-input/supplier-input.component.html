@@ -1,5 +1,5 @@
-<div bsModal (onShown)="shown()" #sellerInputComponentModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
-    aria-labelledby="sellerInputComponentModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+<div bsModal (onShown)="shown()" #supplierInputComponentModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="supplierInputComponentModal" aria-hidden="true" [config]="{backdrop: 'static'}">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="top:140px;">
 
@@ -17,12 +17,14 @@
                     <div class="form-row">
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label for="productPackage">Product Package</label>
-                            <input type="number" id="productPackage" (input)="uppercaseAll($event)"
-                                formControlName="productPackage" [(ngModel)]="productPackage" class="form-control"
-                                name="productPackage" min="0.1" />
+                            <label for="consignment">Consignment</label>
+
+                            <ng-select #ConsignmentOptions [items]="packageChoices" id="consignment" bindValue="displayName"
+                                bindLabel="displayName" [(ngModel)]="consignment" formControlName="consignment"
+                                name="consignment" placeholder="--Choose your item--">
+                            </ng-select>
                             <div class="valid-height">
-                                <validation [control]="formSupplierInput.get('productPackage')"></validation>
+                                <validation [control]="formSupplierInput.get('consignment')"></validation>
                             </div>
                         </div>
 
@@ -67,7 +69,7 @@
                         </div>
 
 
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <!-- <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Sold Date</label>
                             <input #dpSoldDate type="text" class="form-control" style="float:none"
                                 placeholder="Select a date" ngx-mydatepicker name="soldDate" formControlName="soldDate"
@@ -78,7 +80,7 @@
                             <div class="valid-height">
                                 <validation [control]="formSupplierInput.get('soldDate')"></validation>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Series</label>

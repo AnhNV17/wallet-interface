@@ -24,12 +24,12 @@ import { SideBarMenuComponent } from './shared/layout/nav/side-bar-menu.componen
 import { TopBarMenuComponent } from './shared/layout/nav/top-bar-menu.component';
 import { AppCommonModule } from './shared/common/app-common.module';
 import { ValidationComponent } from './shared/ifichain/validation-messages.component';
-import { SellerHomeComponent } from './seller-home/seller-home.component';
-import { SellerInputComponent } from './seller-home/seller-input/seller-input.component';
 // import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { SupplierHomeComponent } from './supplier/supplier-home/supplier-home.component';
 import { SupplierInputComponent } from './supplier/supplier-input/supplier-input.component';
+import { SellerInputComponent } from './seller/seller-input/seller-input.component';
+import { SellerHomeComponent } from './seller/seller_home/seller-home.component';
 
 @NgModule({
   exports: [ChargeModalComponent],

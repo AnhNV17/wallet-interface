@@ -45,10 +45,10 @@
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Expiry</label>
 
-                            <input #dpExpiry type="text" class="form-control" style="float: none" placeholder="Select a date"
-                                ngx-mydatepicker name="expiry" formControlName="expiry" id="expiry"
-                                [options]="dpOptions" #dp1="ngx-mydatepicker" (dateChanged)="onDateChanged1($event)"
-                                (click)="dp1.toggleCalendar()" />
+                            <input #dpExpiry type="text" class="form-control" style="float: none"
+                                placeholder="Select a date" ngx-mydatepicker name="expiry" formControlName="expiry"
+                                id="expiry" [options]="dpOptions" #dp1="ngx-mydatepicker"
+                                (dateChanged)="onDateChanged1($event)" (click)="dp1.toggleCalendar()" />
                             <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"
                                 (click)="dp1.toggleCalendar()"></i>
                             <div class="valid-height">
@@ -57,7 +57,7 @@
                         </div>
 
 
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                        <!-- <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Sold Date</label>
                             <input #dpSoldDate type="text" class="form-control" style="float:none"
                                 placeholder="Select a date" ngx-mydatepicker name="soldDate" formControlName="soldDate"
@@ -68,7 +68,7 @@
                             <div class="valid-height">
                                 <validation [control]="formSeller.get('soldDate')"></validation>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Series</label>
@@ -80,18 +80,17 @@
                         </div>
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Manufacturer</label>
-                            <input type="text" id="manufacturer" [(ngModel)]="manufacturer"
-                                formControlName="manufacturer" class="form-control" name="manufacturer"
-                                maxlength="255" />
+                            <label>Brand</label>
+                            <input type="text" id="brand" [(ngModel)]="brand" formControlName="brand"
+                                class="form-control" name="brand" maxlength="255" />
                             <div class="valid-height">
-                                <validation [control]="formSeller.get('manufacturer')"></validation>
+                                <validation [control]="formSeller.get('brand')"></validation>
                             </div>
                         </div>
 
                     </div>
 
-                </div> 
+                </div>
 
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary blue" [disabled]="saving">

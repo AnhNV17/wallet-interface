@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserWallet } from '../models/user-wallet';
+import { RequestDetail } from '../models/table-detail';
+import { ProductInfor } from '../models/productInfor';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +23,6 @@ export class UserInfoService {
     return this.http.get<String>(`http://localhost:3000/wallet/success_list/${publicKey}`);
   }
 
-  getUserRequests(){
-    return this.http.get<[]>('http://localhost:3000/wallet/user_requests');
-  }
-
   getChargingList(){
     return this.http.get<[]>("http://localhost:3000/wallet/charging_list");
   }
@@ -39,5 +37,9 @@ export class UserInfoService {
 
   getRequestList(publicKey: String){
     return this.http.get<[]>(`http://localhost:3000/wallet/requests_to_sellers/${publicKey}`);
+  }
+
+  getDataBC() {
+    return this.http.get<ProductInfor>(`http://localhost:3000/wallet/getDataBlockchain`);
   }
 }
