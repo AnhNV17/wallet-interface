@@ -1,0 +1,100 @@
+<div class="container-login100" style="background-image: url('../assets/images/bg.jpg');">
+    <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
+
+            <form [formGroup]="formSupplierInput" novalidate (ngSubmit)="save()" autocomplete="off">
+                    <div class="modal-header">
+                        <h4 class="modal-title">
+                            <label>Transaction</label>
+                        </h4>
+                        <button type="button" class="close" (click)="close()" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+    
+                        <div class="form-row">
+    
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label for="consignment">Consignment</label>
+    
+                                <ng-select #ConsignmentOptions [items]="packageChoices" id="consignment" bindValue="displayName"
+                                    bindLabel="displayName" [(ngModel)]="consignment" formControlName="consignment"
+                                    name="consignment" placeholder="--Choose your item--">
+                                </ng-select>
+                                <div class="valid-height">
+                                    <validation [control]="formSupplierInput.get('consignment')"></validation>
+                                </div>
+                            </div>
+    
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label for="productCode">Product Code</label>
+                                <input type="text" id="productCode" (input)="uppercaseAll($event)"
+                                    formControlName="productCode" [(ngModel)]="productCode" class="form-control"
+                                    name="productCode" minlength="0" maxlength="50" />
+                                <div class="valid-height">
+                                    <validation [control]="formSupplierInput.get('productCode')"></validation>
+                                </div>
+                            </div>
+    
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label>Manufacturing Date</label>
+    
+                                <input #dpManDate type="text" class="form-control" style="float:none"
+                                    placeholder="Select a date" ngx-mydatepicker name="manufacturingDate"
+                                    formControlName="manufacturingDate" id="manufacturingDate" [options]="dpOptions"
+                                    #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)"
+                                    (click)="dp.toggleCalendar()" minlength="0" maxlength="20" />
+    
+                                <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"
+                                    (click)="dp.toggleCalendar()"></i>
+                                <div class="valid-height">
+                                    <validation [control]="formSupplierInput.get('manufacturingDate')"></validation>
+                                </div>
+                            </div>
+    
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label>Expiry</label>
+    
+                                <input #dpExpiry type="text" class="form-control" style="float: none"
+                                    placeholder="Select a date" ngx-mydatepicker name="expiry" formControlName="expiry"
+                                    id="expiry" [options]="dpOptions" #dp1="ngx-mydatepicker"
+                                    (dateChanged)="onDateChanged1($event)" (click)="dp1.toggleCalendar()" />
+                                <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"
+                                    (click)="dp1.toggleCalendar()"></i>
+                                <div class="valid-height">
+                                    <validation [control]="formSupplierInput.get('expiry')"></validation>
+                                </div>
+                            </div>
+    
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label>Series</label>
+                                <input type="text" id="series" formControlName="series" [(ngModel)]="series"
+                                    class="form-control" name="series" maxlength="50" />
+                                <div class="valid-height">
+                                    <validation [control]="formSupplierInput.get('series')"></validation>
+                                </div>
+                            </div>
+    
+                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label>Manufacturer</label>
+                                <input type="text" id="manufacturer" [(ngModel)]="manufacturer"
+                                    formControlName="manufacturer" class="form-control" name="manufacturer"
+                                    maxlength="255" />
+                                <div class="valid-height">
+                                    <validation [control]="formSupplierInput.get('manufacturer')"></validation>
+                                </div>
+                            </div>
+    
+                        </div>
+    
+                    </div>
+    
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary blue" [disabled]="saving">
+                            <i class="fa fa-save"></i>
+                            <span class="caret"></span> Save
+                        </button>
+                    </div>
+                </form>
+    </div>
+</div>

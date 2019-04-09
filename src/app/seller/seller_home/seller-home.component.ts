@@ -11,6 +11,8 @@ import { UserInfoService } from 'src/app/services/user-info.service';
 import { Table } from 'primeng/table';
 import { UpdateBalanceService } from 'src/app/services/update-balance.service';
 import { SellerService } from 'src/app/services/seller.service';
+import { SellerImportModalComponent } from '../seller_import/seller-import.component';
+import { SellerTransferModalComponent } from '../seller_transfer/seller-transfer.component';
 
 export class SelectItem {
   id: number;
@@ -26,6 +28,8 @@ export class SelectItem {
 export class SellerHomeComponent implements OnInit {
   @ViewChild("sellerHomeComponentModal") modal: ModalDirective;
   @ViewChild("sellerInputModal") sellerInputModal: SellerInputComponent;
+  @ViewChild("sellerImportModal") sellerImportModal: SellerImportModalComponent;
+  @ViewChild("sellerTransferModal") sellerTransferModal: SellerTransferModalComponent;
   @ViewChild('paginator') paginator: Paginator;
   @ViewChild('dataTable') dataTable: Table;
 
@@ -67,6 +71,14 @@ export class SellerHomeComponent implements OnInit {
     this.sellerInputModal.show(uRequests);
   }
 
+  openImportModal(): void {
+    this.sellerImportModal.show();
+  }
+
+  openTransferModal(): void {
+    this.sellerTransferModal.show();
+  }
+
   logout() {
     localStorage.removeItem("userWallet");
     this.router.navigate([""]);
@@ -86,7 +98,7 @@ export class SellerHomeComponent implements OnInit {
     } else {
       pageNumber = this.paginator.getPage() + 1;
     }
-    
+
     this.sellerService.getUserRequests(
       this.primengTableHelper.getMaxResultCount(this.paginator, event),
       pageNumber
@@ -109,7 +121,7 @@ export class SellerHomeComponent implements OnInit {
   getListHistory() {
     // console.log(103, this.userWallet.publicKey);
     this.userInfo.getHistory(this.userWallet.publicKey).subscribe(result => {
-      this.listHistory = result;  
+      this.listHistory = result;
     });
     this.isDisplay = !this.isDisplay;
   }

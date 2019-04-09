@@ -2,7 +2,7 @@ import { OnInit, Component, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ModalDirective } from "ngx-bootstrap";
 import { appModuleAnimation } from "shared/animations/routerTransition";
-import { Router } from "@angular/router";
+import { Router, NavigationExtras } from "@angular/router";
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { UserWallet } from 'src/app/models/user-wallet';
 import { SupplierInputComponent } from '../supplier-input/supplier-input.component';
@@ -78,19 +78,19 @@ export class SupplierHomeComponent implements OnInit {
         if (isNaN(this.paginator.getPage())) {
             var currentPageNumber = 1;
         } else {
-            currentPageNumber = this.paginator.getPage() + 1; 
+            currentPageNumber = this.paginator.getPage() + 1;
         }
 
         this.supplierSerivce.getSellerRequests(
             this.primengTableHelper.getMaxResultCount(this.paginator, event),
             currentPageNumber
         )
-        .subscribe(result => {
-            console.log(89, result)
-            this.primengTableHelper.records = result.pageList,
-            this.primengTableHelper.totalRecordsCount = result.totalRecords;
-            this.primengTableHelper.hideLoadingIndicator();
-        })
+            .subscribe(result => {
+                console.log(89, result)
+                this.primengTableHelper.records = result.pageList,
+                    this.primengTableHelper.totalRecordsCount = result.totalRecords;
+                this.primengTableHelper.hideLoadingIndicator();
+            })
     }
 
     reloadTable(): void {
@@ -100,11 +100,15 @@ export class SupplierHomeComponent implements OnInit {
         }, 0);
     }
 
-    // getListHistory() {
-    // 
-    // }
+    // Show ProductInforAttribute
+    openRequestHandler(requestId: String): void {
+        // this.dataTableForViewModal.receiver(inforId);
 
-    // getSuccessfulList() {
-    // 
-    // }
+        $('.dropdown-menu').remove();
+        let navigationExtras: NavigationExtras = {
+            queryParams: { 'id': requestId }
+        };
+
+        this.router.navigate(['app', 'supplier', 'request_handler'], navigationExtras)
+    }
 }

@@ -43,29 +43,18 @@
     padding: 0 1rem;
 }
 
-.header-button-row {
-    position: absolute; 
-    right: 0; 
-    top: 50%; 
-    transform: translateY(-50%);
+/* for datetitme picket */
+datetime-popup.dropdown .glyphicon {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-.function-btn-row {
-    position: absolute; 
-    right: 16%; 
-    /* top: 50%; */
-    transform: translateY(-100%);
+datetime-popup.dropdown timepicker {
+    display: flex;
+    justify-content: center;
 }
 
-.header-title {
-    position: relative; 
-    /* padding: 0.5em 0;  */
-    margin-bottom: 0.9375em;
-}
-
-.total-records-count {
-    float: right;
-    position: relative;
-    right: 1%;
-    bottom: 30px;
-}

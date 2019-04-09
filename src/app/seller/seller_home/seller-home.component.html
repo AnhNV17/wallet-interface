@@ -7,9 +7,19 @@
             <button class="btn btn-outline-danger header-button-row" (click)="logout()" type="button"><i
                     class="fa fa-sign-out"></i>Logout</button>
         </div>
+
         <div>
             <h5>Balance: {{ userWallet.balance }}</h5>
+            <div class="btn-group function-btn-row">
+                <button class="btn btn-primary" (click)="openImportModal()" type="button"><i
+                        class="fa fa-cart-arrow-down"></i>Import</button>
+                <button class="btn btn-primary" (click)="openTransferModal()" type="button"><i
+                        class="fa fa-share-square-o"></i>Transfer</button>
+            </div>
         </div>
+
+        <br />
+        <!-- <br /> -->
 
         <div class="row align-items-center">
             <!--<Primeng-Datatable-Start>-->
@@ -72,7 +82,8 @@
                     </ng-template>
                 </p-table>
 
-                <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0" style="text-align: center; opacity: 0.7;">
+                <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0"
+                    style="text-align: center; opacity: 0.7;">
                     No Request
                 </div>
                 <div class="primeng-paging-container">
@@ -107,3 +118,5 @@
     </div>
 </div>
 <sellerInputModal #sellerInputModal (resetList)="reloadTable()"></sellerInputModal>
+<sellerImportModal #sellerImportModal></sellerImportModal>
+<sellerTransferModal #sellerTransferModal></sellerTransferModal>

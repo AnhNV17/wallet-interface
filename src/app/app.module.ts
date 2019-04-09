@@ -30,6 +30,9 @@ import { SupplierHomeComponent } from './supplier/supplier-home/supplier-home.co
 import { SupplierInputComponent } from './supplier/supplier-input/supplier-input.component';
 import { SellerInputComponent } from './seller/seller-input/seller-input.component';
 import { SellerHomeComponent } from './seller/seller_home/seller-home.component';
+import { SellerImportModalComponent } from './seller/seller_import/seller-import.component';
+import { SellerTransferModalComponent } from './seller/seller_transfer/seller-transfer.component';
+import { RequestHandlerComponent } from './supplier/request_handler/request_handler.component';
 
 @NgModule({
   exports: [ChargeModalComponent],
@@ -47,7 +50,10 @@ import { SellerHomeComponent } from './seller/seller_home/seller-home.component'
     TopBarMenuComponent,
     ValidationComponent,
     SupplierHomeComponent,
-    SupplierInputComponent
+    SupplierInputComponent,
+    SellerImportModalComponent,
+    SellerTransferModalComponent,
+    RequestHandlerComponent
   ],
   imports: [
     // NKDatetimeModule,
