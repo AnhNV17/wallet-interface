@@ -4,9 +4,6 @@ import { ModalDirective } from "ngx-bootstrap";
 import { appModuleAnimation } from "shared/animations/routerTransition";
 import { Router } from "@angular/router";
 import { Paginator, LazyLoadEvent } from 'primeng/primeng';
-<<<<<<< HEAD:src/app/seller-home/seller-home.component.ts
-import { UpdateBalanceService } from '../services/update-balance.service';
-=======
 import { SellerInputComponent } from '../seller-input/seller-input.component';
 import { UserWallet } from 'src/app/models/user-wallet';
 import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
@@ -14,7 +11,6 @@ import { UserInfoService } from 'src/app/services/user-info.service';
 import { Table } from 'primeng/table';
 import { UpdateBalanceService } from 'src/app/services/update-balance.service';
 import { SellerService } from 'src/app/services/seller.service';
->>>>>>> efbf5e0bbda6eede85f13bd3911ef83182992f8e:src/app/seller/seller_home/seller-home.component.ts
 
 export class SelectItem {
   id: number;
@@ -41,7 +37,7 @@ export class SellerHomeComponent implements OnInit {
   userRequests: any;
   visible = true;
   listHistory = [];
-  successfulList: String;
+  successfulList = [];
   isDisplay = true;
   isShow = true;
   primengTableHelper: PrimengTableHelper;

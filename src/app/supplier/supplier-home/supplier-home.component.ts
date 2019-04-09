@@ -33,6 +33,8 @@ export class SupplierHomeComponent implements OnInit {
     active = false;
     saving = false;
     userWallet: UserWallet;
+    listHistory = [];
+    successfulList = [];
     // visible = true;
     isDisplay = true;
     isShow = true;
@@ -100,11 +102,20 @@ export class SupplierHomeComponent implements OnInit {
         }, 0);
     }
 
-    // getListHistory() {
-    // 
-    // }
-
-    // getSuccessfulList() {
-    // 
-    // }
+    getListHistory() {
+        // console.log(103, this.userWallet.publicKey);
+        this.userInfo.getHistory(this.userWallet.publicKey).subscribe(result => {
+          this.listHistory = result;  
+        });
+        this.isDisplay = !this.isDisplay;
+      }
+    
+      getSuccessfulList() {
+        this.userInfo
+          .getSuccessfulList(this.userWallet.publicKey)
+          .subscribe(succesfulList => {
+            this.successfulList = succesfulList;
+          });
+        this.isShow = !this.isShow;
+      }
 }
