@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
   showError = false;
 
   simpleItems = [];
-  successfulList: String;
+  successfulList = [];
   isShow = true;
   isDisplay = true;
   formHome: FormGroup;

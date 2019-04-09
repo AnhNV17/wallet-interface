@@ -27,7 +27,7 @@ export class AdminHomeComponent implements OnInit {
   listUser: UserWallet[];
   listTransaction = [];
   listCharging = [];
-  successfulList: String;
+  successfulList = [];
   // balanceAvailable: Number;
   // realBalance: Number;
   balance: Number;

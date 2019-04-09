@@ -11,7 +11,7 @@ export class SupplierService {
     constructor(private http: HttpClient) { }
     createTransaction(requestId: String, userAddress: String, supplier: String, consignment: Number, productCode: String, manufacturingDate: String, expiry: String, series: String,
         manufacturer: String) {
-        return this.http.post<UserWallet>('http://localhost:3000/wallet/seller_transaction', {
+        return this.http.post<UserWallet>('http://localhost:3000/supplier/seller_transaction', {
             requestId: requestId,
             userAddress: userAddress,
             supplier: supplier,
@@ -25,6 +25,6 @@ export class SupplierService {
     }
 
     getSellerRequests(maxResultCount: number, pageNumber: number) {
-        return this.http.get<RequestDetail>(`http://localhost:3000/wallet/seller_requests/${maxResultCount}/${pageNumber}`);
+        return this.http.get<RequestDetail>(`http://localhost:3000/supplier/seller_requests/${maxResultCount}/${pageNumber}`);
     }
 }

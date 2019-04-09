@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
             localStorage.setItem("userWallet", JSON.stringify(userWallet));
             this.router.navigate(['seller_home']);
           } else if (userWallet.role === "supplier")  {
-            localStorage.setItem("userWAllet", JSON.stringify(userWallet));
+            localStorage.setItem("userWallet", JSON.stringify(userWallet));
             this.router.navigate(['supplier_home']);
           } else {
             alert('Username or Password is wrong');

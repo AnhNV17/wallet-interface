@@ -10,7 +10,7 @@ export class SellerService {
 
     constructor(private http: HttpClient) { }
     createTransaction(requestId: String, productName: String, quantity: Number, productCode: String, manufacturingDate: String, expiry: String, series: String, manufacturer: String, receiver: String, userAddress: String, amount: String) {
-        return this.http.post<UserWallet>('http://localhost:3000/wallet/user_transaction', {
+        return this.http.post<UserWallet>('http://localhost:3000/seller/user_transaction', {
             requestId: requestId,
             productName: productName,
             quantity: quantity,
@@ -26,11 +26,11 @@ export class SellerService {
     }
 
     getUserRequests(maxResultCount: number, pageNumber: number) {
-        return this.http.get<RequestDetail>(`http://localhost:3000/wallet/user_requests/${maxResultCount}/${pageNumber}`);
+        return this.http.get<RequestDetail>(`http://localhost:3000/seller/user_requests/${maxResultCount}/${pageNumber}`);
     }
 
     requestToSuppliers(productName: String, quantity: Number, publicKey: String, brand: String) {
-        return this.http.post<UserWallet>('http://localhost:3000/wallet/requests_to_suppliers', {
+        return this.http.post<UserWallet>('http://localhost:3000/seller/requests_to_suppliers', {
             productName: productName,
             quantity: quantity,
             publicKey: publicKey,

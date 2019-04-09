@@ -10,7 +10,7 @@ export class BuyService {
   constructor(private http: HttpClient) { }
 
   buy(username: String, quantity: Number, userchoice: String, publicKey: String){
-    return this.http.post<UserWallet>('http://localhost:3000/wallet/buy', {
+    return this.http.post<UserWallet>('http://localhost:3000/user/buy', {
       username: username,
       quantity: quantity,
       userchoice: userchoice,

@@ -20,7 +20,7 @@ export class UserInfoService {
   }
 
   getSuccessfulList(publicKey: String){
-    return this.http.get<String>(`http://localhost:3000/wallet/success_list/${publicKey}`);
+    return this.http.get<[]>(`http://localhost:3000/wallet/success_list/${publicKey}`);
   }
 
   getChargingList(){
@@ -28,15 +28,15 @@ export class UserInfoService {
   }
 
   getListHistory(publicKey: String){
-    return this.http.get<[]>(`http://localhost:3000/wallet/pending_list/${publicKey}`);
+    return this.http.get<[]>(`http://localhost:3000/user/pending_list/${publicKey}`);
   }
 
   getHistory(publicKey: String){
-    return this.http.get<[]>(`http://localhost:3000/wallet/history/${publicKey}`);
+    return this.http.get<[]>(`http://localhost:3000/seller/history/${publicKey}`);
   }
 
   getRequestList(publicKey: String){
-    return this.http.get<[]>(`http://localhost:3000/wallet/requests/${publicKey}`);
+    return this.http.get<[]>(`http://localhost:3000/user/requests_to_sellers/${publicKey}`);
   }
 
   getDataBC() {
