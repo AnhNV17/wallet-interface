@@ -25,7 +25,6 @@ export class SelectItem {
 })
 export class SupplierHomeComponent implements OnInit {
     @ViewChild("supplierHomeComponentModal") modal: ModalDirective;
-    @ViewChild("supplierInputModal") supplierInputModal: SupplierInputComponent;
     @ViewChild('paginator') paginator: Paginator;
     @ViewChild('dataTable') dataTable: Table;
 
@@ -58,10 +57,6 @@ export class SupplierHomeComponent implements OnInit {
             },
             { updateOn: "change" }
         );
-    }
-
-    openInput(uRequests: any): void {
-        this.supplierInputModal.show(uRequests)
     }
 
     logout() {
@@ -103,15 +98,14 @@ export class SupplierHomeComponent implements OnInit {
     }
 
     // Show ProductInforAttribute
-    openRequestHandler(requestId: String): void {
+    openRequestHandler(requestId: String, productName: String, quantity: Number, brand: String, total: Number): void {
         // this.dataTableForViewModal.receiver(inforId);
 
-        $('.dropdown-menu').remove();
         let navigationExtras: NavigationExtras = {
-            queryParams: { 'id': requestId }
+            queryParams: { 'requestId': requestId, 'productName': productName, 'quantity': quantity, 'brand': brand }
         };
 
-        this.router.navigate(['app', 'supplier', 'request_handler'], navigationExtras)
+        this.router.navigate(['supplier_handler'], navigationExtras)
     }
     getListHistory() {
         // console.log(103, this.userWallet.publicKey);

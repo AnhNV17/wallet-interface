@@ -31,7 +31,7 @@ export class SellerTransferModalComponent implements OnInit {
     showError = false;
 
     active = false;
-    successfulList: String;
+    successfulList: any;
     isShow = true;
     isDisplay = true;
     formSellerTransfer: FormGroup;

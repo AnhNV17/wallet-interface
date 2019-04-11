@@ -1,15 +1,12 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { ModalDirective } from 'ngx-bootstrap';
 import Swal from 'sweetalert2';
-import { Paginator, LazyLoadEvent } from 'primeng/primeng';
 import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
-import { Table } from 'primeng/components/table/table';
 import { UpdateBalanceService } from 'src/app/services/update-balance.service';
 import { BuyService } from 'src/app/services/buy.service';
-import { TransferService } from 'src/app/services/transfer.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { UserWallet } from 'src/app/models/user-wallet';
 import { SellerService } from 'src/app/services/seller.service';
@@ -20,6 +17,7 @@ import { SellerService } from 'src/app/services/seller.service';
     styleUrls: ["./seller-import.component.css"],
     encapsulation: ViewEncapsulation.None
 })
+
 export class SellerImportModalComponent implements OnInit {
     @ViewChild('SellerImportComponentModal') modal: ModalDirective;
     @ViewChild('UserOptions') userOptions: NgSelectComponent;
@@ -47,7 +45,7 @@ export class SellerImportModalComponent implements OnInit {
         { id: 1, displayName: "Chinhmh" },
         { id: 2, displayName: "Vunt" },
     ];
-    successfulList: String;
+    successfulList: any;
     isShow = true;
     isDisplay = true;
     formSellerImport: FormGroup;
@@ -134,20 +132,7 @@ export class SellerImportModalComponent implements OnInit {
         } else {
 
             this.getValueForBuy();
-            console.log(137, this.userWallet.publicKey)
-            console.log(138, this.buyQuantity)
-            console.log(139, this.userChoice)
-            console.log(140, this.selectedBrand)
             if (this.buyQuantity && this.userChoice && this.selectedBrand) {
-                // this.buyService
-                //     .buy(this.userWallet.username, this.buyQuantity, this.userChoice, this.userWallet.publicKey)
-                //     .subscribe(balance => {
-                //         this.walletBalance = balance;
-                //         Swal.fire({
-                //             type: 'success',
-                //             title: String(this.walletBalance.message)
-                //         })
-                //     });
                 this.sellerService
                     .requestToSuppliers(this.userChoice, this.buyQuantity, this.userWallet.publicKey, this.selectedBrand)
                     .subscribe(balance => {

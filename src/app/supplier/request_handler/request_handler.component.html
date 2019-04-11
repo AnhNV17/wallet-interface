@@ -1,100 +1,153 @@
 <div class="container-login100" style="background-image: url('../assets/images/bg.jpg');">
     <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
 
-            <form [formGroup]="formSupplierInput" novalidate (ngSubmit)="save()" autocomplete="off">
-                    <div class="modal-header">
-                        <h4 class="modal-title">
-                            <label>Transaction</label>
-                        </h4>
-                        <button type="button" class="close" (click)="close()" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-    
-                        <div class="form-row">
-    
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <label for="consignment">Consignment</label>
-    
-                                <ng-select #ConsignmentOptions [items]="packageChoices" id="consignment" bindValue="displayName"
-                                    bindLabel="displayName" [(ngModel)]="consignment" formControlName="consignment"
-                                    name="consignment" placeholder="--Choose your item--">
-                                </ng-select>
-                                <div class="valid-height">
-                                    <validation [control]="formSupplierInput.get('consignment')"></validation>
-                                </div>
-                            </div>
-    
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <label for="productCode">Product Code</label>
-                                <input type="text" id="productCode" (input)="uppercaseAll($event)"
-                                    formControlName="productCode" [(ngModel)]="productCode" class="form-control"
-                                    name="productCode" minlength="0" maxlength="50" />
-                                <div class="valid-height">
-                                    <validation [control]="formSupplierInput.get('productCode')"></validation>
-                                </div>
-                            </div>
-    
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <label>Manufacturing Date</label>
-    
-                                <input #dpManDate type="text" class="form-control" style="float:none"
-                                    placeholder="Select a date" ngx-mydatepicker name="manufacturingDate"
-                                    formControlName="manufacturingDate" id="manufacturingDate" [options]="dpOptions"
-                                    #dp="ngx-mydatepicker" (dateChanged)="onDateChanged($event)"
-                                    (click)="dp.toggleCalendar()" minlength="0" maxlength="20" />
-    
-                                <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"
-                                    (click)="dp.toggleCalendar()"></i>
-                                <div class="valid-height">
-                                    <validation [control]="formSupplierInput.get('manufacturingDate')"></validation>
-                                </div>
-                            </div>
-    
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <label>Expiry</label>
-    
-                                <input #dpExpiry type="text" class="form-control" style="float: none"
-                                    placeholder="Select a date" ngx-mydatepicker name="expiry" formControlName="expiry"
-                                    id="expiry" [options]="dpOptions" #dp1="ngx-mydatepicker"
-                                    (dateChanged)="onDateChanged1($event)" (click)="dp1.toggleCalendar()" />
-                                <i class="fa fa-calendar" style="position: absolute; right: 0.9375em; bottom: 1.7em;"
-                                    (click)="dp1.toggleCalendar()"></i>
-                                <div class="valid-height">
-                                    <validation [control]="formSupplierInput.get('expiry')"></validation>
-                                </div>
-                            </div>
-    
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <label>Series</label>
-                                <input type="text" id="series" formControlName="series" [(ngModel)]="series"
-                                    class="form-control" name="series" maxlength="50" />
-                                <div class="valid-height">
-                                    <validation [control]="formSupplierInput.get('series')"></validation>
-                                </div>
-                            </div>
-    
-                            <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                <label>Manufacturer</label>
-                                <input type="text" id="manufacturer" [(ngModel)]="manufacturer"
-                                    formControlName="manufacturer" class="form-control" name="manufacturer"
-                                    maxlength="255" />
-                                <div class="valid-height">
-                                    <validation [control]="formSupplierInput.get('manufacturer')"></validation>
-                                </div>
-                            </div>
-    
+        <form [formGroup]="formHandler" novalidate autocomplete="off">
+            <div class="modal-header">
+                <h4 class="modal-title" style="text-align: center;">
+                    <label>Request Handler</label>
+                </h4>
+                <button type="button" class="btn btn-outline-danger" (click)="close()">
+                    <i class="fa fa-chevron-circle-left"></i>
+                    <span class="caret"></span>Back
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-row">
+
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <h4 class="body-header">Request</h4>
+
+                        <!-- <div class="form-group cus-width">
+                            <label for="requestId">Request Id</label>
+                            <input type="text" id="requestId" formControlName="requestId" [(ngModel)]="requestId"
+                                class="form-control" name="requestId" />
+                        </div> -->
+
+                        <div class="form-group cus-width">
+                            <label for="productName">Product Name</label>
+                            <input type="text" id="productName" formControlName="productName" [(ngModel)]="productName"
+                                class="form-control" name="productName" />
                         </div>
-    
+
+                        <div class="form-group cus-width">
+                            <label for="quantity">Quantity</label>
+                            <input type="text" id="quantity" formControlName="quantity" [(ngModel)]="quantity"
+                                class="form-control" name="quantity" />
+                        </div>
+
+                        <div class="form-group cus-width">
+                            <label for="brand">Brand</label>
+                            <input type="text" id="brand" formControlName="brand" [(ngModel)]="brand"
+                                class="form-control" name="brand" />
+                        </div>
                     </div>
-    
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary blue" [disabled]="saving">
-                            <i class="fa fa-save"></i>
-                            <span class="caret"></span> Save
-                        </button>
+
+                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+
+                        <div class="body-title">
+                            <h4 class="body-header">Handle</h4>
+                            <div class="body-button-row">
+                                <button class="btn btn-primary" type="button" (click)="openInput(requestObj)"><i
+                                        class="fa fa-plus"></i><span class="caret"></span>Create</button>
+                                <button class="btn btn-outline-secondary" type="button"
+                                    (click)="deleteSelectedRows()"><i class="fa fa-trash-o"></i><span
+                                        class="caret"></span>Delete</button>
+                            </div>
+                        </div>
+
+                        <div class="primeng-datatable-container">
+
+                            <p-table #dataTable (onLazyLoad)="getConsignmentDetail($event)"
+                                [value]="primengTableHelper.records"
+                                rows="{{primengTableHelper.defaultRecordsCountPerPage}}" [paginator]="false"
+                                [lazy]="true" [scrollable]="true" ScrollWidth="100%"
+                                [responsive]="primengTableHelper.isResponsive"
+                                [resizableColumns]="primengTableHelper.resizableColumns"
+                                [(selection)]="selectedConsignments">
+
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 80px; text-align: center;">
+                                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                        </th>
+                                        <th style="width: 120px;">
+                                            Consignment
+                                        </th>
+                                        <th style="width: 120px;">
+                                            Product Code
+                                        </th>
+                                        <th style="width: 120px;">
+                                            Manufacturing Date
+                                        </th>
+                                        <th style="width: 120px;">
+                                            Expiry
+                                        </th>
+                                        <th style="width: 120px;">
+                                            Manufacturer
+                                        </th>
+
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-record="$implicit">
+                                    <tr>
+                                        <td [pSelectableRow]="rowData" style="width: 80px; text-align: center;">
+                                            <!-- <label class="m-check">
+                                                <input type="checkbox" name="isChecked" id="isChecked" fromControlName="isChecked" />
+                                                <span></span>
+                                            </label> -->
+                                            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.Consignment}}
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.ProductCode}}
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.ManufacturingDate}}
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.Expiry}}
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.Manufacturer}}
+                                        </td>
+
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+
+                            <div class="primeng-no-data" *ngIf="primengTableHelper.totalRecordsCount == 0"
+                                style="text-align: center; opacity: 0.7;">
+                                No Consignment
+                            </div>
+                            <div class="primeng-paging-container">
+                                <p-paginator rows="{{primengTableHelper.defaultRecordsCountPerPage}}" #paginator
+                                    (onPageChange)="getConsignmentDetail($event)"
+                                    [totalRecords]="primengTableHelper.totalRecordsCount"
+                                    [rowsPerPageOptions]="primengTableHelper.predefinedRecordsCountPerPage">
+                                </p-paginator>
+                                <span class="total-records-count">
+                                    Total: {{primengTableHelper.totalRecordsCount}}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-success" (click)="submit()"
+                                [disabled]="saving">
+                                <i class="fa fa-forward"></i>
+                                <span class="caret"></span> Export
+                            </button>
+                        </div>
+
                     </div>
-                </form>
+                </div>
+
+            </div>
+
+        </form>
     </div>
 </div>
+<supplierInputModal #supplierInputModal (resetList)="reloadList()"></supplierInputModal>

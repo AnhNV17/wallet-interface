@@ -41,7 +41,7 @@ export class SellerHomeComponent implements OnInit {
   userRequests: any;
   visible = true;
   listHistory = [];
-  successfulList = [];
+  successfulList: any;
   isDisplay = true;
   isShow = true;
   primengTableHelper: PrimengTableHelper;

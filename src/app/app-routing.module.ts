@@ -8,6 +8,7 @@ import { LogoutComponent } from './logout/logout.component';
 import { NgModule } from '@angular/core';
 import { SupplierHomeComponent } from './supplier/supplier-home/supplier-home.component';
 import { SellerHomeComponent } from './seller/seller_home/seller-home.component';
+import { RequestHandlerComponent } from './supplier/request_handler/request_handler.component';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { SellerHomeComponent } from './seller/seller_home/seller-home.component'
                     { path: 'seller_home', component: SellerHomeComponent, data: {}  },
                     { path: 'supplier_home', component: SupplierHomeComponent, data: {} },
                     { path: 'user_detail/:walletId', component: AdminHomeComponent, data: {}  },
-                    { path: 'logout', component: LogoutComponent, data: {} }
+                    { path: 'logout', component: LogoutComponent, data: {} },
+                    { path: 'supplier_handler', component: RequestHandlerComponent, data: {} }
                 // ]
             // }
         ])
