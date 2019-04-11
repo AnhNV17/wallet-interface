@@ -58,6 +58,7 @@ export class SupplierHomeComponent implements OnInit {
             },
             { updateOn: "change" }
         );
+        this.getSellerRequests();
     }
 
     openInput(uRequests: any): void {
