@@ -35,8 +35,8 @@ export class ValidationComponent {
             'isMin': 'Lon hon ngay bat dau',
             'isMaxS': 'Nho hon ngay ket thuc',
             'isMinS': 'Lon hon ngay ket thuc',
-            'isStartMax': 'Thoi gian nho hon hoac bang ngay ket thuc',
-            'isEndMin': 'Thoi gian lon hon hoac bang ngay bat dau'
+            'isStartMax': 'Thoi gian nho hon ngay ket thuc',
+            'isEndMin': 'Thoi gian lon hon ngay bat dau'
         }
         return messages[err]
     }

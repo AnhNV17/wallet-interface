@@ -2,7 +2,7 @@ import { OnInit, Component, ViewChild } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ModalDirective } from "ngx-bootstrap";
 import { appModuleAnimation } from "shared/animations/routerTransition";
-import { Router } from "@angular/router";
+import { Router, NavigationExtras } from "@angular/router";
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { UserWallet } from 'src/app/models/user-wallet';
 import { SupplierInputComponent } from '../supplier-input/supplier-input.component';
@@ -25,7 +25,6 @@ export class SelectItem {
 })
 export class SupplierHomeComponent implements OnInit {
     @ViewChild("supplierHomeComponentModal") modal: ModalDirective;
-    @ViewChild("supplierInputModal") supplierInputModal: SupplierInputComponent;
     @ViewChild('paginator') paginator: Paginator;
     @ViewChild('dataTable') dataTable: Table;
 
@@ -34,7 +33,7 @@ export class SupplierHomeComponent implements OnInit {
     saving = false;
     userWallet: UserWallet;
     listHistory = [];
-    successfulList = [];
+    successfulList: any;
     // visible = true;
     isDisplay = true;
     isShow = true;
@@ -61,10 +60,6 @@ export class SupplierHomeComponent implements OnInit {
         this.getSellerRequests();
     }
 
-    openInput(uRequests: any): void {
-        this.supplierInputModal.show(uRequests)
-    }
-
     logout() {
         localStorage.removeItem("userWallet");
         this.router.navigate([""]);
@@ -81,19 +76,19 @@ export class SupplierHomeComponent implements OnInit {
         if (isNaN(this.paginator.getPage())) {
             var currentPageNumber = 1;
         } else {
-            currentPageNumber = this.paginator.getPage() + 1; 
+            currentPageNumber = this.paginator.getPage() + 1;
         }
 
         this.supplierSerivce.getSellerRequests(
             this.primengTableHelper.getMaxResultCount(this.paginator, event),
             currentPageNumber
         )
-        .subscribe(result => {
-            console.log(89, result)
-            this.primengTableHelper.records = result.pageList,
-            this.primengTableHelper.totalRecordsCount = result.totalRecords;
-            this.primengTableHelper.hideLoadingIndicator();
-        })
+            .subscribe(result => {
+                console.log(89, result)
+                this.primengTableHelper.records = result.pageList,
+                    this.primengTableHelper.totalRecordsCount = result.totalRecords;
+                this.primengTableHelper.hideLoadingIndicator();
+            })
     }
 
     reloadTable(): void {
@@ -103,20 +98,30 @@ export class SupplierHomeComponent implements OnInit {
         }, 0);
     }
 
+    // Show ProductInforAttribute
+    openRequestHandler(requestId: String, productName: String, quantity: Number, brand: String, total: Number): void {
+        // this.dataTableForViewModal.receiver(inforId);
+
+        let navigationExtras: NavigationExtras = {
+            queryParams: { 'requestId': requestId, 'productName': productName, 'quantity': quantity, 'brand': brand }
+        };
+
+        this.router.navigate(['supplier_handler'], navigationExtras)
+    }
     getListHistory() {
         // console.log(103, this.userWallet.publicKey);
         this.userInfo.getHistory(this.userWallet.publicKey).subscribe(result => {
-          this.listHistory = result;  
+            this.listHistory = result;
         });
         this.isDisplay = !this.isDisplay;
-      }
-    
-      getSuccessfulList() {
+    }
+
+    getSuccessfulList() {
         this.userInfo
-          .getSuccessfulList(this.userWallet.publicKey)
-          .subscribe(succesfulList => {
-            this.successfulList = succesfulList;
-          });
+            .getSuccessfulList(this.userWallet.publicKey)
+            .subscribe(succesfulList => {
+                this.successfulList = succesfulList;
+            });
         this.isShow = !this.isShow;
-      }
+    }
 }

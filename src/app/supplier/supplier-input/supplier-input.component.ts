@@ -49,7 +49,7 @@ export class SupplierInputComponent implements OnInit {
     manufacturingDate: String;
     expiry: String;
     // soldDate: String;
-    series: String;
+    // series: String;
     manufacturer: String;
 
     format = 'dd/mm/yyyy';
@@ -90,7 +90,7 @@ export class SupplierInputComponent implements OnInit {
             manufacturingDate: new FormControl('', { validators: [Validators.required] }),
             expiry: new FormControl('', { validators: [Validators.required] }),
             // soldDate: new FormControl('', { validators: [Validators.required] }),
-            series: new FormControl('', {}),
+            // series: new FormControl('', {}),
             manufacturer: new FormControl('', {}),
 
         }, { updateOn: 'change' });
@@ -253,8 +253,7 @@ export class SupplierInputComponent implements OnInit {
         this.formSupplierInput.get('productCode').setValue(this.productCode);
         this.formSupplierInput.get('manufacturingDate').setValue(this.manufacturingDate);
         this.formSupplierInput.get('expiry').setValue(this.expiry);
-        // this.formSupplierInput.get('soldDate').setValue(this.soldDate);
-        this.formSupplierInput.get('series').setValue(this.series);
+        // this.formSupplierInput.get('series').setValue(this.series);
         this.formSupplierInput.get('manufacturer').setValue(this.manufacturer);
     }
 
@@ -280,16 +279,26 @@ export class SupplierInputComponent implements OnInit {
         } else {
             this.getValueForSave();
             console.log(284, this.userRequest)
-            this.supplierService.createTransaction(
-                this.userRequest.requestId,
-                this.userRequest.supplier,
-                this.userRequest.userAddress,
+            // this.supplierService.createTransaction(
+            //     this.userRequest.requestId,
+            //     this.userRequest.supplier,
+            //     this.userRequest.userAddress,
+            //     this.consignment,
+            //     this.productCode,
+            //     this.manufacturingDate,
+            //     this.expiry,
+            //     this.series,
+            //     this.manufacturer
+            // )
+            console.log(293, this.userRequest)
+            this.supplierService.createConsignmentDetail(
                 this.consignment,
                 this.productCode,
                 this.manufacturingDate,
                 this.expiry,
-                this.series,
+                // this.userRequest.quantity,
                 this.manufacturer
+                // this.userRequest.total
             )
             .subscribe(balance => {
                 this.walletBalance = balance;

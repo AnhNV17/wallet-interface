@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserWallet } from '../models/user-wallet';
-import { RequestDetail } from '../models/table-detail';
 import { ProductInfor } from '../models/productInfor';
 
 @Injectable({

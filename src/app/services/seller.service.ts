@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserWallet } from '../models/user-wallet';
-import { RequestDetail } from '../models/table-detail';
+import { TableResult } from '../models/table-detail';
 
 @Injectable({
     providedIn: 'root'
@@ -26,7 +26,7 @@ export class SellerService {
     }
 
     getUserRequests(maxResultCount: number, pageNumber: number) {
-        return this.http.get<RequestDetail>(`http://localhost:3000/seller/user_requests/${maxResultCount}/${pageNumber}`);
+        return this.http.get<TableResult>(`http://localhost:3000/seller/user_requests/${maxResultCount}/${pageNumber}`);
     }
 
     requestToSuppliers(productName: String, quantity: Number, publicKey: String, brand: String) {

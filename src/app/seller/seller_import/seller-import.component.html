@@ -1,0 +1,65 @@
+<div bsModal (onShown)="shown()" #SellerImportComponentModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="SellerImportComponentModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="top:140px;">
+
+            <form [formGroup]="formSellerImport" novalidate (ngSubmit)="requestSupplier()" autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <label>Request Supplier</label>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-row">
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="userChoice">Item</label>
+
+                            <ng-select #UserOptions [items]="selectItems" id="userChoice" bindValue="displayName"
+                                bindLabel="displayName" [(ngModel)]="userChoice" formControlName="userChoice"
+                                name="userChoice" placeholder="--Choose your item--">
+                            </ng-select>
+                            <div class="valid-height">
+                                <validation [control]="formSellerImport.get('userChoice')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Quantity</label>
+                            <input type="text" id="quantity" formControlName="quantity" [(ngModel)]="buyQuantity"
+                                class="form-control" name="quantity" maxlength="50" />
+                            <div class="valid-height">
+                                <validation [control]="formSellerImport.get('quantity')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label for="selectedBrand">Brand</label>
+
+                            <ng-select #BrandOptions [items]="cfBrands" id="selectedBrand" bindValue="displayName"
+                                bindLabel="displayName" [(ngModel)]="selectedBrand" formControlName="selectedBrand"
+                                name="selectedBrand" placeholder="--Choose your item--">
+                            </ng-select>
+                            <div class="valid-height">
+                                <validation [control]="formSellerImport.get('selectedBrand')"></validation>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary blue" [disabled]="saving">
+                        <i class="fa fa-save"></i>
+                        <span class="caret"></span> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

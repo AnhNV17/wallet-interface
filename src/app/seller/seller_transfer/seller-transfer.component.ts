@@ -1,0 +1,167 @@
+import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgSelectComponent } from '@ng-select/ng-select';
+import { ModalDirective } from 'ngx-bootstrap';
+import Swal from 'sweetalert2';
+import { Paginator, LazyLoadEvent } from 'primeng/primeng';
+import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
+import { Table } from 'primeng/components/table/table';
+import { UpdateBalanceService } from 'src/app/services/update-balance.service';
+import { BuyService } from 'src/app/services/buy.service';
+import { UserInfoService } from 'src/app/services/user-info.service';
+import { UserWallet } from 'src/app/models/user-wallet';
+import { TransferService } from 'src/app/services/transfer.service';
+
+@Component({
+    selector: "sellerTransferModal",
+    templateUrl: "./seller-transfer.component.html",
+    styleUrls: ["./seller-transfer.component.css"],
+    encapsulation: ViewEncapsulation.None
+})
+export class SellerTransferModalComponent implements OnInit {
+    @ViewChild('SellerTransferComponentModal') modal: ModalDirective;
+
+    userWallet: UserWallet;
+    walletBalance: UserWallet;
+    listRequest = [];
+    listHistory = [];
+    balance: Number;
+    walletId: String;
+    showError = false;
+
+    active = false;
+    successfulList: any;
+    isShow = true;
+    isDisplay = true;
+    formSellerTransfer: FormGroup;
+
+    amount: Number;
+    receiver: String;
+    real_balance: Number;
+
+    transferingBtn = false;
+    buyingBtn = false;
+    showBuyError = false;
+    showTransferError = false;
+
+    primengTableHelper: PrimengTableHelper;
+    dataBC: any;
+
+    constructor(
+        private updateBalanceService: UpdateBalanceService,
+        private transferService: TransferService,
+        private userInfoService: UserInfoService,
+        private router: Router
+    ) {
+        this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
+        this.primengTableHelper = new PrimengTableHelper();
+    }
+
+    ngOnInit() {
+        /** Declare formgroup, formcontrol */
+        this.formSellerTransfer = new FormGroup({
+            amount: new FormControl('', { validators: [Validators.required] }),
+            receiver: new FormControl('', { validators: [Validators.required] })
+        }, { updateOn: 'change' });
+
+        this.updateBalance(this.userWallet.walletId);
+        this.formSellerTransfer.reset();
+    }
+
+    updateBalance(walletId: String) {
+        this.updateBalanceService.updateBalance(walletId).subscribe(balance => {
+            this.userWallet.balance = balance;
+        });
+    }
+
+    getValueForTransfer() {
+        this.formSellerTransfer.get('amount').setValue(this.amount);
+        this.formSellerTransfer.get('receiver').setValue(this.receiver);
+    }
+
+    transfer() {
+        let check = '';
+        let fControls = { amount: FormControl, receiver: FormControl }
+        for (var control in fControls) {
+            if (this.formSellerTransfer.get(control).errors) {
+                check = control;
+                this.showError = true;
+                break;
+            }
+        }
+        if (check != '') {
+            for (var control in fControls) {
+                this.formSellerTransfer.get(control).markAsTouched({ onlySelf: true });
+            }
+            $('#' + check).focus();
+        } else {
+
+            this.getValueForTransfer();
+            if (this.amount && this.receiver) {
+                this.transferService
+                    .transfer(this.amount, this.receiver, this.userWallet.publicKey)
+                    .subscribe(balance => {
+                        this.walletBalance = balance;
+                        // alert(this.walletBalance.message);
+                        Swal.fire({
+                            // type: 'success',
+                            title: String(this.walletBalance.message)
+                        })
+                    });
+                this.updateBalance(this.walletId);
+                this.updateListHistory();
+                this.formSellerTransfer.get("amount").reset();
+                this.formSellerTransfer.get("receiver").reset();
+            } else {
+                Swal.fire({
+                    // type: 'error',
+                    text: "Please fill the form to transfer",
+                })
+            }
+
+        }
+    }
+
+    show(): void {
+        this.active = true;
+        this.modal.show();
+    }
+
+    shown(): void {
+        $('#amount').focus();
+    }
+
+    getSuccessfulList() {
+        this.userInfoService
+            .getSuccessfulList(this.userWallet.publicKey)
+            .subscribe(succesfulList => {
+                this.successfulList = succesfulList;
+            });
+        this.isShow = !this.isShow;
+        this.updateBalance(this.userWallet.walletId);
+    }
+
+    updateListHistory() {
+        this.userInfoService.getListHistory(this.userWallet.publicKey)
+            .subscribe(result => { this.listHistory = result });
+    }
+
+    getListHistory() {
+        this.userInfoService.getListHistory(this.userWallet.publicKey)
+            .subscribe(result => { this.listHistory = result });
+        this.isDisplay = !this.isDisplay;
+    }
+
+    close(): void {
+        this.active = false;
+        this.formSellerTransfer.reset();
+        this.modal.hide();
+    }
+
+    logout() {
+        localStorage.removeItem("userWallet");
+        this.router.navigate([""]);
+    }
+
+}
