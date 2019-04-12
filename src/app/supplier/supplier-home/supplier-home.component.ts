@@ -57,6 +57,7 @@ export class SupplierHomeComponent implements OnInit {
             },
             { updateOn: "change" }
         );
+        this.getSellerRequests();
     }
 
     logout() {
