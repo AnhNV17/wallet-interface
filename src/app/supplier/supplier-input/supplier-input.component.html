@@ -19,9 +19,9 @@
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label for="consignment">Consignment</label>
 
-                            <ng-select #ConsignmentOptions [items]="packageChoices" id="consignment" bindValue="displayName"
-                                bindLabel="displayName" [(ngModel)]="consignment" formControlName="consignment"
-                                name="consignment" placeholder="--Choose your item--">
+                            <ng-select #ConsignmentOptions [items]="packageChoices" id="consignment"
+                                bindValue="displayName" bindLabel="displayName" [(ngModel)]="consignment"
+                                formControlName="consignment" name="consignment" placeholder="--Choose your item--">
                             </ng-select>
                             <div class="valid-height">
                                 <validation [control]="formSupplierInput.get('consignment')"></validation>
@@ -35,6 +35,29 @@
                                 name="productCode" minlength="0" maxlength="50" />
                             <div class="valid-height">
                                 <validation [control]="formSupplierInput.get('productCode')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Quantity of Consignment</label>
+                            <input type="text" id="quantityOfConsignment" formControlName="quantityOfConsignment"
+                                [(ngModel)]="quantityOfConsignment" class="form-control" name="quantityOfConsignment"
+                                maxlength="12"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                onkeypress="javascript: if ( event.keyCode > 31 && (event.keyCode < 48 || event.keyCode > 57)) return false;" />
+                            <div class="valid-height">
+                                <validation [control]="formSupplierInput.get('quantityOfConsignment')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Amount ($)</label>
+                            <input type="text" id="amount" formControlName="amount" [(ngModel)]="amount"
+                                class="form-control" name="amount" maxlength="15"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                onkeypress="javascript: if ( event.keyCode > 31 && (event.keyCode < 48 || event.keyCode > 57)) return false;" />
+                            <div class="valid-height">
+                                <validation [control]="formSupplierInput.get('amount')"></validation>
                             </div>
                         </div>
 
@@ -67,15 +90,6 @@
                                 <validation [control]="formSupplierInput.get('expiry')"></validation>
                             </div>
                         </div>
-
-                        <!-- <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Series</label>
-                            <input type="text" id="series" formControlName="series" [(ngModel)]="series"
-                                class="form-control" name="series" maxlength="50" />
-                            <div class="valid-height">
-                                <validation [control]="formSupplierInput.get('series')"></validation>
-                            </div>
-                        </div> -->
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Manufacturer</label>

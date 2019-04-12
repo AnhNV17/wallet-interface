@@ -122,27 +122,30 @@ export class RequestHandlerComponent implements OnInit {
     }
 
     submit(): void {
-        console.log(126, this.selectedConsignments[0].ProductCode);
+        console.log(125, this.selectedConsignments)
     }
 
     deleteSelectedRows(): void {
-        if (this.selectedConsignments.length !== 0) {
+        if (this.selectedConsignments !== undefined) {
+            if (this.selectedConsignments.length !== 0) {
 
-            let removedCode = [];
+                let removedCode = [];
 
-            for (let i = 0; i < this.selectedConsignments.length; i++) {
-                removedCode.push(this.selectedConsignments[i].ProductCode);
-            }
+                for (let i = 0; i < this.selectedConsignments.length; i++) {
+                    removedCode.push(this.selectedConsignments[i].ProductCode);
+                }
 
-            this.supplierSerivce.deleteConsignment(JSON.stringify(removedCode))
-                .subscribe(e => {
-                    this.reloadList();
-                    Swal.fire({
-                        type: 'success',
-                        title: "Delete Successfully"
+                this.supplierSerivce.deleteConsignment(JSON.stringify(removedCode))
+                    .subscribe(e => {
+                        this.reloadList();
+                        Swal.fire({
+                            type: 'success',
+                            title: "Delete Successfully"
+                        })
                     })
-                })
+            }
         }
+
     }
 
     openInput(uRequests: any): void {

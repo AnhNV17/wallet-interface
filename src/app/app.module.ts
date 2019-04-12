@@ -1,5 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
-import {BrowserAnimationsModule, NoopAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from "@angular/core";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -33,6 +33,8 @@ import { SellerHomeComponent } from './seller/seller_home/seller-home.component'
 import { SellerImportModalComponent } from './seller/seller_import/seller-import.component';
 import { SellerTransferModalComponent } from './seller/seller_transfer/seller-transfer.component';
 import { RequestHandlerComponent } from './supplier/request_handler/request_handler.component';
+import { HeaderComponent } from './shared/layout/header.component';
+import { FooterComponent } from './shared/layout/footer.component';
 
 @NgModule({
   exports: [ChargeModalComponent],
@@ -53,7 +55,9 @@ import { RequestHandlerComponent } from './supplier/request_handler/request_hand
     SupplierInputComponent,
     SellerImportModalComponent,
     SellerTransferModalComponent,
-    RequestHandlerComponent
+    RequestHandlerComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     // NKDatetimeModule,

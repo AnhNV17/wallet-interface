@@ -19,7 +19,9 @@
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label>Amount</label>
                             <input type="text" id="amount" formControlName="amount" [(ngModel)]="amount"
-                                class="form-control" name="amount" maxlength="50" />
+                                class="form-control" name="amount" maxlength="15"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                onkeypress="javascript: if ( event.keyCode > 31 && (event.keyCode < 48 || event.keyCode > 57)) return false;" />
                             <div class="valid-height">
                                 <validation [control]="formSellerTransfer.get('amount')"></validation>
                             </div>
