@@ -1,18 +1,20 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { UserWallet } from '../models/user-wallet';
-import { TransferCoinsService } from '../services/charge.service';
+import { UserWallet } from '../../models/user-wallet';
+import { TransferCoinsService } from '../../services/charge.service';
 import { Router } from '@angular/router';
-import { UserInfoService } from '../services/user-info.service';
+import { UserInfoService } from '../../services/user-info.service';
 import { ChargeModalComponent } from '../charge/charge.component';
 import { viewUserDetailModalComponent } from '../userDetail/user-detail.component';
 import { Paginator } from 'primeng/components/paginator/paginator';
 import { Table } from 'primeng/components/table/table';
+import { appModuleAnimation } from 'src/shared/animations/routerTransition';
 
 @Component({
   selector: 'app-admin-home',
   templateUrl: './admin-home.component.html',
   styleUrls: ['./admin-home.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: [appModuleAnimation()]
 })
 export class AdminHomeComponent implements OnInit {
   @ViewChild('dataTable') dataTable: Table;

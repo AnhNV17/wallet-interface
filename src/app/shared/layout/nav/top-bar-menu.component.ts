@@ -21,9 +21,6 @@ export class TopBarMenuComponent implements OnInit {
     }
 
     showMenuItem(menuItem): boolean {
-        if (menuItem.permissionName === 'Pages.Administration.Tenant.SubscriptionManagement') {
-            return false;
-        }
 
         return true;
     }

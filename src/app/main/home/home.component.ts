@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { UserWallet } from "../models/user-wallet";
-import { UpdateBalanceService } from "../services/update-balance.service";
-import { BuyService } from "../services/buy.service";
-import { TransferService } from "../services/transfer.service";
-import { UserInfoService } from "../services/user-info.service";
+import { UserWallet } from "../../models/user-wallet";
+import { UpdateBalanceService } from "../../services/update-balance.service";
+import { BuyService } from "../../services/buy.service";
+import { TransferService } from "../../services/transfer.service";
+import { UserInfoService } from "../../services/user-info.service";
 import { FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';

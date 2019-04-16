@@ -25,9 +25,9 @@ export class SideBarMenuComponent implements OnInit {
         //     return false;
         // }
 
-        if (menuItem.items && menuItem.items.length) {
-            return this._appNavigationService.checkChildMenuItemPermission(menuItem);
-        }
+        // if (menuItem.items && menuItem.items.length) {
+        //     return this._appNavigationService.checkChildMenuItemPermission(menuItem);
+        // }
 
         return true;
     }

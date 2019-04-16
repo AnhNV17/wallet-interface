@@ -11,11 +11,17 @@ export class AppNavigationService {
 
     getMenu(): AppMenu {
         return new AppMenu('MainMenu', 'MainMenu', [
-            new AppMenuItem('Dashboard', 'Pages.Administration.Host.Dashboard', 'flaticon-line-graph', '/app/admin/hostDashboard'),
-            new AppMenuItem('Dashboard', 'Pages.Tenant.Dashboard', 'flaticon-line-graph', '/app/main/dashboard'),
+            new AppMenuItem('AdminHome', 'flaticon-line-graph', '/app/main/admin-home'),
+            new AppMenuItem('UserHome', 'flaticon-line-graph', '/app/main/home'),
 
-            new AppMenuItem('Administration', '', 'flaticon-interface-8', '', [
+            new AppMenuItem('Seller', 'flaticon-interface-8', '', [
+                new AppMenuItem('SellerHome', 'flaticon-suitcase', '/app/admin/seller/seller_home')
             ]),
+
+            new AppMenuItem('Supplier', 'flaticon-interface-8', '', [
+                new AppMenuItem('SupplierHome', 'flaticon-suitcase', '/app/admin/seller/supplier_home'),
+                new AppMenuItem('RequestHandler', 'flaticon-suitcase', '/app/admin/seller/request_handler')
+            ])
 
         ]);
     }
@@ -27,9 +33,10 @@ export class AppNavigationService {
 
             if (subMenuItem.items && subMenuItem.items.length) {
                 return this.checkChildMenuItemPermission(subMenuItem);
-            } else if (!subMenuItem.permissionName) {
-                return true;
-            }
+            } 
+            // else if (!subMenuItem.permissionName) {
+            //     return true;
+            // }
         }
 
         return false;

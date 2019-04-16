@@ -1,7 +1,6 @@
 import { OnInit, Component, Injector, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators, AbstractControl } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap';
-import { appModuleAnimation } from 'shared/animations/routerTransition';
 import { DateTimeComponent } from 'src/app/shared/ifichain/datetime.component';
 import * as $ from 'jquery';
 import { ProductInfor } from 'src/app/models/productInfor';
@@ -13,6 +12,7 @@ import { FormatStringComponent } from 'src/app/shared/ifichain/formatString.comp
 import Swal from 'sweetalert2';
 import { ShareFuncComponent } from 'src/app/shared/ifichain/sharedFunc.component';
 import { ValidationComponent } from 'src/app/shared/ifichain/validation-messages.component';
+import { appModuleAnimation } from 'src/shared/animations/routerTransition';
 
 export class SelectItem {
     id: number;

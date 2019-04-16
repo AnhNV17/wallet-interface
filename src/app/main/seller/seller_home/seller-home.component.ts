@@ -1,7 +1,6 @@
 import { OnInit, Component, Injector, ViewChild, ViewEncapsulation } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ModalDirective } from "ngx-bootstrap";
-import { appModuleAnimation } from "shared/animations/routerTransition";
 import { Router } from "@angular/router";
 import { Paginator, LazyLoadEvent } from 'primeng/primeng';
 import { SellerInputComponent } from '../seller-input/seller-input.component';
@@ -13,6 +12,7 @@ import { UpdateBalanceService } from 'src/app/services/update-balance.service';
 import { SellerService } from 'src/app/services/seller.service';
 import { SellerImportModalComponent } from '../seller_import/seller-import.component';
 import { SellerTransferModalComponent } from '../seller_transfer/seller-transfer.component';
+import { appModuleAnimation } from 'src/shared/animations/routerTransition';
 
 export class SelectItem {
   id: number;

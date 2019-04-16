@@ -1,9 +1,9 @@
 import { ModalDirective } from 'ngx-bootstrap';
 import { Component, ViewChild, OnInit, ElementRef, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-import { TransferCoinsService } from '../services/charge.service';
-import { UserInfoService } from '../services/user-info.service';
+import { TransferCoinsService } from '../../services/charge.service';
+import { UserInfoService } from '../../services/user-info.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserWallet } from '../models/user-wallet';
+import { UserWallet } from '../../models/user-wallet';
 import Swal from 'sweetalert2';
 
 @Component({

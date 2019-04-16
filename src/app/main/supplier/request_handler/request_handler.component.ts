@@ -1,7 +1,6 @@
 import { OnInit, Component, ViewChild, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ModalDirective } from "ngx-bootstrap";
-import { appModuleAnimation } from "shared/animations/routerTransition";
 import { Router, ActivatedRoute } from "@angular/router";
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { UserWallet } from 'src/app/models/user-wallet';
@@ -12,6 +11,7 @@ import { Table } from 'primeng/table';
 import { SellerService } from 'src/app/services/seller.service';
 import { SupplierService } from 'src/app/services/supplier.service';
 import Swal from 'sweetalert2';
+import { appModuleAnimation } from 'src/shared/animations/routerTransition';
 
 export class SelectItem {
     id: number;
