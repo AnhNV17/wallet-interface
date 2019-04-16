@@ -12,6 +12,7 @@ import { FormatStringComponent } from 'src/app/shared/ifichain/formatString.comp
 import Swal from 'sweetalert2';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { SupplierService } from 'src/app/services/supplier.service';
+import { tick } from '@angular/core/testing';
 
 export class SelectItem {
     id: number;
@@ -48,6 +49,8 @@ export class SupplierInputComponent implements OnInit {
     productCode: String;
     manufacturingDate: String;
     expiry: String;
+    quantityOfConsignment: Number;
+    amount: Number;
     // soldDate: String;
     // series: String;
     manufacturer: String;
@@ -89,6 +92,8 @@ export class SupplierInputComponent implements OnInit {
             productCode: new FormControl('', { validators: [Validators.required] }),
             manufacturingDate: new FormControl('', { validators: [Validators.required] }),
             expiry: new FormControl('', { validators: [Validators.required] }),
+            quantityOfConsignment: new FormControl('', {validators: [Validators.required]}),
+            amount: new FormControl('', {validators: [Validators.required]}),
             // soldDate: new FormControl('', { validators: [Validators.required] }),
             // series: new FormControl('', {}),
             manufacturer: new FormControl('', {}),
@@ -235,9 +240,10 @@ export class SupplierInputComponent implements OnInit {
     show(requests: any): void {
         this.userRequest = requests;
         console.log(239, this.userRequest)
-
-        this.manufacturingDate = '';
-        this.expiry = '';
+        
+        // this.manufacturingDate = '';
+        // this.expiry = '';
+        // this.formSupplierInput.reset();
         // this.soldDate = '';
 
         this.active = true;
@@ -253,7 +259,8 @@ export class SupplierInputComponent implements OnInit {
         this.formSupplierInput.get('productCode').setValue(this.productCode);
         this.formSupplierInput.get('manufacturingDate').setValue(this.manufacturingDate);
         this.formSupplierInput.get('expiry').setValue(this.expiry);
-        // this.formSupplierInput.get('series').setValue(this.series);
+        this.formSupplierInput.get('quantityOfConsignment').setValue(this.quantityOfConsignment);
+        this.formSupplierInput.get('amount').setValue(this.amount);
         this.formSupplierInput.get('manufacturer').setValue(this.manufacturer);
     }
 
@@ -279,26 +286,14 @@ export class SupplierInputComponent implements OnInit {
         } else {
             this.getValueForSave();
             console.log(284, this.userRequest)
-            // this.supplierService.createTransaction(
-            //     this.userRequest.requestId,
-            //     this.userRequest.supplier,
-            //     this.userRequest.userAddress,
-            //     this.consignment,
-            //     this.productCode,
-            //     this.manufacturingDate,
-            //     this.expiry,
-            //     this.series,
-            //     this.manufacturer
-            // )
-            console.log(293, this.userRequest)
             this.supplierService.createConsignmentDetail(
                 this.consignment,
                 this.productCode,
+                this.quantityOfConsignment,
+                this.amount,
                 this.manufacturingDate,
                 this.expiry,
-                // this.userRequest.quantity,
                 this.manufacturer
-                // this.userRequest.total
             )
             .subscribe(balance => {
                 this.walletBalance = balance;

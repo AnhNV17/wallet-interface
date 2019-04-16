@@ -31,3 +31,15 @@
     right: 1%;
     bottom: 30px;
 }
+
+/* .ui-datatable table { 
+    table-layout: auto !important; 
+} */
+
+.ui-datatable-scrollable-view {
+    overflow:scroll !important;
+}
+
+.ui-datatable-scrollable-body {
+    overflow:visible !important;
+}

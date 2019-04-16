@@ -23,8 +23,10 @@
           </div>
 
           <label for="quantity">Quantity</label>
-          <input name="quantity" [(ngModel)]="buyQuantity" formControlName="quantity" id="quantity" type="number"
-            class="form-control item-form-control" min="1" placeholder="--Number you want--" required />
+          <input name="quantity" [(ngModel)]="buyQuantity" formControlName="quantity" id="quantity" type="text"
+            class="form-control item-form-control" placeholder="--Number you want--" maxlength="12"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            onkeypress="javascript: if ( event.keyCode > 31 && (event.keyCode < 48 || event.keyCode > 57)) return false;" />
           <div class="valid-height">
             <validation [control]="formHome.get('quantity')"></validation>
           </div>
@@ -40,8 +42,10 @@
 
         <div class="form-group div-align-2 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
           <label for="amount">Amount</label>
-          <input name="amount" [(ngModel)]="transferAmount" formControlName="amount" id="amount" type="number"
-            class="form-control item-form-control" min="0.1" placeholder="--The amount of money--" required />
+          <input name="amount" [(ngModel)]="transferAmount" formControlName="amount" id="amount" type="text"
+            class="form-control item-form-control" placeholder="--The amount of money--" maxlength="15"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            onkeypress="javascript: if ( event.keyCode > 31 && (event.keyCode < 48 || event.keyCode > 57)) return false;" />
           <div class="valid-height">
             <validation [control]="formHome.get('amount')"></validation>
           </div>

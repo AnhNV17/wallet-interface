@@ -28,15 +28,15 @@ export class SupplierService {
         return this.http.get<TableResult>(`http://localhost:3000/supplier/seller_requests/${maxResultCount}/${pageNumber}`);
     }
 
-    createConsignmentDetail(consignment: String, productCode: String, manufacturingDate: String, expiry: String, manufacturer: String) {
+    createConsignmentDetail(consignment: String, productCode: String, quantityOfAConsignment: Number, amount: Number, manufacturingDate: String, expiry: String, manufacturer: String) {
         return this.http.post<UserWallet>('http://localhost:3000/supplier/detail_consignment', {
             consignment: consignment,
             productCode: productCode,
+            quantityOfAConsignment: quantityOfAConsignment,
+            amount: amount,
             manufacturingDate: manufacturingDate,
             expiry: expiry,
-            // quantityOfAConsignment: quantityOfAConsignment,
-            manufacturer: manufacturer,
-            // amount: amount
+            manufacturer: manufacturer
         })
     }
 

@@ -77,6 +77,12 @@
                                         <th style="width: 120px;">
                                             Product Code
                                         </th>
+                                        <th style="width:   120px;">
+                                            Quantity Of Consignment
+                                        </th>
+                                        <th style="width: 120px;">
+                                            Amount
+                                        </th>
                                         <th style="width: 120px;">
                                             Manufacturing Date
                                         </th>
@@ -92,10 +98,6 @@
                                 <ng-template pTemplate="body" let-rowData let-record="$implicit">
                                     <tr>
                                         <td [pSelectableRow]="rowData" style="width: 80px; text-align: center;">
-                                            <!-- <label class="m-check">
-                                                <input type="checkbox" name="isChecked" id="isChecked" fromControlName="isChecked" />
-                                                <span></span>
-                                            </label> -->
                                             <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                         </td>
                                         <td style="width: 120px; word-wrap: break-word;">
@@ -103,6 +105,12 @@
                                         </td>
                                         <td style="width: 120px; word-wrap: break-word;">
                                             {{record.ProductCode}}
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.Quantity}}
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.Amount}}
                                         </td>
                                         <td style="width: 120px; word-wrap: break-word;">
                                             {{record.ManufacturingDate}}
@@ -135,8 +143,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-success" (click)="submit()"
-                                [disabled]="saving">
+                            <button type="button" style="position: absolute; right: 0.5%; transform: translateY(40%);"
+                                class="btn btn-outline-success" (click)="submit()" [disabled]="saving">
                                 <i class="fa fa-forward"></i>
                                 <span class="caret"></span> Export
                             </button>
