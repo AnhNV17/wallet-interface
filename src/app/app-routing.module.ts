@@ -13,19 +13,14 @@ import { RequestHandlerComponent } from './supplier/request_handler/request_hand
 @NgModule({
     imports: [
         RouterModule.forRoot([
-            // {
-                // path: '',
-                // children: [
-                    { path: '', component: LoginComponent, data: {}  },
-                    { path: 'home', component: HomeComponent, data: {}  },
-                    { path: 'admin_home', component: AdminHomeComponent, data: {}  },
-                    { path: 'seller_home', component: SellerHomeComponent, data: {}  },
-                    { path: 'supplier_home', component: SupplierHomeComponent, data: {} },
-                    { path: 'user_detail/:walletId', component: AdminHomeComponent, data: {}  },
-                    { path: 'logout', component: LogoutComponent, data: {} },
-                    { path: 'supplier_handler', component: RequestHandlerComponent, data: {} }
-                // ]
-            // }
+            { path: '', component: LoginComponent, data: {} },
+            { path: 'home', component: HomeComponent, data: {} },
+            { path: 'admin_home', component: AdminHomeComponent, data: {} },
+            { path: 'seller_home', component: SellerHomeComponent, data: {} },
+            { path: 'supplier_home', component: SupplierHomeComponent, data: {} },
+            { path: 'user_detail/:walletId', component: AdminHomeComponent, data: {} },
+            { path: 'logout', component: LogoutComponent, data: {} },
+            { path: 'supplier_handler', component: RequestHandlerComponent, data: {} }
         ])
     ],
     exports: [
