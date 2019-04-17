@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { ModalDirective } from 'ngx-bootstrap';
 import Swal from 'sweetalert2';
+import { BuyService } from 'src/app/services/buy.service';
+import { UserWallet } from 'src/app/models/user-wallet';
 import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
 import { UpdateBalanceService } from 'src/app/services/update-balance.service';
-import { BuyService } from 'src/app/services/buy.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
-import { UserWallet } from 'src/app/models/user-wallet';
 import { SellerService } from 'src/app/services/seller.service';
 
 @Component({
@@ -36,8 +36,7 @@ export class SellerImportModalComponent implements OnInit {
     selectItems: any[] = [
         { id: 0, displayName: "Abrica" },
         { id: 1, displayName: "Robusta" },
-        { id: 2, displayName: "Culi" },
-        { id: 3, displayName: "TrungNguyen" },
+        { id: 2, displayName: "Culi" }
     ];
 
     cfBrands: any[] = [

@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
   buyingBtn = false;
   showBuyError = false;
   showTransferError = false;
+  showRequest = true;
 
   primengTableHelper: PrimengTableHelper;
   dataBC: any;
@@ -207,7 +208,7 @@ export class HomeComponent implements OnInit {
   getRequests() {
     this.userInfoService.getRequestList(this.userWallet.publicKey)
       .subscribe(result => { this.listRequest = result });
-    this.isDisplay = !this.isDisplay;
+    this.showRequest = !this.showRequest;
   }
 
   getDataBC(): void {

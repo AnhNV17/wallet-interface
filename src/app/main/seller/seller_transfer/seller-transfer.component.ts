@@ -5,13 +5,13 @@ import { NgSelectComponent } from '@ng-select/ng-select';
 import { ModalDirective } from 'ngx-bootstrap';
 import Swal from 'sweetalert2';
 import { Paginator, LazyLoadEvent } from 'primeng/primeng';
-import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
 import { Table } from 'primeng/components/table/table';
-import { UpdateBalanceService } from 'src/app/services/update-balance.service';
 import { BuyService } from 'src/app/services/buy.service';
-import { UserInfoService } from 'src/app/services/user-info.service';
-import { UserWallet } from 'src/app/models/user-wallet';
 import { TransferService } from 'src/app/services/transfer.service';
+import { UserWallet } from 'src/app/models/user-wallet';
+import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
+import { UpdateBalanceService } from 'src/app/services/update-balance.service';
+import { UserInfoService } from 'src/app/services/user-info.service';
 
 @Component({
     selector: "sellerTransferModal",

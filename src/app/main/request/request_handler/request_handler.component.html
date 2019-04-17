@@ -36,10 +36,16 @@
                                 class="form-control" name="quantity" />
                         </div>
 
-                        <div class="form-group cus-width">
+                        <div *ngIf="userWallet.role==='supplier'" class="form-group cus-width">
                             <label for="brand">Brand</label>
                             <input type="text" id="brand" formControlName="brand" [(ngModel)]="brand"
                                 class="form-control" name="brand" />
+                        </div>
+
+                        <div *ngIf="userWallet.role==='seller'" class="form-group cus-width">
+                            <label for="brand">Total</label>
+                            <input type="text" id="total" formControlName="total" [(ngModel)]="total"
+                                class="form-control" name="total" />
                         </div>
                     </div>
 
@@ -47,7 +53,7 @@
 
                         <div class="body-title">
                             <h4 class="body-header">Handle</h4>
-                            <div class="body-button-row">
+                            <div *ngIf="userWallet.role==='supplier'" class="body-button-row">
                                 <button class="btn btn-primary" type="button" (click)="openInput(requestObj)"><i
                                         class="fa fa-plus"></i><span class="caret"></span>Create</button>
                                 <button class="btn btn-outline-secondary" type="button"

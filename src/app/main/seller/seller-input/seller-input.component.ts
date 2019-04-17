@@ -4,8 +4,6 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { DateTimeComponent } from 'src/app/shared/ifichain/datetime.component';
 import * as $ from 'jquery';
 import { ProductInfor } from 'src/app/models/productInfor';
-import { SellerService } from 'src/app/services/seller.service';
-import { UserWallet } from 'src/app/models/user-wallet';
 import { INgxMyDpOptions, IMyDateModel, NgxMyDatePickerDirective } from 'ngx-mydatepicker';
 import * as moment from 'moment';
 import { FormatStringComponent } from 'src/app/shared/ifichain/formatString.component';
@@ -13,6 +11,8 @@ import Swal from 'sweetalert2';
 import { ShareFuncComponent } from 'src/app/shared/ifichain/sharedFunc.component';
 import { ValidationComponent } from 'src/app/shared/ifichain/validation-messages.component';
 import { appModuleAnimation } from 'src/shared/animations/routerTransition';
+import { UserWallet } from 'src/app/models/user-wallet';
+import { SellerService } from 'src/app/services/seller.service';
 
 export class SelectItem {
     id: number;

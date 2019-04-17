@@ -26,15 +26,15 @@ import { AppCommonModule } from './shared/common/app-common.module';
 import { ValidationComponent } from './shared/ifichain/validation-messages.component';
 // import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
-import { SupplierHomeComponent } from './main/supplier/supplier-home/supplier-home.component';
-import { SupplierInputComponent } from './main/supplier/supplier-input/supplier-input.component';
+// import { SupplierInputComponent } from './main/supplier/supplier-input/supplier-input.component';
 import { SellerInputComponent } from './main/seller/seller-input/seller-input.component';
-import { SellerHomeComponent } from './main/seller/seller_home/seller-home.component';
+import { RequesListComponent } from './main/request/requestList/requestList.component';
 import { SellerImportModalComponent } from './main/seller/seller_import/seller-import.component';
 import { SellerTransferModalComponent } from './main/seller/seller_transfer/seller-transfer.component';
-import { RequestHandlerComponent } from './main/supplier/request_handler/request_handler.component';
+import { RequestHandlerComponent } from './main/request/request_handler/request_handler.component';
 import { HeaderComponent } from './shared/layout/header.component';
 import { FooterComponent } from './shared/layout/footer.component';
+import { SupplierInputComponent } from './main/supplier/supplier-input/supplier-input.component';
 
 @NgModule({
   declarations: [
@@ -49,10 +49,9 @@ import { FooterComponent } from './shared/layout/footer.component';
     LogoutComponent,
     ChargeModalComponent,
     viewUserDetailModalComponent,
-    SellerHomeComponent,
+    RequesListComponent,
     SellerInputComponent,
     ValidationComponent,
-    SupplierHomeComponent,
     SupplierInputComponent,
     SellerImportModalComponent,
     SellerTransferModalComponent,

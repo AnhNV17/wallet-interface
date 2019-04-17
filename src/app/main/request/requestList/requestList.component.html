@@ -8,7 +8,7 @@
                     class="fa fa-sign-out"></i>Logout</button>
         </div>
 
-        <div>
+        <div *ngIf="userWallet.role==='seller'">
             <h5>Balance: {{ userWallet.balance }}</h5>
             <div class="btn-group function-btn-row">
                 <button class="btn btn-outline-primary" (click)="openImportModal()" type="button"><i
@@ -35,10 +35,16 @@
                             <th style="width: 80px; text-align: center;">
                                 Action
                             </th>
-                            <th style="width: 150px;">
-                                User Address
+                            <th *ngIf="userWallet.role==='supplier'" style="width: 150px;">
+                                Seller's Address
                             </th>
-                            <th style="width: 150px;">
+                            <th *ngIf="userWallet.role==='seller'" style="width: 150px;">
+                                User's Address
+                            </th>
+                            <th *ngIf="userWallet.role==='supplier'" style="width: 150px;">
+                                RequestId
+                            </th>
+                            <th *ngIf="userWallet.role==='seller'" th style="width: 150px;">
                                 UserName
                             </th>
                             <th style="width: 150px;">
@@ -47,8 +53,11 @@
                             <th style="width: 150px;">
                                 Quantity
                             </th>
-                            <th style="width: 150px;">
+                            <th *ngIf="userWallet.role==='seller'" style="width: 150px;">
                                 Total
+                            </th>
+                            <th *ngIf="userWallet.role==='supplier'" style="width: 150px;">
+                                Brand
                             </th>
 
                         </tr>
@@ -56,8 +65,9 @@
                     <ng-template pTemplate="body" let-record="$implicit">
                         <tr>
                             <td style="width: 80px; text-align: center;">
-                                <button class="btn btn-outline-primary" (click)="openInput(record)" type="button"
-                                    style="text-align: center;">
+                                <button class="btn btn-outline-primary"
+                                    (click)="openRequestHandler(record.requestId, record.productName, record.quantity, record.brand, record.total, record.userAddress)"
+                                    type="button" style="text-align: center;">
                                     <i class="fa fa-cogs"></i>
                                     <span class="caret"></span> Handle
                                 </button>
@@ -65,7 +75,10 @@
                             <td style="width: 150px; word-wrap: break-word;">
                                 {{record.userAddress}}
                             </td>
-                            <td style="width: 150px; word-wrap: break-word;">
+                            <td *ngIf="userWallet.role==='supplier'" style="width: 150px; word-wrap: break-word;">
+                                {{record.requestId}}
+                            </td>
+                            <td *ngIf="userWallet.role==='seller'" style="width: 150px; word-wrap: break-word;">
                                 {{record.username}}
                             </td>
                             <td style="width: 150px; word-wrap: break-word;">
@@ -74,8 +87,11 @@
                             <td style="width: 150px; word-wrap: break-word;">
                                 {{record.quantity}}
                             </td>
-                            <td style="width: 150px; word-wrap: break-word;">
+                            <td *ngIf="userWallet.role==='seller'" style="width: 150px; word-wrap: break-word;">
                                 {{record.total}}
+                            </td>
+                            <td *ngIf="userWallet.role==='supplier'" style="width: 150px; word-wrap: break-word;">
+                                {{record.brand}}
                             </td>
 
                         </tr>
@@ -99,6 +115,10 @@
 
             <div class="history">
                 <div class="btn-group">
+                    <button *ngIf="userWallet.role==='seller'" (click)="getRequest()" type="button"
+                        class="btn btn-outline-primary successListBtn">
+                        Request
+                    </button>
                     <button (click)="getListHistory()" type="button" class="btn btn-outline-primary historyBtn">
                         History
                     </button>
@@ -107,6 +127,9 @@
                     </button>
                 </div>
 
+                <ul *ngFor="let req of listSellerRequest" [hidden]="showRequest">
+                    <li>{{ req }}</li>
+                </ul>
                 <ul *ngFor="let transaction of listHistory" [hidden]="isDisplay">
                     <li>{{ transaction }}</li>
                 </ul>

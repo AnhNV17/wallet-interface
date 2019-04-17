@@ -9,18 +9,12 @@ import { TableResult } from '../models/table-detail';
 export class SupplierService {
 
     constructor(private http: HttpClient) { }
-    createTransaction(requestId: String, userAddress: String, supplier: String, consignment: Number, productCode: String, manufacturingDate: String, expiry: String, series: String,
-        manufacturer: String) {
+    createTransaction(requestId: String, userAddress: String, supplier: String, listData: []) {
         return this.http.post<UserWallet>('http://localhost:3000/supplier/seller_transaction', {
             requestId: requestId,
             userAddress: userAddress,
             supplier: supplier,
-            consignment: consignment,
-            productCode: productCode,
-            manufacturingDate: manufacturingDate,
-            expiry: expiry,
-            series: series,
-            manufacturer: manufacturer
+            listData: listData
         })
     }
 
@@ -28,7 +22,7 @@ export class SupplierService {
         return this.http.get<TableResult>(`http://localhost:3000/supplier/seller_requests/${maxResultCount}/${pageNumber}`);
     }
 
-    createConsignmentDetail(consignment: String, productCode: String, quantityOfAConsignment: Number, amount: Number, manufacturingDate: String, expiry: String, manufacturer: String) {
+    createConsignmentDetail(consignment: String, productCode: String, quantityOfAConsignment: Number, amount: Number, manufacturingDate: String, expiry: String, manufacturer: String, productName: String) {
         return this.http.post<UserWallet>('http://localhost:3000/supplier/detail_consignment', {
             consignment: consignment,
             productCode: productCode,
@@ -36,7 +30,8 @@ export class SupplierService {
             amount: amount,
             manufacturingDate: manufacturingDate,
             expiry: expiry,
-            manufacturer: manufacturer
+            manufacturer: manufacturer,
+            productName: productName
         })
     }
 
@@ -46,5 +41,9 @@ export class SupplierService {
 
     deleteConsignment(selectedConsignments: String) {
         return this.http.delete<[]>(`http://localhost:3000/supplier/deleteConsignment/${selectedConsignments}`)
+    }
+
+    deleteSellerRequest(sellerRequest: {}) {
+        return this.http.delete<[]>(`http://localhost:3000/supplier/deleteRequest/${sellerRequest}`);
     }
 }

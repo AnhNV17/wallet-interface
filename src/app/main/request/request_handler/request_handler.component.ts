@@ -4,7 +4,6 @@ import { ModalDirective } from "ngx-bootstrap";
 import { Router, ActivatedRoute } from "@angular/router";
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { UserWallet } from 'src/app/models/user-wallet';
-import { SupplierInputComponent } from '../supplier-input/supplier-input.component';
 import { Paginator, LazyLoadEvent } from 'primeng/primeng';
 import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
 import { Table } from 'primeng/table';
@@ -12,6 +11,8 @@ import { SellerService } from 'src/app/services/seller.service';
 import { SupplierService } from 'src/app/services/supplier.service';
 import Swal from 'sweetalert2';
 import { appModuleAnimation } from 'src/shared/animations/routerTransition';
+import { SupplierInputComponent } from '../../supplier/supplier-input/supplier-input.component';
+// import { SupplierInputComponent } from '../../supplier/supplier-input/supplier-input.component';
 
 export class SelectItem {
     id: number;
@@ -30,8 +31,6 @@ export class RequestHandlerComponent implements OnInit {
     @ViewChild('paginator') paginator: Paginator;
     @ViewChild('dataTable') dataTable: Table;
 
-    @Output() modalSave: EventEmitter<any> = new EventEmitter<any>();
-
     formHandler: FormGroup;
     active = false;
     saving = false;
@@ -45,9 +44,11 @@ export class RequestHandlerComponent implements OnInit {
     productName: String;
     quantity: Number;
     brand: String;
-    // total: Number;
+    total: Number;
     consignDetail: any;
-    isChecked: boolean;
+    userAdd: String;
+
+    mess: string;
 
     walletBalance: UserWallet;
 
@@ -57,7 +58,6 @@ export class RequestHandlerComponent implements OnInit {
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private userInfo: UserInfoService,
         private supplierSerivce: SupplierService
     ) {
         this.route.queryParamMap.subscribe(resp => {
@@ -65,8 +65,11 @@ export class RequestHandlerComponent implements OnInit {
             this.productName = resp.get('productName');
             this.quantity = +resp.get('quantity');
             this.brand = resp.get('brand');
+            this.total = +resp.get('total');
+            this.userAdd = resp.get('userAddress');
 
-            this.requestObj = { 'requestId': this.requestId, 'productName': this.productName, 'quantity': this.quantity, 'brand': this.brand }
+            this.requestObj = { 'requestId': this.requestId, 'productName': this.productName, 'quantity': this.quantity, 'brand': this.brand, 'total': this.total, 'userAdd': this.userAdd }
+            console.log(72, this.requestObj)
         })
 
         this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
@@ -75,14 +78,13 @@ export class RequestHandlerComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        console.log(57, this.requestId)
         /** Declare formgroup, formcontrol */
         this.formHandler = new FormGroup({
             requestId: new FormControl("", {}),
             productName: new FormControl("", {}),
             quantity: new FormControl("", {}),
             brand: new FormControl("", {}),
-            isChecked: new FormControl("", {})
+            total: new FormControl("", {})
         }, { updateOn: "change" });
         this.formHandler.disable();
     }
@@ -92,7 +94,6 @@ export class RequestHandlerComponent implements OnInit {
         setTimeout(() => {
             this.getConsignmentDetail();
         }, 0);
-
     }
 
     getConsignmentDetail(event?: LazyLoadEvent): void {
@@ -109,20 +110,47 @@ export class RequestHandlerComponent implements OnInit {
             currentPageNumber = this.paginator.getPage() + 1;
         }
 
-        this.supplierSerivce.getConsignmentDetail(
-            this.primengTableHelper.getMaxResultCount(this.paginator, event),
-            currentPageNumber
-        )
-            .subscribe(result => {
+        if (this.userWallet.role === "supplier") {
+            this.supplierSerivce.getConsignmentDetail(
+                this.primengTableHelper.getMaxResultCount(this.paginator, event),
+                currentPageNumber
+            ).subscribe(result => {
                 console.log(89, result)
                 this.primengTableHelper.records = result.pageList;
                 this.primengTableHelper.totalRecordsCount = result.totalRecords;
                 this.primengTableHelper.hideLoadingIndicator()
             })
+        }
     }
 
     submit(): void {
-        console.log(125, this.selectedConsignments)
+        console.log(127, this.selectedConsignments);
+        if (this.requestObj != null && this.selectedConsignments !== undefined) {
+            if (this.selectedConsignments.length !== 0) {
+                this.supplierSerivce.createTransaction(this.requestObj.requestId, this.requestObj.userAdd, this.userWallet.publicKey, this.selectedConsignments)
+                    .subscribe(result => {
+                        Swal.fire({
+                            // type: 'success',
+                            title: String(result.message)
+                        })
+                        // this.selectedConsignments = null;
+                        this.reloadList();
+
+                        // remove params
+                        this.router.navigate(['request_handler'], { queryParams: null });
+                    });
+            } else {
+                Swal.fire({
+                    type: "warning",
+                    title: "Request - null or Consignment - not checked!"
+                });
+            }
+        } else {
+            Swal.fire({
+                type: "warning",
+                title: "Request - null or Consignment - not checked!"
+            });
+        }
     }
 
     deleteSelectedRows(): void {
@@ -149,11 +177,15 @@ export class RequestHandlerComponent implements OnInit {
     }
 
     openInput(uRequests: any): void {
-        this.supplierInputModal.show(uRequests)
+        this.supplierInputModal.show(uRequests);
     }
 
     close(): void {
-        this.router.navigate(['supplier_home']);
+        if (this.userWallet.role === "supplier") {
+            this.router.navigate(['requestList']);
+        } else if (this.userWallet.role === "seller") {
+            this.router.navigate(['requestList']);
+        }
     }
 
 }

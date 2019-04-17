@@ -15,7 +15,7 @@ export class AppNavigationService {
             new AppMenuItem('UserHome', 'flaticon-line-graph', '/app/main/home'),
 
             new AppMenuItem('Seller', 'flaticon-interface-8', '', [
-                new AppMenuItem('SellerHome', 'flaticon-suitcase', '/app/admin/seller/seller_home')
+                new AppMenuItem('SellerHome', 'flaticon-suitcase', '/app/admin/seller/requestList')
             ]),
 
             new AppMenuItem('Supplier', 'flaticon-interface-8', '', [

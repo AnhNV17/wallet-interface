@@ -1,18 +1,20 @@
 import { OnInit, Component, Injector, ViewChild, ViewEncapsulation } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { ModalDirective } from "ngx-bootstrap";
-import { Router } from "@angular/router";
+import { Router, NavigationExtras } from "@angular/router";
 import { Paginator, LazyLoadEvent } from 'primeng/primeng';
-import { SellerInputComponent } from '../seller-input/seller-input.component';
+import { SellerInputComponent } from '../../seller/seller-input/seller-input.component';
 import { UserWallet } from 'src/app/models/user-wallet';
 import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { Table } from 'primeng/table';
 import { UpdateBalanceService } from 'src/app/services/update-balance.service';
 import { SellerService } from 'src/app/services/seller.service';
-import { SellerImportModalComponent } from '../seller_import/seller-import.component';
-import { SellerTransferModalComponent } from '../seller_transfer/seller-transfer.component';
+import { SellerImportModalComponent } from '../../seller/seller_import/seller-import.component';
+import { SellerTransferModalComponent } from '../../seller/seller_transfer/seller-transfer.component';
 import { appModuleAnimation } from 'src/shared/animations/routerTransition';
+import { SupplierService } from 'src/app/services/supplier.service';
+import { RequestHandlerComponent } from '../request_handler/request_handler.component';
 
 export class SelectItem {
   id: number;
@@ -20,18 +22,20 @@ export class SelectItem {
 }
 
 @Component({
-  selector: "sellerHomeModal",
-  templateUrl: "./seller-home.component.html",
-  styleUrls: ["./seller-home.component.css"],
+  selector: "requesListModal",
+  templateUrl: "./requestList.component.html",
+  styleUrls: ["./requestList.component.css"],
   animations: [appModuleAnimation()]
 })
-export class SellerHomeComponent implements OnInit {
-  @ViewChild("sellerHomeComponentModal") modal: ModalDirective;
+export class RequesListComponent implements OnInit {
+  @ViewChild("requesListComponentModal") modal: ModalDirective;
   @ViewChild("sellerInputModal") sellerInputModal: SellerInputComponent;
   @ViewChild("sellerImportModal") sellerImportModal: SellerImportModalComponent;
   @ViewChild("sellerTransferModal") sellerTransferModal: SellerTransferModalComponent;
   @ViewChild('paginator') paginator: Paginator;
   @ViewChild('dataTable') dataTable: Table;
+
+  @ViewChild('requestHandler') requestHandler : RequestHandlerComponent;
 
   formSeller: FormGroup;
   active = false;
@@ -46,11 +50,12 @@ export class SellerHomeComponent implements OnInit {
   isShow = true;
   primengTableHelper: PrimengTableHelper;
   totalRecord: Number;
+  listSellerRequest: any;
+  showRequest = true;
 
-
-  constructor(private router: Router, private userInfo: UserInfoService, private sellerService: SellerService) {
+  constructor(private router: Router, private userInfo: UserInfoService, private sellerService: SellerService, private supplierSerivce: SupplierService) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
-    // console.log(48, this.userWallet)
+    console.log(48, this.userWallet)
     this.primengTableHelper = new PrimengTableHelper();
   }
 
@@ -67,9 +72,17 @@ export class SellerHomeComponent implements OnInit {
     );
   }
 
-  openInput(uRequests: any): void {
-    this.sellerInputModal.show(uRequests);
+  openRequestHandler(requestId: String, productName: String, quantity: Number, brand: String, total: Number, userAddress: String): void {
+    let navigationExtras: NavigationExtras = {
+      queryParams: { 'requestId': requestId, 'productName': productName, 'quantity': quantity, 'brand': brand, 'total': total, 'userAddress': userAddress }
+    };
+
+    this.router.navigate(['request_handler'], navigationExtras)
   }
+
+  // openInput(uRequests: any) {
+  //   this.sellerInputModal.show(uRequests);
+  // }
 
   openImportModal(): void {
     this.sellerImportModal.show();
@@ -99,15 +112,27 @@ export class SellerHomeComponent implements OnInit {
       pageNumber = this.paginator.getPage() + 1;
     }
 
-    this.sellerService.getUserRequests(
-      this.primengTableHelper.getMaxResultCount(this.paginator, event),
-      pageNumber
-    ).subscribe(listRequest => {
-      console.log(94, listRequest)
-      this.primengTableHelper.records = listRequest.pageList;
-      this.primengTableHelper.totalRecordsCount = listRequest.totalRecords;
-      this.primengTableHelper.hideLoadingIndicator()
-    });
+    if (this.userWallet.role === "seller") {
+      this.sellerService.getUserRequests(
+        this.primengTableHelper.getMaxResultCount(this.paginator, event),
+        pageNumber
+      ).subscribe(listRequest => {
+        console.log(107, listRequest)
+        this.primengTableHelper.records = listRequest.pageList;
+        this.primengTableHelper.totalRecordsCount = listRequest.totalRecords;
+        this.primengTableHelper.hideLoadingIndicator()
+      });
+    } else if (this.userWallet.role === "supplier") {
+      this.supplierSerivce.getSellerRequests(
+        this.primengTableHelper.getMaxResultCount(this.paginator, event),
+        pageNumber
+      ).subscribe(result => {
+        console.log(117, result)
+        this.primengTableHelper.records = result.pageList,
+          this.primengTableHelper.totalRecordsCount = result.totalRecords;
+        this.primengTableHelper.hideLoadingIndicator();
+      })
+    }
   }
 
   reloadTable(): void {
@@ -118,8 +143,16 @@ export class SellerHomeComponent implements OnInit {
 
   }
 
+  getRequest() {
+    this.sellerService.getRequests(this.userWallet.publicKey)
+    .subscribe(result => {
+      console.log(145, result)
+      this.listSellerRequest = result;
+    });
+    this.showRequest = !this.showRequest;
+  }
+
   getListHistory() {
-    // console.log(103, this.userWallet.publicKey);
     this.userInfo.getHistory(this.userWallet.publicKey).subscribe(result => {
       this.listHistory = result;
     });

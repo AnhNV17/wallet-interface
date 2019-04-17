@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { SupplierService } from 'src/app/services/supplier.service';
 import { tick } from '@angular/core/testing';
+import { ValidationComponent } from 'src/app/shared/ifichain/validation-messages.component';
 
 export class SelectItem {
     id: number;
@@ -89,7 +90,7 @@ export class SupplierInputComponent implements OnInit {
         /** Declare formgroup, formcontrol */
         this.formSupplierInput = new FormGroup({
             consignment: new FormControl("", { validators: [Validators.required] }),
-            productCode: new FormControl('', { validators: [Validators.required] }),
+            productCode: new FormControl('', { validators: [Validators.required, ValidationComponent.checkCharacters ] }),
             manufacturingDate: new FormControl('', { validators: [Validators.required] }),
             expiry: new FormControl('', { validators: [Validators.required] }),
             quantityOfConsignment: new FormControl('', {validators: [Validators.required]}),
@@ -293,7 +294,8 @@ export class SupplierInputComponent implements OnInit {
                 this.amount,
                 this.manufacturingDate,
                 this.expiry,
-                this.manufacturer
+                this.manufacturer,
+                this.userRequest.productName
             )
             .subscribe(balance => {
                 this.walletBalance = balance;

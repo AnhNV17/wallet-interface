@@ -28,12 +28,12 @@ export class LoginComponent implements OnInit {
           } else if (userWallet.role === "admin") {
             localStorage.setItem("userWallet", JSON.stringify(userWallet));
             this.router.navigate(['admin_home']);
-          } else if (userWallet.role === "seller") {
+          } else if (userWallet.role === "seller" || userWallet.role === "supplier") {
             localStorage.setItem("userWallet", JSON.stringify(userWallet));
-            this.router.navigate(['seller_home']);
-          } else if (userWallet.role === "supplier")  {
-            localStorage.setItem("userWallet", JSON.stringify(userWallet));
-            this.router.navigate(['supplier_home']);
+            this.router.navigate(['requestList']);
+          // } else if (userWallet.role === "supplier")  {
+          //   localStorage.setItem("userWallet", JSON.stringify(userWallet));
+          //   this.router.navigate(['supplier_home']);
           } else {
             alert('Username or Password is wrong');
           }
