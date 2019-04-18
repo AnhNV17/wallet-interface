@@ -37,4 +37,8 @@ export class SellerService {
             brand: brand
         })
     }
+
+    getRequests(publicKey: String) {
+        return this.http.get<[]>(`http://localhost:3000/seller/requests/${publicKey}`);
+    }
 }

@@ -7,13 +7,13 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { LoginComponent } from "./login/login.component";
-import { HomeComponent } from "./home/home.component";
-import { AdminHomeComponent } from "./admin-home/admin-home.component";
-import { LogoutComponent } from "./logout/logout.component";
-import { ChargeModalComponent } from './charge/charge.component';
+import { LoginComponent } from "./main/login/login.component";
+import { HomeComponent } from "./main/home/home.component";
+import { AdminHomeComponent } from "./main/admin-home/admin-home.component";
+import { LogoutComponent } from "./main/logout/logout.component";
+import { ChargeModalComponent } from './main/charge/charge.component';
 import { ModalModule, ComponentLoaderFactory } from 'ngx-bootstrap';
-import { viewUserDetailModalComponent } from './userDetail/user-detail.component';
+import { viewUserDetailModalComponent } from './main/userDetail/user-detail.component';
 
 import { AutoCompleteModule } from 'primeng/primeng';
 import { PaginatorModule } from 'primeng/primeng';
@@ -26,41 +26,38 @@ import { AppCommonModule } from './shared/common/app-common.module';
 import { ValidationComponent } from './shared/ifichain/validation-messages.component';
 // import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
-import { SupplierHomeComponent } from './supplier/supplier-home/supplier-home.component';
-import { SupplierInputComponent } from './supplier/supplier-input/supplier-input.component';
-import { SellerInputComponent } from './seller/seller-input/seller-input.component';
-import { SellerHomeComponent } from './seller/seller_home/seller-home.component';
-import { SellerImportModalComponent } from './seller/seller_import/seller-import.component';
-import { SellerTransferModalComponent } from './seller/seller_transfer/seller-transfer.component';
-import { RequestHandlerComponent } from './supplier/request_handler/request_handler.component';
+// import { SupplierInputComponent } from './main/supplier/supplier-input/supplier-input.component';
+import { SellerInputComponent } from './main/seller/seller-input/seller-input.component';
+import { RequesListComponent } from './main/request/requestList/requestList.component';
+import { SellerImportModalComponent } from './main/seller/seller_import/seller-import.component';
+import { SellerTransferModalComponent } from './main/seller/seller_transfer/seller-transfer.component';
+import { RequestHandlerComponent } from './main/request/request_handler/request_handler.component';
 import { HeaderComponent } from './shared/layout/header.component';
 import { FooterComponent } from './shared/layout/footer.component';
+import { SupplierInputComponent } from './main/supplier/supplier-input/supplier-input.component';
 
 @NgModule({
-  exports: [ChargeModalComponent],
   declarations: [
     AppComponent,
+    SideBarMenuComponent,
+    TopBarMenuComponent,
+    HeaderComponent,
+    FooterComponent,
     LoginComponent,
     HomeComponent,
     AdminHomeComponent,
     LogoutComponent,
     ChargeModalComponent,
     viewUserDetailModalComponent,
-    SellerHomeComponent,
+    RequesListComponent,
     SellerInputComponent,
-    SideBarMenuComponent,
-    TopBarMenuComponent,
     ValidationComponent,
-    SupplierHomeComponent,
     SupplierInputComponent,
     SellerImportModalComponent,
     SellerTransferModalComponent,
-    RequestHandlerComponent,
-    HeaderComponent,
-    FooterComponent
+    RequestHandlerComponent
   ],
   imports: [
-    // NKDatetimeModule,
     NgxMyDatePickerModule.forRoot(),
     BrowserModule,
     BrowserAnimationsModule,
@@ -76,7 +73,7 @@ import { FooterComponent } from './shared/layout/footer.component';
     EditorModule,
     TableModule,
     CommonModule,
-    AppCommonModule
+    AppCommonModule.forRoot()
   ],
   providers: [
     ComponentLoaderFactory

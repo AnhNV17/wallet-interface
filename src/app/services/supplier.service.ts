@@ -43,6 +43,7 @@ export class SupplierService {
         return this.http.delete<[]>(`http://localhost:3000/supplier/deleteConsignment/${selectedConsignments}`)
     }
 
-
-
+    deleteSellerRequest(sellerRequest: {}) {
+        return this.http.delete<[]>(`http://localhost:3000/supplier/deleteRequest/${sellerRequest}`);
+    }
 }

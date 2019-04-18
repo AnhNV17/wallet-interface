@@ -36,15 +36,17 @@ export class ValidationComponent {
             'isMaxS': 'Nho hon ngay ket thuc',
             'isMinS': 'Lon hon ngay ket thuc',
             'isStartMax': 'Thoi gian nho hon ngay ket thuc',
-            'isEndMin': 'Thoi gian lon hon ngay bat dau'
+            'isEndMin': 'Thoi gian lon hon ngay bat dau',
+            'pattern': 'Chi nhap ky tu thuong'
         }
         return messages[err]
     }
 
     // kiểm tra dấu cách - nếu có dấu cách là lỗi
-    public static KtraKhoangTrang(control: AbstractControl) {
+    public static CheckSpace(control: AbstractControl) {
         try {
             // nếu k phai số trả về true
+            // debugger
             if (control.value != null) {
                 if (control.value.trim().length == 0) {
                     return { required: true };
@@ -54,6 +56,18 @@ export class ValidationComponent {
         } catch (error) {
 
         }
+    }
+
+    // chỉ cho chữ thường a - z A-Z
+    public static checkCharacters(control: AbstractControl) {
+        // nếu k phai chữ thường trả về true
+        // debugger
+        if (control.value != null) {
+            if (/[^A-Z0-9]+/.test(control.value)) {
+                return { pattern: true };
+            }
+        }
+        return null;
     }
 
     // nếu thời gian lớn hơn ngày hiện tại thì bắt lỗi
