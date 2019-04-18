@@ -99,11 +99,11 @@ export class SupplierHomeComponent implements OnInit {
     }
 
     // Show ProductInforAttribute
-    openRequestHandler(requestId: String, productName: String, quantity: Number, brand: String, total: Number): void {
+    openRequestHandler(requestId: String, productName: String, quantity: Number, brand: String, total: Number, userAddress: String): void {
         // this.dataTableForViewModal.receiver(inforId);
 
         let navigationExtras: NavigationExtras = {
-            queryParams: { 'requestId': requestId, 'productName': productName, 'quantity': quantity, 'brand': brand }
+            queryParams: { 'requestId': requestId, 'productName': productName, 'quantity': quantity, 'brand': brand, 'userAddress': userAddress }
         };
 
         this.router.navigate(['supplier_handler'], navigationExtras)

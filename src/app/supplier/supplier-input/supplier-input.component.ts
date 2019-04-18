@@ -293,7 +293,8 @@ export class SupplierInputComponent implements OnInit {
                 this.amount,
                 this.manufacturingDate,
                 this.expiry,
-                this.manufacturer
+                this.manufacturer,
+                this.userRequest.productName
             )
             .subscribe(balance => {
                 this.walletBalance = balance;

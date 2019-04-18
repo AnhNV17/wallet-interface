@@ -53,6 +53,7 @@ export class RequestHandlerComponent implements OnInit {
 
     requestObj: any;
     selectedConsignments: any;
+    userAddress: String;
 
     constructor(
         private router: Router,
@@ -65,10 +66,11 @@ export class RequestHandlerComponent implements OnInit {
             this.productName = resp.get('productName');
             this.quantity = +resp.get('quantity');
             this.brand = resp.get('brand');
+            this.userAddress = resp.get('userAddress');
 
-            this.requestObj = { 'requestId': this.requestId, 'productName': this.productName, 'quantity': this.quantity, 'brand': this.brand }
+            this.requestObj = { 'requestId': this.requestId, 'productName': this.productName, 'quantity': this.quantity, 'brand': this.brand, 'userAddress': this.userAddress}
         })
-
+        console.log(73, this.requestObj);
         this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
         this.primengTableHelper = new PrimengTableHelper();
         console.log(41, this.userWallet)
@@ -119,10 +121,17 @@ export class RequestHandlerComponent implements OnInit {
                 this.primengTableHelper.totalRecordsCount = result.totalRecords;
                 this.primengTableHelper.hideLoadingIndicator()
             })
-    }
+    };
 
     submit(): void {
+        this.supplierSerivce.createTransaction(this.requestObj.requestId, this.requestObj.userAddress, this.userWallet.publicKey, this.selectedConsignments)
+            .subscribe(result => {
+                Swal.fire({
+                    title: String(result.message)
+                });
+            })
         console.log(125, this.selectedConsignments)
+        this.reloadList();
     }
 
     deleteSelectedRows(): void {
