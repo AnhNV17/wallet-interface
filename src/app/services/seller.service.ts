@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserWallet } from '../models/user-wallet';
 import { TableResult } from '../models/table-detail';
+import { ProductInfor } from '../models/productInfor';
 
 @Injectable({
     providedIn: 'root'
@@ -40,5 +41,9 @@ export class SellerService {
 
     getRequests(publicKey: String) {
         return this.http.get<[]>(`http://localhost:3000/seller/requests/${publicKey}`);
+    }
+
+    getBill(publicKey: String){
+        return this.http.get<ProductInfor>(`http://localhost:3000/supplier/products/${publicKey}`);
     }
 }

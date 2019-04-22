@@ -6,4 +6,5 @@ export class UserWallet {
      balance: Number;
      publicKey: String;
      message: String;
+     type: String;
 }

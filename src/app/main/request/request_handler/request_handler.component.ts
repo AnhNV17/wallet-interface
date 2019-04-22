@@ -130,15 +130,22 @@ export class RequestHandlerComponent implements OnInit {
             if (this.selectedConsignments.length !== 0) {
                 this.supplierSerivce.createTransaction(this.requestObj.requestId, this.requestObj.userAdd, this.userWallet.publicKey, this.selectedConsignments)
                     .subscribe(result => {
-                        Swal.fire({
-                            // type: 'success',
-                            title: String(result.message)
-                        })
-                        // this.selectedConsignments = null;
-                        this.reloadList();
-
-                        // remove params
-                        this.router.navigate(['request_handler'], { queryParams: null });
+                        if (result.type == "Success"){
+                            Swal.fire({
+                                type: 'success',
+                                title: String(result.message)
+                            })
+                            // this.selectedConsignments = null;
+                            this.reloadList();
+    
+                            // remove params
+                            this.router.navigate(['request_handler'], { queryParams: null });
+                        } else {
+                            Swal.fire({
+                                type: "error",
+                                title: String(result.message)
+                            })
+                        }
                     });
             } else {
                 Swal.fire({

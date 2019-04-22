@@ -12,8 +12,8 @@ import { FormatStringComponent } from 'src/app/shared/ifichain/formatString.comp
 import Swal from 'sweetalert2';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { SupplierService } from 'src/app/services/supplier.service';
-import { tick } from '@angular/core/testing';
 import { ValidationComponent } from 'src/app/shared/ifichain/validation-messages.component';
+import { UserInfoService } from 'src/app/services/user-info.service';
 
 export class SelectItem {
     id: number;
@@ -45,8 +45,10 @@ export class SupplierInputComponent implements OnInit {
     productInfor: ProductInfor;
     userRequest: any;
     walletBalance: UserWallet;
+    successfulList: any;
+    isShow = true;
 
-    consignment: any;
+    productName: any;
     productCode: String;
     manufacturingDate: String;
     expiry: String;
@@ -71,25 +73,23 @@ export class SupplierInputComponent implements OnInit {
         { id: 4, displayName: "Consignment 5"}
     ];
 
-    userChoices: any[] = [
-        { id: 0, displayName: "Coffee-1" },
-        { id: 1, displayName: "Coffee-2" },
-        { id: 2, displayName: "Coffee-3" },
-        { id: 3, displayName: "Coffee-4" },
-        { id: 4, displayName: "Coffee-5" },
-        { id: 5, displayName: "Coffee-6" }
+    selectItems: any[] = [
+        { id: 0, displayName: "Abrica" },
+        { id: 1, displayName: "Robusta" },
+        { id: 2, displayName: "Culi" }
     ];
 
     constructor(
         // injector: Injector,
         private supplierService: SupplierService,
+        private userInfoService: UserInfoService
     ) {
     }
 
     ngOnInit(): void {
         /** Declare formgroup, formcontrol */
         this.formSupplierInput = new FormGroup({
-            consignment: new FormControl("", { validators: [Validators.required] }),
+            productName: new FormControl("", { validators: [Validators.required] }),
             productCode: new FormControl('', { validators: [Validators.required, ValidationComponent.checkCharacters ] }),
             manufacturingDate: new FormControl('', { validators: [Validators.required] }),
             expiry: new FormControl('', { validators: [Validators.required] }),
@@ -256,7 +256,7 @@ export class SupplierInputComponent implements OnInit {
     }
 
     getValueForSave() {
-        this.formSupplierInput.get('consignment').setValue(this.consignment);
+        this.formSupplierInput.get('productName').setValue(this.productName);
         this.formSupplierInput.get('productCode').setValue(this.productCode);
         this.formSupplierInput.get('manufacturingDate').setValue(this.manufacturingDate);
         this.formSupplierInput.get('expiry').setValue(this.expiry);
@@ -288,7 +288,7 @@ export class SupplierInputComponent implements OnInit {
             this.getValueForSave();
             console.log(284, this.userRequest)
             this.supplierService.createConsignmentDetail(
-                this.consignment,
+                this.productName,
                 this.productCode,
                 this.quantityOfConsignment,
                 this.amount,

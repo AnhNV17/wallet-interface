@@ -17,14 +17,14 @@
                     <div class="form-row">
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label for="consignment">Consignment</label>
+                            <label for="consignment">Product Name</label>
 
-                            <ng-select #ConsignmentOptions [items]="packageChoices" id="consignment"
-                                bindValue="displayName" bindLabel="displayName" [(ngModel)]="consignment"
-                                formControlName="consignment" name="consignment" placeholder="--Choose your item--">
+                            <ng-select #ConsignmentOptions [items]="selectItems" id="productName"
+                                bindValue="displayName" bindLabel="displayName" [(ngModel)]="productName"
+                                formControlName="productName" name="productName" placeholder="--Choose your item--">
                             </ng-select>
                             <div class="valid-height">
-                                <validation [control]="formSupplierInput.get('consignment')"></validation>
+                                <validation [control]="formSupplierInput.get('productName')"></validation>
                             </div>
                         </div>
 
