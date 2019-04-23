@@ -17,18 +17,6 @@
                     <div class="form-row">
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label for="consignment">Consignment</label>
-
-                            <ng-select #ConsignmentOptions [items]="packageChoices" id="consignment"
-                                bindValue="displayName" bindLabel="displayName" [(ngModel)]="consignment"
-                                formControlName="consignment" name="consignment" placeholder="--Choose your item--">
-                            </ng-select>
-                            <div class="valid-height">
-                                <validation [control]="formSupplierInput.get('consignment')"></validation>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label for="productCode">Product Code</label>
                             <input type="text" id="productCode" (input)="uppercaseAll($event)"
                                 formControlName="productCode" [(ngModel)]="productCode" class="form-control"
@@ -39,7 +27,19 @@
                         </div>
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Quantity of Consignment</label>
+                            <label for="productName">Product Name</label>
+
+                            <ng-select #ProductOptions [items]="selectItems" id="productName"
+                                bindValue="displayName" bindLabel="displayName" [(ngModel)]="productName"
+                                formControlName="productName" name="productName" placeholder="--Choose your item--">
+                            </ng-select>
+                            <div class="valid-height">
+                                <validation [control]="formSupplierInput.get('productName')"></validation>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <label>Quantity of Product</label>
                             <input type="text" id="quantityOfConsignment" formControlName="quantityOfConsignment"
                                 [(ngModel)]="quantityOfConsignment" class="form-control" name="quantityOfConsignment"
                                 maxlength="12"

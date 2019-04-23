@@ -27,7 +27,6 @@ import { ValidationComponent } from './shared/ifichain/validation-messages.compo
 // import { NKDatetimeModule } from 'ng2-datetime/ng2-datetime';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 // import { SupplierInputComponent } from './main/supplier/supplier-input/supplier-input.component';
-import { SellerInputComponent } from './main/seller/seller-input/seller-input.component';
 import { RequesListComponent } from './main/request/requestList/requestList.component';
 import { SellerImportModalComponent } from './main/seller/seller_import/seller-import.component';
 import { SellerTransferModalComponent } from './main/seller/seller_transfer/seller-transfer.component';
@@ -50,7 +49,6 @@ import { SupplierInputComponent } from './main/supplier/supplier-input/supplier-
     ChargeModalComponent,
     viewUserDetailModalComponent,
     RequesListComponent,
-    SellerInputComponent,
     ValidationComponent,
     SupplierInputComponent,
     SellerImportModalComponent,

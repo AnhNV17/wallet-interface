@@ -32,12 +32,10 @@ export class ValidationComponent {
     getErrorMessage(err) {
         let messages = {
             'required': 'This is required field.',
-            'isMin': 'Lon hon ngay bat dau',
-            'isMaxS': 'Nho hon ngay ket thuc',
-            'isMinS': 'Lon hon ngay ket thuc',
             'isStartMax': 'Thoi gian nho hon ngay ket thuc',
             'isEndMin': 'Thoi gian lon hon ngay bat dau',
-            'pattern': 'Chi nhap ky tu thuong'
+            'pattern': 'Chi nhap ky tu thuong',
+            'isErrToday': 'Lon hon ngay hien tai'
         }
         return messages[err]
     }

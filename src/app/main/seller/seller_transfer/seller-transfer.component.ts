@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewChild, ViewEncapsulation, Output, EventEmitter } from "@angular/core";
 import { FormGroup, FormControl, Validators, FormControlName } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgSelectComponent } from '@ng-select/ng-select';
@@ -21,6 +21,7 @@ import { UserInfoService } from 'src/app/services/user-info.service';
 })
 export class SellerTransferModalComponent implements OnInit {
     @ViewChild('SellerTransferComponentModal') modal: ModalDirective;
+    @Output() balanceUpdate: EventEmitter<any> = new EventEmitter<any>();
 
     userWallet: UserWallet;
     walletBalance: UserWallet;
@@ -101,21 +102,28 @@ export class SellerTransferModalComponent implements OnInit {
             if (this.amount && this.receiver) {
                 this.transferService
                     .transfer(this.amount, this.receiver, this.userWallet.publicKey)
-                    .subscribe(balance => {
-                        this.walletBalance = balance;
-                        // alert(this.walletBalance.message);
-                        Swal.fire({
-                            // type: 'success',
-                            title: String(this.walletBalance.message)
-                        })
+                    .subscribe(result => {
+                        if (result.typeMess == "success") {
+                            Swal.fire({
+                                type: 'success',
+                                title: String(result.message)
+                            })
+                        } else if (result.typeMess == "error") {
+                            Swal.fire({
+                                type: 'error',
+                                title: String(result.message)
+                            })
+                        }
+
+                        this.updateBalance(this.walletId);
+                        this.updateListHistory();
+                        this.balanceUpdate.emit(null);
+                        this.formSellerTransfer.get("amount").reset();
+                        this.formSellerTransfer.get("receiver").reset();
                     });
-                this.updateBalance(this.walletId);
-                this.updateListHistory();
-                this.formSellerTransfer.get("amount").reset();
-                this.formSellerTransfer.get("receiver").reset();
             } else {
                 Swal.fire({
-                    // type: 'error',
+                    type: "warning",
                     text: "Please fill the form to transfer",
                 })
             }

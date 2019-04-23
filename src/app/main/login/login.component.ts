@@ -1,6 +1,7 @@
 import { Component, OnInit, QueryList } from '@angular/core';
 import { LoginService } from './login.service';
 import { ActivatedRoute, Router } from '@angular/router'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -31,17 +32,26 @@ export class LoginComponent implements OnInit {
           } else if (userWallet.role === "seller" || userWallet.role === "supplier") {
             localStorage.setItem("userWallet", JSON.stringify(userWallet));
             this.router.navigate(['requestList']);
-          // } else if (userWallet.role === "supplier")  {
-          //   localStorage.setItem("userWallet", JSON.stringify(userWallet));
-          //   this.router.navigate(['supplier_home']);
+            // } else if (userWallet.role === "supplier")  {
+            //   localStorage.setItem("userWallet", JSON.stringify(userWallet));
+            //   this.router.navigate(['supplier_home']);
           } else {
-            alert('Username or Password is wrong');
+            Swal.fire({
+              type: 'error',
+              title: 'Username or Password is wrong'
+            })
           }
         }, error => {
-          alert('There is an error' + error);
+          Swal.fire({
+            type: 'error',
+            title: 'There is an error' + error
+          })
         })
     } else {
-      alert('Username or Password is wrong. Please enter again')
+      Swal.fire({
+        type: 'error',
+        title: 'Username or Password is wrong. Please enter again'
+      })
     }
   }
 }

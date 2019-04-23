@@ -50,8 +50,11 @@
                             <th style="width: 150px;">
                                 Product Name
                             </th>
-                            <th style="width: 150px;">
-                                Quantity
+                            <th *ngIf="userWallet.role==='seller'" style="width: 150px;">
+                                Quantity Of Product
+                            </th>
+                            <th *ngIf="userWallet.role==='supplier'" style="width: 150px;">
+                                Quantity Of Consignment
                             </th>
                             <th *ngIf="userWallet.role==='seller'" style="width: 150px;">
                                 Total
@@ -140,6 +143,5 @@
         </div>
     </div>
 </div>
-<sellerInputModal #sellerInputModal (resetList)="reloadTable()"></sellerInputModal>
 <sellerImportModal #sellerImportModal></sellerImportModal>
-<sellerTransferModal #sellerTransferModal></sellerTransferModal>
+<sellerTransferModal #sellerTransferModal (balanceUpdate)="updateBalance(userWallet.walletId)"></sellerTransferModal>
