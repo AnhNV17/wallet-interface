@@ -54,6 +54,7 @@ export class RequestHandlerComponent implements OnInit {
 
     requestObj: any;
     selectedConsignments: any;
+    userAddress: String;
 
     consingmentDetail: any;
 
@@ -74,7 +75,7 @@ export class RequestHandlerComponent implements OnInit {
             this.requestObj = { 'requestId': this.requestId, 'productName': this.productName, 'quantity': this.quantity, 'brand': this.brand, 'total': this.total, 'userAdd': this.userAdd }
             console.log(72, this.requestObj)
         })
-
+        console.log(73, this.requestObj);
         this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
         this.primengTableHelper = new PrimengTableHelper();
         console.log(41, this.userWallet)
