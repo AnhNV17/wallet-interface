@@ -75,7 +75,7 @@
                                 [(selection)]="selectedConsignments">
 
                                 <ng-template pTemplate="header">
-                                    <tr>
+                                    <tr *ngIf="userWallet.role=='supplier'">
                                         <th style="width: 80px; text-align: center;">
                                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                                         </th>
@@ -102,9 +102,34 @@
                                         </th>
 
                                     </tr>
+
+                                    <tr *ngIf="userWallet.role=='seller'">
+                                        <th style="width: 80px; text-align: center;">
+                                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                                        </th>
+                                        <th style="width: 120px;">
+                                            Product Name
+                                        </th>
+                                        <th style="width: 120px;">
+                                            Product Code
+                                        </th>
+                                        <th style="width:   120px;">
+                                            Quantity Of Product
+                                        </th>
+                                        <th style="width: 120px;">
+                                            Manufacturing Date
+                                        </th>
+                                        <th style="width: 120px;">
+                                            Expiry
+                                        </th>
+                                        <th style="width: 120px;">
+                                            Manufacturer
+                                        </th>
+
+                                    </tr>
                                 </ng-template>
                                 <ng-template pTemplate="body" let-rowData let-record="$implicit">
-                                    <tr>
+                                    <tr *ngIf="userWallet.role=='supplier'">
                                         <td [pSelectableRow]="rowData" style="width: 80px; text-align: center;">
                                             <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                         </td>
@@ -128,6 +153,30 @@
                                         </td>
                                         <td style="width: 120px; word-wrap: break-word;">
                                             {{record.Manufacturer}}
+                                        </td>
+
+                                    </tr>
+                                    <tr *ngIf="userWallet.role=='seller'">
+                                        <td [pSelectableRow]="rowData" style="width: 80px; text-align: center;">
+                                            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.productName}}
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.productCode}}
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.quantity}}
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.manufacturingDate}}
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.expiry}}
+                                        </td>
+                                        <td style="width: 120px; word-wrap: break-word;">
+                                            {{record.manufacturer}}
                                         </td>
 
                                     </tr>
