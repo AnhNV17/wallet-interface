@@ -16,7 +16,8 @@
                 <div class="form-row">
 
                     <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                        <h4 class="body-header">Request</h4>
+                        <h4 *ngIf="userWallet.role==='seller'" class="body-header">Request From User</h4>
+                        <h4 *ngIf="userWallet.role==='supplier'" class="body-header">Request From Seller</h4>
 
                         <div class="form-group cus-width">
                             <label for="requestId">Request Id</label>
@@ -31,7 +32,8 @@
                         </div>
 
                         <div class="form-group cus-width">
-                            <label for="quantity">Quantity</label>
+                            <label *ngIf="userWallet.role==='seller'" for="quantity">Quantity of Product</label>
+                            <label *ngIf="userWallet.role==='supplier'" for="quantity">Quantity of Consignment</label>
                             <input type="text" id="quantity" formControlName="quantity" [(ngModel)]="quantity"
                                 class="form-control" name="quantity" />
                         </div>
@@ -52,7 +54,7 @@
                     <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
 
                         <div class="body-title">
-                            <h4 class="body-header">Handle</h4>
+                            <h4 class="body-header">Availabel Consignments</h4>
                             <div *ngIf="userWallet.role==='supplier'" class="body-button-row">
                                 <button class="btn btn-primary" type="button" (click)="openInput(requestObj)"><i
                                         class="fa fa-plus"></i><span class="caret"></span>Create</button>
@@ -84,7 +86,7 @@
                                             Product Code
                                         </th>
                                         <th style="width:   120px;">
-                                            Quantity Of Consignment
+                                            Quantity Of Product
                                         </th>
                                         <th style="width: 120px;">
                                             Amount

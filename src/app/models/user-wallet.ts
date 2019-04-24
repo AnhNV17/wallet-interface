@@ -4,7 +4,5 @@ export class UserWallet {
      username: String;
      walletId: String;
      balance: Number;
-     publicKey: String;
-     message: String;
-     type: String;
+     publicKey: String
 }

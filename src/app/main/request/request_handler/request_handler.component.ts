@@ -56,10 +56,15 @@ export class RequestHandlerComponent implements OnInit {
     selectedConsignments: any;
     userAddress: String;
 
+    consingmentDetail: any;
+
+    testResult: any;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
-        private supplierSerivce: SupplierService
+        private supplierSerivce: SupplierService,
+        private sellerService: SellerService
     ) {
         this.route.queryParamMap.subscribe(resp => {
             this.requestId = resp.get('requestId');
@@ -111,15 +116,26 @@ export class RequestHandlerComponent implements OnInit {
             currentPageNumber = this.paginator.getPage() + 1;
         }
 
-        if (this.userWallet.role === "supplier") {
+        if (this.userWallet.role == "supplier") {
             this.supplierSerivce.getConsignmentDetail(
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
                 currentPageNumber
             ).subscribe(result => {
-                console.log(89, result)
+                console.log(119, result)
                 this.primengTableHelper.records = result.pageList;
                 this.primengTableHelper.totalRecordsCount = result.totalRecords;
                 this.primengTableHelper.hideLoadingIndicator()
+            })
+        } else if (this.userWallet.role == "seller") {
+            this.sellerService.getBill(
+                this.primengTableHelper.getMaxResultCount(this.paginator, event),
+                currentPageNumber,
+                this.userWallet.publicKey,
+                this.requestObj.ProductName
+            ).subscribe(result => {
+                this.primengTableHelper.records = result.pageList;
+                this.primengTableHelper.totalRecordsCount = result.totalRecords;
+                this.primengTableHelper.hideLoadingIndicator();
             })
         }
     }
@@ -128,25 +144,52 @@ export class RequestHandlerComponent implements OnInit {
         console.log(127, this.userWallet);
         if (this.requestObj != null && this.selectedConsignments !== undefined) {
             if (this.selectedConsignments.length !== 0) {
-                this.supplierSerivce.createTransaction(this.requestObj.requestId, this.requestObj.userAdd, this.userWallet.publicKey, this.selectedConsignments)
-                    .subscribe(result => {
-                        if (result.type == "Success"){
-                            Swal.fire({
-                                type: 'success',
-                                title: String(result.message)
-                            })
-                            // this.selectedConsignments = null;
+                if (this.userWallet.role == "supplier") {
+                    this.supplierSerivce.createTransaction(this.requestObj.requestId, this.requestObj.userAdd, this.userWallet.publicKey, this.selectedConsignments)
+                        .subscribe(result => {
+                            if (result.typeMess == "success") {
+                                Swal.fire({
+                                    type: 'success',
+                                    title: String(result.message)
+                                })
+                            } else if (result.typeMess == "error") {
+                                Swal.fire({
+                                    type: 'error',
+                                    title: String(result.message)
+                                })
+                            }
                             this.reloadList();
-    
+
                             // remove params
                             this.router.navigate(['request_handler'], { queryParams: null });
-                        } else {
+                        });
+                } else if (this.userWallet.role == "seller") {
+                    console.log(165, this.consingmentDetail, this.userWallet.publicKey, this.requestObj.userAdd)
+                    this.sellerService.createTransaction(
+                        this.requestObj.requestId,
+                        this.consingmentDetail.ProductName,
+                        this.consingmentDetail.Quantity,
+                        this.consingmentDetail.ProductCode,
+                        this.consingmentDetail.ManufacturingDate,
+                        this.consingmentDetail.Expiry,
+                        this.consingmentDetail.Manufacturer,
+                        this.requestObj.userAdd,
+                        this.userWallet.publicKey,
+                        this.consingmentDetail.Amount
+                    ).subscribe(result => {
+                        if (result.typeMess == "success") {
                             Swal.fire({
-                                type: "error",
+                                type: "info",
+                                title: String(result.message)
+                            })
+                        } else if (result.typeMess == "error") {
+                            Swal.fire({
+                                type: 'error',
                                 title: String(result.message)
                             })
                         }
-                    });
+                    })
+                }
             } else {
                 Swal.fire({
                     type: "warning",
@@ -172,12 +215,19 @@ export class RequestHandlerComponent implements OnInit {
                 }
 
                 this.supplierSerivce.deleteConsignment(JSON.stringify(removedCode))
-                    .subscribe(e => {
+                    .subscribe(result => {
+                        if (result.typeMess == "success") {
+                            Swal.fire({
+                                type: 'success',
+                                title: String(result.message)
+                            })
+                        } else if (result.typeMess == "error") {
+                            Swal.fire({
+                                type: 'error',
+                                title: String(result.message)
+                            })
+                        }
                         this.reloadList();
-                        Swal.fire({
-                            type: 'success',
-                            title: "Delete Successfully"
-                        })
                     })
             }
         }

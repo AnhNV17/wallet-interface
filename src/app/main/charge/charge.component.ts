@@ -47,10 +47,9 @@ export class ChargeModalComponent implements OnInit {
         if (this.amount && this.walletUser.publicKey) {
             this.transferingCoins.transferCoins(this.amount, this.walletUser.walletId, this.walletUser.publicKey)
                 .subscribe(result => {
-                    this.walletAdmin = result;
                     Swal.fire({
                         type: 'success',
-                        title: String(this.walletAdmin.message)
+                        title: String(result.message)
                     })
                 }, error => {
                     Swal.fire({

@@ -120,12 +120,18 @@ export class HomeComponent implements OnInit {
       if (this.buyQuantity && this.userChoice) {
         this.buyService
           .buy(this.userWallet.username, this.buyQuantity, this.userChoice, this.userWallet.publicKey)
-          .subscribe(balance => {
-            this.walletBalance = balance;
-            Swal.fire({
-              type: 'success',
-              title: String(this.walletBalance.message)
-            })
+          .subscribe(result => {
+            if (result.typeMess == "success") {
+              Swal.fire({
+                type: 'success',
+                title: String(result.message)
+              })
+            } else if (result.typeMess == "error") {
+              Swal.fire({
+                type: 'error',
+                title: String(result.message)
+              })
+            }
           });
         this.updateBalance(this.userWallet.walletId);
         this.updateListHistory();
@@ -134,7 +140,7 @@ export class HomeComponent implements OnInit {
       } else {
         // alert('Please fill the form to transfer');
         Swal.fire({
-          // type: 'error',
+          type: "info",
           text: "Please fill the form to transfer",
         })
       }
@@ -162,13 +168,18 @@ export class HomeComponent implements OnInit {
       if (this.transferAmount && this.transferReceiver) {
         this.transferService
           .transfer(this.transferAmount, this.transferReceiver, this.userWallet.publicKey)
-          .subscribe(balance => {
-            this.walletBalance = balance;
-            // alert(this.walletBalance.message);
-            Swal.fire({
-              // type: 'success',
-              title: String(this.walletBalance.message)
-            })
+          .subscribe(result => {
+            if (result.typeMess == "success") {
+              Swal.fire({
+                type: 'success',
+                title: String(result.message)
+              })
+            } else if (result.typeMess == "error") {
+              Swal.fire({
+                type: 'error',
+                title: String(result.message)
+              })
+            }
           });
         // this.updateBalance(this.walletId);
         // this.updateListHistory();
@@ -176,7 +187,7 @@ export class HomeComponent implements OnInit {
         this.formHome.get("receiver").reset();
       } else {
         Swal.fire({
-          // type: 'error',
+          type: "info",
           text: "Please fill the form to transfer",
         })
       }

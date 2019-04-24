@@ -16,8 +16,9 @@
                         <div class="form-group text-center div-input">
                             <label for="amount">Amount</label>
                             <input #amountInput name="amount" [(ngModel)]="amount" formControlName="amount" id="amount"
-                                type="number" class="form-control" min="0.1" placeholder="--The amount of money--"
-                                required />
+                                type="number" class="form-control" placeholder="--The amount of money--" maxLength="15"
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                                onkeypress="javascript: if ( event.keyCode > 31 && (event.keyCode < 48 || event.keyCode > 57)) return false;" />
                             <input type="hidden" name="receiver" [(ngModel)]="walletUser.publicKey"
                                 formControlName="receiver" id="receiver" />
                             <div class="valid-height">

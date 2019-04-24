@@ -134,12 +134,18 @@ export class SellerImportModalComponent implements OnInit {
             if (this.buyQuantity && this.userChoice && this.selectedBrand) {
                 this.sellerService
                     .requestToSuppliers(this.userChoice, this.buyQuantity, this.userWallet.publicKey, this.selectedBrand)
-                    .subscribe(balance => {
-                        this.walletBalance = balance;
-                        Swal.fire({
-                            type: "success",
-                            title: String(this.walletBalance.message)
-                        })
+                    .subscribe(result => {
+                        if (result.typeMess == "success") {
+                            Swal.fire({
+                                type: "info",
+                                title: String(result.message)
+                            })
+                        } else if (result.typeMess == "error") {
+                            Swal.fire({
+                                type: 'error',
+                                title: String(result.message)
+                            })
+                        }
                     });
                 this.showError = false;
                 this.updateBalance(this.userWallet.walletId);
@@ -147,7 +153,7 @@ export class SellerImportModalComponent implements OnInit {
                 this.close();
             } else {
                 Swal.fire({
-                    type: 'error',
+                    type: "warning",
                     text: "Please fill the form to transfer",
                 })
             }
