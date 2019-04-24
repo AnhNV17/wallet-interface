@@ -34,6 +34,7 @@ export class SupplierInputComponent implements OnInit {
     @ViewChild('dpSoldDate') dpSoldDate: ElementRef;
     @ViewChild('dp') ngxdp: NgxMyDatePickerDirective;
     @ViewChild('ProductOptions') ProductOptions: NgSelectComponent;
+    @ViewChild('ManufacturerOptions') ManufacturerOptions: NgSelectComponent;
     @Output() resetList: EventEmitter<any> = new EventEmitter<any>();
 
     formSupplierInput: FormGroup;
@@ -65,12 +66,11 @@ export class SupplierInputComponent implements OnInit {
         dateFormat: 'dd/mm/yyyy',
     };
 
-    packageChoices: any[] = [
-        { id: 0, displayName: "Consignment 1" },
-        { id: 1, displayName: "Consignment 2" },
-        { id: 2, displayName: "Consignment 3" },
-        { id: 3, displayName: "Consignment 4" },
-        { id: 4, displayName: "Consignment 5" }
+    manufacturerChoices: any[] = [
+        { id: 0, displayName: "The Coffee Factory" },
+        { id: 1, displayName: "Smoothie Factory Vietnam" },
+        { id: 2, displayName: "Cafe Deli Artisee" },
+        { id: 3, displayName: "Trung Nguyen" }
     ];
 
     selectItems: any[] = [
@@ -264,8 +264,11 @@ export class SupplierInputComponent implements OnInit {
                 this.formSupplierInput.get(control).markAsTouched({ onlySelf: true });
             }
             $('#' + check).focus();
-            if (check == 'pruductName')
+            if (check == 'pruductName') {
                 this.ProductOptions.focus();
+            } else if (check == 'manufacturer') {
+                this.ManufacturerOptions.focus();
+            }
         } else {
             this.getValueForSave();
             console.log(284, this.userRequest)
