@@ -58,6 +58,8 @@ export class RequestHandlerComponent implements OnInit {
 
     consingmentDetail: any;
 
+    testResult: any;
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -125,14 +127,13 @@ export class RequestHandlerComponent implements OnInit {
                 this.primengTableHelper.hideLoadingIndicator()
             })
         } else if (this.userWallet.role == "seller") {
-            this.sellerService.getConsignment(
-                this.userWallet.publicKey,
+            this.sellerService.getBill(
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
-                currentPageNumber
+                currentPageNumber,
+                this.userWallet.publicKey,
+                this.requestObj.ProductName
             ).subscribe(result => {
-                console.log(130, result)
                 this.primengTableHelper.records = result.pageList;
-                this.consingmentDetail = result.pageList;
                 this.primengTableHelper.totalRecordsCount = result.totalRecords;
                 this.primengTableHelper.hideLoadingIndicator();
             })

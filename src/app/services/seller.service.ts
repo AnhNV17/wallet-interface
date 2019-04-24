@@ -45,4 +45,8 @@ export class SellerService {
     getConsignment(publicKey: String, maxResultCount: number, pageNumber: number) {
         return this.http.get<TableResult>(`http://localhost:3000/seller/products/${publicKey}/${maxResultCount}/${pageNumber}`);
     }
+
+    getBill(maxResultCount: Number, pageNumber: Number, publicKey: String, productName: String) {
+        return this.http.get<TableResult>(`http://localhost:3000/supplier/products/${maxResultCount}/${pageNumber}/${publicKey}/${productName}`);
+    }
 }
