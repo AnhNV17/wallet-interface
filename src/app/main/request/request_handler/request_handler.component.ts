@@ -142,7 +142,7 @@ export class RequestHandlerComponent implements OnInit {
     }
 
     submit(): void {
-        console.log(127, this.selectedConsignments);
+        console.log(127, this.userWallet);
         if (this.requestObj != null && this.selectedConsignments !== undefined) {
             if (this.selectedConsignments.length !== 0) {
                 if (this.userWallet.role == "supplier") {

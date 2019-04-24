@@ -12,8 +12,8 @@ import { FormatStringComponent } from 'src/app/shared/ifichain/formatString.comp
 import Swal from 'sweetalert2';
 import { NgSelectComponent } from '@ng-select/ng-select';
 import { SupplierService } from 'src/app/services/supplier.service';
-import { tick } from '@angular/core/testing';
 import { ValidationComponent } from 'src/app/shared/ifichain/validation-messages.component';
+import { UserInfoService } from 'src/app/services/user-info.service';
 
 export class SelectItem {
     id: number;
@@ -45,6 +45,8 @@ export class SupplierInputComponent implements OnInit {
     productInfor: ProductInfor;
     userRequest: any;
     walletBalance: UserWallet;
+    successfulList: any;
+    isShow = true;
 
     productName: any;
     productCode: String;
@@ -80,6 +82,7 @@ export class SupplierInputComponent implements OnInit {
     constructor(
         // injector: Injector,
         private supplierService: SupplierService,
+        private userInfoService: UserInfoService
     ) {
     }
 
