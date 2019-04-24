@@ -131,8 +131,9 @@ export class RequestHandlerComponent implements OnInit {
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
                 currentPageNumber,
                 this.userWallet.publicKey,
-                this.requestObj.ProductName
+                this.requestObj.productName
             ).subscribe(result => {
+                console.log(136, result);
                 this.primengTableHelper.records = result.pageList;
                 this.primengTableHelper.totalRecordsCount = result.totalRecords;
                 this.primengTableHelper.hideLoadingIndicator();
