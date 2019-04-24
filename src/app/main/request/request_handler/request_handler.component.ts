@@ -133,7 +133,7 @@ export class RequestHandlerComponent implements OnInit {
                 this.userWallet.publicKey,
                 this.requestObj.productName
             ).subscribe(result => {
-                console.log(136, result);
+                console.log(136, result.pageList)
                 this.primengTableHelper.records = result.pageList;
                 this.primengTableHelper.totalRecordsCount = result.totalRecords;
                 this.primengTableHelper.hideLoadingIndicator();
@@ -165,18 +165,14 @@ export class RequestHandlerComponent implements OnInit {
                             this.router.navigate(['request_handler'], { queryParams: null });
                         });
                 } else if (this.userWallet.role == "seller") {
-                    console.log(165, this.consingmentDetail, this.userWallet.publicKey, this.requestObj.userAdd)
+                    console.log(165, this.selectedConsignments, this.userWallet.publicKey, this.requestObj.userAdd)
                     this.sellerService.createTransaction(
                         this.requestObj.requestId,
-                        this.consingmentDetail.ProductName,
-                        this.consingmentDetail.Quantity,
-                        this.consingmentDetail.ProductCode,
-                        this.consingmentDetail.ManufacturingDate,
-                        this.consingmentDetail.Expiry,
-                        this.consingmentDetail.Manufacturer,
+                        this.requestObj.productName,
+                        this.selectedConsignments,
                         this.requestObj.userAdd,
                         this.userWallet.publicKey,
-                        this.consingmentDetail.Amount
+                        this.requestObj.total
                     ).subscribe(result => {
                         if (result.typeMess == "success") {
                             Swal.fire({
