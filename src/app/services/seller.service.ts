@@ -10,14 +10,12 @@ import { ReturnMessage } from '../models/message';
 export class SellerService {
 
     constructor(private http: HttpClient) { }
-    createTransaction(requestId: String, productName: String,listData: [], receiver: String, userAddress: String, total: Number) {
+    createTransaction(requestId: String, listData: [], receiver: String, userAddress: String) {
         return this.http.post<ReturnMessage>('http://localhost:3000/seller/user_transaction', {
             requestId: requestId,
-            productName: productName,
             listData: listData,
             receiver: receiver,
-            userAddress: userAddress,
-            total: total
+            userAddress: userAddress
         })
     }
 

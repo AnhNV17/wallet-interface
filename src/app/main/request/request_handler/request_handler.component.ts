@@ -168,11 +168,9 @@ export class RequestHandlerComponent implements OnInit {
                     console.log(165, this.selectedConsignments, this.userWallet.publicKey, this.requestObj.userAdd)
                     this.sellerService.createTransaction(
                         this.requestObj.requestId,
-                        this.requestObj.productName,
                         this.selectedConsignments,
-                        this.requestObj.userAdd,
                         this.userWallet.publicKey,
-                        this.requestObj.total
+                        this.requestObj.userAdd
                     ).subscribe(result => {
                         if (result.typeMess == "success") {
                             Swal.fire({
