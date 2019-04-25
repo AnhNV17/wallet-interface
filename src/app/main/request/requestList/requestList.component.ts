@@ -53,7 +53,13 @@ export class RequesListComponent implements OnInit {
   listSellerRequest: any;
   showRequest = true;
 
-  constructor(private router: Router, private userInfo: UserInfoService, private sellerService: SellerService, private supplierSerivce: SupplierService, private updateBalanceService: UpdateBalanceService) {
+  constructor(
+    private router: Router,
+    private userInfo: UserInfoService,
+    private sellerService: SellerService,
+    private supplierSerivce: SupplierService,
+    private updateBalanceService: UpdateBalanceService
+  ) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
     console.log(48, this.userWallet)
     this.primengTableHelper = new PrimengTableHelper();
@@ -102,7 +108,6 @@ export class RequesListComponent implements OnInit {
     this.router.navigate([""]);
   }
 
-  // getUserRequests() {
   getUserRequests(event?: LazyLoadEvent): void {
     if (this.primengTableHelper.shouldResetPaging(event)) {
       this.paginator.changePage(0);

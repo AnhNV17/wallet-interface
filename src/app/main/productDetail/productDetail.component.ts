@@ -4,6 +4,7 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { UserWallet } from 'src/app/models/user-wallet';
 import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
 import { SellerService } from 'src/app/services/seller.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
     selector: "productDetailModal",
@@ -26,13 +27,15 @@ export class ProductDetailModalComponent implements OnInit {
 
     userRole: String;
 
-    detailFrSeller: any;
-    detailFrSupplier: any;
+    detailForUser: any;
+    detailForSeller: any;
 
     constructor(
-        private sellerService: SellerService
+        private sellerService: SellerService,
+        private productService: ProductService
     ) {
         this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
+        console.log(38, this.userWallet)
         this.primengTableHelper = new PrimengTableHelper();
     }
 
@@ -42,18 +45,28 @@ export class ProductDetailModalComponent implements OnInit {
         }, { updateOn: 'change' });
 
         this.formProductDetail.reset();
+        this.getPackageDetail();
         this.getProductDetail();
     }
 
-    getProductDetail(): void {
-        this.sellerService.getUserRequests(5, 1).subscribe(result => {
-            console.log(49, result.pageList)
-            this.detailFrSeller = result.pageList;
+    getPackageDetail(): void {
+        this.productService.trackDataForSeller(
+            '049c9b39950a9de25d8cfd9fecaa97d969770ba89472e1831b689865c069531a010555ae3ff3096896722b8cdbcbe3f717f869c1912269edfa42f61480264a92fb',
+            '6f7bc9b0-6757-11e9-ba04-17a1cb04c825'
+        ).subscribe(result => {
+            console.log(64, result);
+            this.detailForSeller = result;
         })
+    }
 
-        if (this.userRole == "user") {
-
-        }
+    getProductDetail(): void {
+        this.productService.trackDataForUser(
+            'CVX',
+            '04ec8747d3935dae79b0ab59c2c904965265f72be807edc6974cf29fa1d0e464cbafa3bca69d42f2bceeeee2166d990f49320a982d66185b5295042634b9cf02de'
+        ).subscribe(result => {
+            console.log(74, result);
+            this.detailForUser = result;
+        })
     }
 
     show(role: String): void {
