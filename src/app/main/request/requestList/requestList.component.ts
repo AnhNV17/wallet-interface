@@ -14,6 +14,7 @@ import { SellerTransferModalComponent } from '../../seller/seller_transfer/selle
 import { appModuleAnimation } from 'src/shared/animations/routerTransition';
 import { SupplierService } from 'src/app/services/supplier.service';
 import { RequestHandlerComponent } from '../request_handler/request_handler.component';
+import { ProductDetailModalComponent } from '../../productDetail/productDetail.component';
 
 export class SelectItem {
   id: number;
@@ -30,6 +31,7 @@ export class RequesListComponent implements OnInit {
   @ViewChild("requesListComponentModal") modal: ModalDirective;
   @ViewChild("sellerImportModal") sellerImportModal: SellerImportModalComponent;
   @ViewChild("sellerTransferModal") sellerTransferModal: SellerTransferModalComponent;
+  @ViewChild("productDetailModal") productDetailModal: ProductDetailModalComponent;
   @ViewChild('paginator') paginator: Paginator;
   @ViewChild('dataTable') dataTable: Table;
 
@@ -72,9 +74,9 @@ export class RequesListComponent implements OnInit {
     this.updateBalance(this.userWallet.walletId);
   }
 
-  openRequestHandler(requestId: String, productName: String, quantity: Number, brand: String, total: Number, userAddress: String): void {
+  openRequestHandler(requestId: String, username: String, productName: String, quantity: Number, brand: String, total: Number, userAddress: String): void {
     let navigationExtras: NavigationExtras = {
-      queryParams: { 'requestId': requestId, 'productName': productName, 'quantity': quantity, 'brand': brand, 'total': total, 'userAddress': userAddress },
+      queryParams: { 'requestId': requestId, 'username': username, 'productName': productName, 'quantity': quantity, 'brand': brand, 'total': total, 'userAddress': userAddress },
       skipLocationChange: true
     };
 
@@ -169,5 +171,9 @@ export class RequesListComponent implements OnInit {
         this.successfulList = succesfulList;
       });
     this.isShow = !this.isShow;
+  }
+
+  openDetail(userRole: String): void {
+    this.productDetailModal.show(userRole);
   }
 }

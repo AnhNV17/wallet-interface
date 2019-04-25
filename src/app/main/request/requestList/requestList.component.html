@@ -35,14 +35,15 @@
                             <th style="width: 80px; text-align: center;">
                                 Action
                             </th>
-                            <th *ngIf="userWallet.role==='supplier'" style="width: 150px;">
+                            <!-- <th *ngIf="userWallet.role==='supplier'" style="width: 150px;">
                                 Seller's Address
                             </th>
                             <th *ngIf="userWallet.role==='seller'" style="width: 150px;">
                                 User's Address
-                            </th>
+                            </th> -->
+
                             <th *ngIf="userWallet.role==='supplier'" style="width: 150px;">
-                                RequestId
+                                Username
                             </th>
                             <th *ngIf="userWallet.role==='seller'" th style="width: 150px;">
                                 UserName
@@ -54,7 +55,7 @@
                                 Quantity Of Product
                             </th>
                             <th *ngIf="userWallet.role==='supplier'" style="width: 150px;">
-                                Quantity Of Consignment
+                                Quantity Of Package
                             </th>
                             <th *ngIf="userWallet.role==='seller'" style="width: 150px;">
                                 Total
@@ -69,19 +70,19 @@
                         <tr>
                             <td style="width: 80px; text-align: center;">
                                 <button class="btn btn-outline-primary"
-                                    (click)="openRequestHandler(record.requestId, record.productName, record.quantity, record.brand, record.total, record.userAddress)"
+                                    (click)="openRequestHandler(record.requestId, record.username, record.productName, record.quantity, record.brand, record.total, record.userAddress)"
                                     type="button" style="text-align: center;">
                                     <i class="fa fa-cogs"></i>
                                     <span class="caret"></span> Handle
                                 </button>
                             </td>
-                            <td style="width: 150px; word-wrap: break-word;">
+                            <!-- <td style="width: 150px; word-wrap: break-word;">
                                 {{record.userAddress}}
-                            </td>
-                            <td *ngIf="userWallet.role==='supplier'" style="width: 150px; word-wrap: break-word;">
-                                {{record.requestId}}
-                            </td>
-                            <td *ngIf="userWallet.role==='seller'" style="width: 150px; word-wrap: break-word;">
+                            </td> -->
+                            <!-- <td *ngIf="userWallet.role==='supplier'" style="width: 150px; word-wrap: break-word;">
+                                {{record.username}}
+                            </td> -->
+                            <td style="width: 150px; word-wrap: break-word;">
                                 {{record.username}}
                             </td>
                             <td style="width: 150px; word-wrap: break-word;">
@@ -137,7 +138,8 @@
                     <li>{{ transaction }}</li>
                 </ul>
                 <ul *ngFor="let output of successfulList" [hidden]="isShow">
-                    <li>{{ output }}</li>
+                    <li>{{ output }} <a (click)="openDetail(userWallet.role)"><i class="fa fa-history fa-2x"
+                                aria-hidden="true"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -145,3 +147,4 @@
 </div>
 <sellerImportModal #sellerImportModal></sellerImportModal>
 <sellerTransferModal #sellerTransferModal (balanceUpdate)="updateBalance(userWallet.walletId)"></sellerTransferModal>
+<productDetailModal #productDetailModal></productDetailModal>

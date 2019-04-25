@@ -105,51 +105,6 @@ export class SupplierInputComponent implements OnInit {
 
     validStartEnd(st: any, en: any) {
         const $el = this;
-        // if (st != '' && en != '') {
-
-        // if ($el.formSupplierInput.get('manufacturingDate').touched) {
-        //     try {
-        //         // console.log(109, st, en)
-        //         var Start = moment(st, "DD/MM/YYYY");
-        //         var End = moment(en, "DD/MM/YYYY");
-        //         // var today = moment(new Date(), "DD/MM/YYYY");
-
-        //     } catch (error) {
-        //     }
-
-        //     if (Start > End) {
-        //         $el.formSupplierInput.get('manufacturingDate').setErrors({ isStartMax: true })
-        //     } else {
-        //         $el.formSupplierInput.get('manufacturingDate').setErrors(null)
-        //     }
-
-        //     $el.formSupplierInput.get('manufacturingDate').markAsTouched({ onlySelf: false });
-
-        //     if (!$el.formSupplierInput.get('expiry').getError("isErrToday"))
-        //         $el.formSupplierInput.get('expiry').setErrors(null)
-
-        // } else if ($el.formSupplierInput.get('expiry').touched) {
-        //     try {
-        //         var dateStart = moment(st, "DD/MM/YYYY");
-        //         var dateEnd = moment(en, "DD/MM/YYYY");
-        //         var today = moment(new Date(), "DD/MM/YYYY");
-
-        //         console.log(134, today)
-
-        //     } catch (err) {
-
-        //     }
-        //     if (dateEnd < dateStart) {
-        //         $el.formSupplierInput.get('expiry').setErrors({ isEndMin: true })
-        //     } else if (dateEnd < today) {
-        //         $el.formSupplierInput.get('expiry').setErrors({ isErrToday: true })
-        //     } else {
-        //         $el.formSupplierInput.get('expiry').setErrors(null)
-        //     }
-        //     // $el.formSupplierInput.get('expiry').setErrors(null)
-
-        //     $el.formSupplierInput.get('expiry').markAsTouched({ onlySelf: false });
-        // }
 
         try {
             var Start = moment(st, "DD/MM/YYYY");
@@ -162,23 +117,48 @@ export class SupplierInputComponent implements OnInit {
 
         }
 
-        if (Start > End) {
-            if ($el.formSupplierInput.get('manufacturingDate').touched) {
+        debugger
+
+        if ($el.formSupplierInput.get('manufacturingDate').touched) {
+            if (Start > End) {
                 $el.formSupplierInput.get('manufacturingDate').setErrors({ isStartMax: true });
-                // $el.formSupplierInput.get('expiry').setErrors(null);
+                $el.formSupplierInput.get('expiry').setErrors(null);
                 $el.formSupplierInput.get('manufacturingDate').markAsTouched({ onlySelf: true });
-            } else if ($el.formSupplierInput.get('expiry').touched) {
-                $el.formSupplierInput.get('expiry').setErrors({ isEndMin: true });
-                $el.formSupplierInput.get('expiry').markAsTouched({ onlySelf: true });
-                // $el.formSupplierInput.get('manufacturingDate').setErrors(null);
+            } else {
+                $el.formSupplierInput.get('expiry').setErrors(null);
+                $el.formSupplierInput.get('manufacturingDate').setErrors(null);
             }
-        } else if (End < today) {
-            $el.formSupplierInput.get('expiry').setErrors({ isErrToday: true });
-            $el.formSupplierInput.get('expiry').markAsTouched({ onlySelf: true });
-        } else {
-            $el.formSupplierInput.get('expiry').setErrors(null);
-            $el.formSupplierInput.get('manufacturingDate').setErrors(null);
+        } else if ($el.formSupplierInput.get('expiry').touched) {
+            if (Start > End) {
+                $el.formSupplierInput.get('expiry').setErrors({ isEndMin: true });
+                $el.formSupplierInput.get('manufacturingDate').setErrors(null);
+                $el.formSupplierInput.get('expiry').markAsTouched({ onlySelf: true });
+            } else if (End > today) {
+                $el.formSupplierInput.get('expiry').setErrors({ isErrToday: true });
+
+            } else {
+                $el.formSupplierInput.get('expiry').setErrors(null);
+                $el.formSupplierInput.get('manufacturingDate').setErrors(null);
+            }
         }
+
+        // if (Start > End) {
+        //     if ($el.formSupplierInput.get('manufacturingDate').touched) {
+        //         $el.formSupplierInput.get('manufacturingDate').setErrors({ isStartMax: true });
+        //         $el.formSupplierInput.get('expiry').setErrors(null);
+        //         $el.formSupplierInput.get('manufacturingDate').markAsTouched({ onlySelf: true });
+        //     } else if ($el.formSupplierInput.get('expiry').touched) {
+        //         $el.formSupplierInput.get('expiry').setErrors({ isEndMin: true });
+        //         $el.formSupplierInput.get('expiry').markAsTouched({ onlySelf: true });
+        //         $el.formSupplierInput.get('manufacturingDate').setErrors(null);
+        //     }
+        // } else if (End < today) {
+        //     $el.formSupplierInput.get('expiry').setErrors({ isErrToday: true });
+        //     $el.formSupplierInput.get('expiry').markAsTouched({ onlySelf: true });
+        // } else {
+        //     $el.formSupplierInput.get('expiry').setErrors(null);
+        //     $el.formSupplierInput.get('manufacturingDate').setErrors(null);
+        // }
     }
 
     onDateChangedTest(e: IMyDateModel, e1: IMyDateModel): void {

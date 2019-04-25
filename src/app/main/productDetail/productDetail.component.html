@@ -1,0 +1,82 @@
+<div bsModal #ProductDetailComponentModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="ProductDetailComponentModal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="top:140px;">
+
+            <form [formGroup]="formProductDetail" novalidate autocomplete="off">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <label>Product Detail Tracker</label>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <h5 class="body-header">From Supplier</h5>
+
+                    <br />
+
+                    <div class="form-row">
+
+                        <div *ngFor="let detail of detailFrSeller"
+                            class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <table>
+                                <tr>
+                                    <th>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-coffee fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Product Name</h6>
+                                                {{detail.productName}}
+                                            </span>
+                                        </div>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-bars fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Quantity</h6>
+                                                {{detail.quantity}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Total</h6>
+                                                {{detail.total}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <hr />
+
+                    <h5 *ngIf="userRole=='seller'" class="body-header">From Seller</h5>
+
+                    <br />
+
+                </div>
+
+                <!-- </div> -->
+
+                <div class="modal-footer">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

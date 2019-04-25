@@ -10,14 +10,12 @@ import { ReturnMessage } from '../models/message';
 export class SellerService {
 
     constructor(private http: HttpClient) { }
-    createTransaction(requestId: String, productName: String,listData: [], receiver: String, userAddress: String, total: Number) {
+    createTransaction(requestId: String, listData: [], userAddress: String, receiver: String) {
         return this.http.post<ReturnMessage>('http://localhost:3000/seller/user_transaction', {
             requestId: requestId,
-            productName: productName,
             listData: listData,
             receiver: receiver,
-            userAddress: userAddress,
-            total: total
+            userAddress: userAddress
         })
     }
 
@@ -25,8 +23,9 @@ export class SellerService {
         return this.http.get<TableResult>(`http://localhost:3000/seller/user_requests/${maxResultCount}/${pageNumber}`);
     }
 
-    requestToSuppliers(productName: String, quantity: Number, publicKey: String, brand: String) {
+    requestToSuppliers(username: String, productName: String, quantity: Number, publicKey: String, brand: String) {
         return this.http.post<ReturnMessage>('http://localhost:3000/seller/requests_to_suppliers', {
+            username: username,
             productName: productName,
             quantity: quantity,
             publicKey: publicKey,

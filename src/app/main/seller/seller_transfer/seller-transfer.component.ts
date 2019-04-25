@@ -167,9 +167,4 @@ export class SellerTransferModalComponent implements OnInit {
         this.modal.hide();
     }
 
-    logout() {
-        localStorage.removeItem("userWallet");
-        this.router.navigate([""]);
-    }
-
 }

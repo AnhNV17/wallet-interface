@@ -34,6 +34,7 @@ import { RequestHandlerComponent } from './main/request/request_handler/request_
 import { HeaderComponent } from './shared/layout/header.component';
 import { FooterComponent } from './shared/layout/footer.component';
 import { SupplierInputComponent } from './main/supplier/supplier-input/supplier-input.component';
+import { ProductDetailModalComponent } from './main/productDetail/productDetail.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { SupplierInputComponent } from './main/supplier/supplier-input/supplier-
     SupplierInputComponent,
     SellerImportModalComponent,
     SellerTransferModalComponent,
-    RequestHandlerComponent
+    RequestHandlerComponent,
+    ProductDetailModalComponent
   ],
   imports: [
     NgxMyDatePickerModule.forRoot(),

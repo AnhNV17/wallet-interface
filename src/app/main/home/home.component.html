@@ -152,7 +152,12 @@
       </ul>
       <ul *ngFor="let output of successfulList" [hidden]="isShow">
         <li>{{ output }}</li>
+
+        <li>{{ output }} <a (click)="openDetail(userWallet.role)"><i class="fa fa-history"
+          aria-hidden="true"></i></a></li>
       </ul>
     </div>
   </div>
 </div>
+
+<productDetailModal #productDetailModal></productDetailModal>

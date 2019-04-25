@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { Paginator, LazyLoadEvent } from 'primeng/primeng';
 import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
 import { Table } from 'primeng/components/table/table';
+import { ProductDetailModalComponent } from '../productDetail/productDetail.component';
 
 @Component({
   selector: "app-home",
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit {
   @ViewChild('UserOptions') userOptions: NgSelectComponent;
   @ViewChild('paginator') paginator: Paginator;
   @ViewChild('dataTable') dataTable: Table;
+  @ViewChild('productDetailModal') productDetailModal: ProductDetailModalComponent;
 
   userWallet: UserWallet;
   walletBalance: UserWallet;
@@ -222,26 +224,8 @@ export class HomeComponent implements OnInit {
     this.showRequest = !this.showRequest;
   }
 
-  getDataBC(): void {
-
-    // if (this.primengTableHelper.shouldResetPaging(event)) {
-    //   this.paginator.changePage(0);
-    //   return;
-    // }
-
-    // this.primengTableHelper.showLoadingIndicator();
-
-    // if (isNaN(this.paginator.getPage())) {
-    //   var pageNumber = 1;
-    // } else {
-    //   pageNumber = this.paginator.getPage() + 1;
-    // }
-
-    this.userInfoService.getDataBC()
-      .subscribe(result => {
-        this.dataBC = result[1],
-        console.log(231, this.dataBC)
-      })
+  openDetail(role: String): void {
+    this.productDetailModal.show(role);
   }
 
   logout() {

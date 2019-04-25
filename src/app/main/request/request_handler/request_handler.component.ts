@@ -47,6 +47,7 @@ export class RequestHandlerComponent implements OnInit {
     total: Number;
     consignDetail: any;
     userAdd: String;
+    username: String;
 
     mess: string;
 
@@ -73,8 +74,9 @@ export class RequestHandlerComponent implements OnInit {
             this.brand = resp.get('brand');
             this.total = +resp.get('total');
             this.userAdd = resp.get('userAddress');
+            this.username = resp.get('username');
 
-            this.requestObj = { 'requestId': this.requestId, 'productName': this.productName, 'quantity': this.quantity, 'brand': this.brand, 'total': this.total, 'userAdd': this.userAdd }
+            this.requestObj = { 'requestId': this.requestId, 'username': this.username, 'productName': this.productName, 'quantity': this.quantity, 'brand': this.brand, 'total': this.total, 'userAdd': this.userAdd }
             console.log(72, this.requestObj)
         })
         console.log(73, this.requestObj);
@@ -86,7 +88,7 @@ export class RequestHandlerComponent implements OnInit {
     ngOnInit(): void {
         /** Declare formgroup, formcontrol */
         this.formHandler = new FormGroup({
-            requestId: new FormControl("", {}),
+            username: new FormControl("", {}),
             productName: new FormControl("", {}),
             quantity: new FormControl("", {}),
             brand: new FormControl("", {}),
@@ -153,6 +155,7 @@ export class RequestHandlerComponent implements OnInit {
                                     type: 'success',
                                     title: String(result.message)
                                 })
+                                this.router.navigate(['request_handler'], { queryParams: null });
                             } else if (result.typeMess == "error") {
                                 Swal.fire({
                                     type: 'error',
@@ -162,29 +165,28 @@ export class RequestHandlerComponent implements OnInit {
                             this.reloadList();
 
                             // remove params
-                            this.router.navigate(['request_handler'], { queryParams: null });
                         });
                 } else if (this.userWallet.role == "seller") {
                     console.log(165, this.selectedConsignments, this.userWallet.publicKey, this.requestObj.userAdd)
                     this.sellerService.createTransaction(
                         this.requestObj.requestId,
-                        this.requestObj.productName,
                         this.selectedConsignments,
                         this.requestObj.userAdd,
-                        this.userWallet.publicKey,
-                        this.requestObj.total
+                        this.userWallet.publicKey
                     ).subscribe(result => {
                         if (result.typeMess == "success") {
                             Swal.fire({
                                 type: "info",
                                 title: String(result.message)
                             })
+                            this.router.navigate(['request_handler'], { queryParams: null });
                         } else if (result.typeMess == "error") {
                             Swal.fire({
                                 type: 'error',
                                 title: String(result.message)
                             })
                         }
+                        this.reloadList();
                     })
                 }
             } else {
@@ -236,11 +238,7 @@ export class RequestHandlerComponent implements OnInit {
     }
 
     close(): void {
-        if (this.userWallet.role === "supplier") {
-            this.router.navigate(['requestList']);
-        } else if (this.userWallet.role === "seller") {
-            this.router.navigate(['requestList']);
-        }
+        this.router.navigate(['requestList']);
     }
 
 }

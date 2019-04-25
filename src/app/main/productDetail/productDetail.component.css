@@ -1,0 +1,28 @@
+.cus-width {
+    width: 50%;
+}
+
+.middle {
+    /* transition: .5s ease; */
+    /* opacity: 0; */
+    /* position: absolute; */
+    /* top: 50%; */
+    word-wrap: break-word;
+    left: 50%;
+    /* transform: translate(-50%, -50%); */
+    /* -ms-transform: translate(-50%, -50%); */
+    text-align: center;
+}
+
+table {
+    /* border-collapse: collapse; */
+    width: 100%;
+}
+
+table, td, th {
+    border: 1px solid rgb(197, 197, 197);
+}
+
+th, td {
+    padding-left: 120px;    
+}

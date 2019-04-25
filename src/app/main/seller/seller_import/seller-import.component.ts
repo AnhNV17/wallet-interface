@@ -131,9 +131,10 @@ export class SellerImportModalComponent implements OnInit {
         } else {
 
             this.getValueForBuy();
+            console.log(134, this.userWallet.username)
             if (this.buyQuantity && this.userChoice && this.selectedBrand) {
                 this.sellerService
-                    .requestToSuppliers(this.userChoice, this.buyQuantity, this.userWallet.publicKey, this.selectedBrand)
+                    .requestToSuppliers(this.userWallet.username, this.userChoice, this.buyQuantity, this.userWallet.publicKey, this.selectedBrand)
                     .subscribe(result => {
                         if (result.typeMess == "success") {
                             Swal.fire({
@@ -191,11 +192,6 @@ export class SellerImportModalComponent implements OnInit {
         this.active = false;
         this.formSellerImport.reset();
         this.modal.hide();
-    }
-
-    logout() {
-        localStorage.removeItem("userWallet");
-        this.router.navigate([""]);
     }
 
 }
