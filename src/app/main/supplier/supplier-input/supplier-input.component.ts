@@ -116,9 +116,7 @@ export class SupplierInputComponent implements OnInit {
         } catch (err) {
 
         }
-
-        debugger
-
+        
         if ($el.formSupplierInput.get('manufacturingDate').touched) {
             if (Start > End) {
                 $el.formSupplierInput.get('manufacturingDate').setErrors({ isStartMax: true });

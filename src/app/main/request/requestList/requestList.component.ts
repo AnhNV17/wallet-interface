@@ -178,7 +178,7 @@ export class RequesListComponent implements OnInit {
     this.isShow = !this.isShow;
   }
 
-  openDetail(userRole: String): void {
-    this.productDetailModal.show(userRole);
+  openDetail(reqId: String): void {
+    this.productDetailModal.show(reqId);
   }
 }

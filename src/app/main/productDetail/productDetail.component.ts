@@ -25,13 +25,13 @@ export class ProductDetailModalComponent implements OnInit {
 
     primengTableHelper: PrimengTableHelper;
 
-    userRole: String;
+    requestID: String;
 
     detailForUser: any;
     detailForSeller: any;
+    soldDate: any;
 
     constructor(
-        private sellerService: SellerService,
         private productService: ProductService
     ) {
         this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
@@ -45,17 +45,19 @@ export class ProductDetailModalComponent implements OnInit {
         }, { updateOn: 'change' });
 
         this.formProductDetail.reset();
-        this.getPackageDetail();
-        this.getProductDetail();
+        // this.getPackageDetail();
+        // this.getProductDetail();
     }
 
     getPackageDetail(): void {
+        console.log(52, this.userWallet.publicKey, this.requestID)
         this.productService.trackDataForSeller(
-            '049c9b39950a9de25d8cfd9fecaa97d969770ba89472e1831b689865c069531a010555ae3ff3096896722b8cdbcbe3f717f869c1912269edfa42f61480264a92fb',
-            '6f7bc9b0-6757-11e9-ba04-17a1cb04c825'
+            this.userWallet.publicKey,
+            this.requestID
         ).subscribe(result => {
             console.log(64, result);
-            this.detailForSeller = result;
+            this.soldDate = result.transactedDate;
+            this.detailForSeller = result.infoProductFromSupplier;
         })
     }
 
@@ -69,8 +71,10 @@ export class ProductDetailModalComponent implements OnInit {
         })
     }
 
-    show(role: String): void {
-        this.userRole = role;
+    show(reqId: String): void {
+        console.log(72, reqId)
+        this.requestID = reqId;
+        this.getPackageDetail();
         this.active = true;
         this.modal.show();
     }

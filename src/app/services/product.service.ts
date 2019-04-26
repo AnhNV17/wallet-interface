@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ProductInfor } from '../models/productInfor';
+import { TrackingData } from '../models/trackingData';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ProductService {
   }
 
   trackDataForSeller(publicKey: String, requestId: String) {
-    return this.http.get<{}>(`http://localhost:3000/product/track_data/${publicKey}/${requestId}`);
+    return this.http.get<TrackingData>(`http://localhost:3000/product/track_data/${publicKey}/${requestId}`);
   }
 
   trackDataForUser(productCode: String, publicKey: String) {
