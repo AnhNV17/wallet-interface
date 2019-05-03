@@ -192,7 +192,7 @@ export class RequestHandlerComponent implements OnInit {
             } else {
                 Swal.fire({
                     type: "warning",
-                    title: "Request - null or Consignment - not checked!"
+                    title: "No Package is checked!"
                 });
             }
         } else {

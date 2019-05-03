@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserWallet } from '../models/user-wallet';
 import { TableResult } from '../models/table-detail';
 import { ReturnMessage } from '../models/message';
+import { sellerModal } from '../models/sellerModel';
 
 @Injectable({
     providedIn: 'root'
@@ -19,17 +20,18 @@ export class SellerService {
         })
     }
 
-    getUserRequests(maxResultCount: number, pageNumber: number) {
-        return this.http.get<TableResult>(`http://localhost:3000/seller/user_requests/${maxResultCount}/${pageNumber}`);
+    getUserRequests(seller: String, maxResultCount: number, pageNumber: number) {
+        return this.http.get<TableResult>(`http://localhost:3000/seller/user_requests/${seller}/${maxResultCount}/${pageNumber}`);
     }
 
-    requestToSuppliers(username: String, productName: String, quantity: Number, publicKey: String, brand: String) {
+    requestToSuppliers(username: String, productName: String, quantity: Number, publicKey: String, brand: String, supplier: String) {
         return this.http.post<ReturnMessage>('http://localhost:3000/seller/requests_to_suppliers', {
             username: username,
             productName: productName,
             quantity: quantity,
             publicKey: publicKey,
-            brand: brand
+            brand: brand,
+            supplier: supplier
         })
     }
 
@@ -43,5 +45,9 @@ export class SellerService {
 
     getBill(maxResultCount: Number, pageNumber: Number, publicKey: String, productName: String) {
         return this.http.get<TableResult>(`http://localhost:3000/supplier/products/${maxResultCount}/${pageNumber}/${publicKey}/${productName}`);
+    }
+
+    getSellers() {
+        return this.http.get<[]>('http://localhost:3000/seller/getSellers');
     }
 }

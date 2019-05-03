@@ -62,6 +62,8 @@ export class SellerImportModalComponent implements OnInit {
     primengTableHelper: PrimengTableHelper;
     dataBC: any;
 
+    supplierAddress: any;
+
     constructor(
         private updateBalanceService: UpdateBalanceService,
         private buyService: BuyService,
@@ -78,7 +80,8 @@ export class SellerImportModalComponent implements OnInit {
         this.formSellerImport = new FormGroup({
             userChoice: new FormControl('', { validators: [Validators.required] }),
             quantity: new FormControl('', { validators: [Validators.required] }),
-            selectedBrand: new FormControl('', { validators: [Validators.required] })
+            selectedBrand: new FormControl('', { validators: [Validators.required] }),
+            supplier: new FormControl('', { validators: [Validators.required] })
         }, { updateOn: 'change' });
 
         this.updateBalance(this.userWallet.walletId);
@@ -109,7 +112,7 @@ export class SellerImportModalComponent implements OnInit {
 
     requestSupplier() {
         let check = '';
-        let fControls = { userChoice: FormControl, quantity: FormControl, selectedBrand: FormControl }
+        let fControls = { userChoice: FormControl, quantity: FormControl, selectedBrand: FormControl, supplier: FormControl }
         for (var control in fControls) {
             if (this.formSellerImport.get(control).errors) {
                 check = control;
@@ -134,7 +137,14 @@ export class SellerImportModalComponent implements OnInit {
             console.log(134, this.userWallet.username)
             if (this.buyQuantity && this.userChoice && this.selectedBrand) {
                 this.sellerService
-                    .requestToSuppliers(this.userWallet.username, this.userChoice, this.buyQuantity, this.userWallet.publicKey, this.selectedBrand)
+                    .requestToSuppliers(
+                        this.userWallet.username,
+                        this.userChoice,
+                        this.buyQuantity,
+                        this.userWallet.publicKey,
+                        this.selectedBrand,
+                        this.supplierAddress
+                    )
                     .subscribe(result => {
                         if (result.typeMess == "success") {
                             Swal.fire({

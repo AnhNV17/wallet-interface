@@ -13,6 +13,9 @@ import { Paginator, LazyLoadEvent } from 'primeng/primeng';
 import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
 import { Table } from 'primeng/components/table/table';
 import { ProductDetailModalComponent } from '../productDetail/productDetail.component';
+import { SellerService } from 'src/app/services/seller.service';
+import { FormatStringComponent } from 'src/app/shared/ifichain/formatString.component';
+import { ValidationComponent } from 'src/app/shared/ifichain/validation-messages.component';
 
 @Component({
   selector: "app-home",
@@ -23,6 +26,7 @@ import { ProductDetailModalComponent } from '../productDetail/productDetail.comp
 export class HomeComponent implements OnInit {
   @ViewChild('AppHomeModal') modal: ModalDirective;
   @ViewChild('UserOptions') userOptions: NgSelectComponent;
+  @ViewChild('SellerOptions') sellerOptions: NgSelectComponent;
   @ViewChild('paginator') paginator: Paginator;
   @ViewChild('dataTable') dataTable: Table;
   @ViewChild('productDetailModal') productDetailModal: ProductDetailModalComponent;
@@ -56,12 +60,17 @@ export class HomeComponent implements OnInit {
   primengTableHelper: PrimengTableHelper;
   dataBC: any;
 
+  sellerAddress: any;
+
+  trackingCode: String;
+
   constructor(
     private updateBalanceService: UpdateBalanceService,
     private buyService: BuyService,
     private transferService: TransferService,
     private userInfoService: UserInfoService,
-    private router: Router
+    private router: Router,
+    private sellerSevice: SellerService
   ) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
     this.primengTableHelper = new PrimengTableHelper();
@@ -72,14 +81,21 @@ export class HomeComponent implements OnInit {
     this.formHome = new FormGroup({
       userChoice: new FormControl('', { validators: [Validators.required] }),
       quantity: new FormControl('', { validators: [Validators.required] }),
+      seller: new FormControl('', { validators: [Validators.required] }),
       amount: new FormControl('', { validators: [Validators.required] }),
       receiver: new FormControl('', { validators: [Validators.required] }),
+      trackingCode: new FormControl('', { validators: [ValidationComponent.checkCharacters] })
     }, { updateOn: 'change' });
 
     this.simpleItems = ["Abrica", "Robusta", "Culi", "TrungNguyen"];
     this.updateBalance(this.userWallet.walletId);
     // this.getDataBC();
     this.formHome.reset();
+    // this.getAllSeller();
+  }
+
+  uppercaseAll(e: any) {
+    this.trackingCode = FormatStringComponent.vietHoa(e);
   }
 
   updateBalance(walletId: String) {
@@ -91,6 +107,15 @@ export class HomeComponent implements OnInit {
   getValueForBuy() {
     this.formHome.get('userChoice').setValue(this.userChoice);
     this.formHome.get('quantity').setValue(this.buyQuantity);
+  }
+
+  getAllSeller(): void {
+    let cfShop = [];
+    this.sellerSevice.getSellers().subscribe(result => {
+      console.log(103, result)
+      this.sellerAddress = result;
+
+    })
   }
 
   getValueForTransfer() {
@@ -113,15 +138,25 @@ export class HomeComponent implements OnInit {
         this.formHome.get(control).markAsTouched({ onlySelf: true });
       }
       $('#' + check).focus();
-      if (check == 'userChoice')
+      if (check == 'userChoice') {
         this.userOptions.focus();
+      }
+      //  else if (check == 'SellerOptions') {
+      //   this.sellerOptions.focus();
+      // }
     } else {
 
       this.getValueForBuy();
       // console.log(95, this.userWallet.publicKey)
       if (this.buyQuantity && this.userChoice) {
         this.buyService
-          .buy(this.userWallet.username, this.buyQuantity, this.userChoice, this.userWallet.publicKey)
+          .buy(
+            this.userWallet.username,
+            this.buyQuantity,
+            this.userChoice,
+            this.userWallet.publicKey,
+            this.sellerAddress
+          )
           .subscribe(result => {
             if (result.typeMess == "success") {
               Swal.fire({
@@ -137,8 +172,9 @@ export class HomeComponent implements OnInit {
           });
         this.updateBalance(this.userWallet.walletId);
         this.updateListHistory();
-        this.formHome.get("userChoice").reset();
-        this.formHome.get("quantity").reset();
+        // this.formHome.get("userChoice").reset();
+        // this.formHome.get("quantity").reset();
+        this.formHome.reset();
       } else {
         // alert('Please fill the form to transfer');
         Swal.fire({
@@ -151,7 +187,7 @@ export class HomeComponent implements OnInit {
 
   transfer() {
     let check = '';
-    let fControls = { amount: FormControl, receiver: FormControl }
+    let fControls = { amount: FormControl, receiver: FormControl, seller: FormControl }
     for (var control in fControls) {
       if (this.formHome.get(control).errors) {
         check = control;

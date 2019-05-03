@@ -35,12 +35,6 @@
                             <th style="width: 80px; text-align: center;">
                                 Action
                             </th>
-                            <!-- <th *ngIf="userWallet.role==='supplier'" style="width: 150px;">
-                                Seller's Address
-                            </th>
-                            <th *ngIf="userWallet.role==='seller'" style="width: 150px;">
-                                User's Address
-                            </th> -->
 
                             <th *ngIf="userWallet.role==='supplier'" style="width: 150px;">
                                 Username
@@ -76,12 +70,6 @@
                                     <span class="caret"></span> Handle
                                 </button>
                             </td>
-                            <!-- <td style="width: 150px; word-wrap: break-word;">
-                                {{record.userAddress}}
-                            </td> -->
-                            <!-- <td *ngIf="userWallet.role==='supplier'" style="width: 150px; word-wrap: break-word;">
-                                {{record.username}}
-                            </td> -->
                             <td style="width: 150px; word-wrap: break-word;">
                                 {{record.username}}
                             </td>
@@ -129,6 +117,10 @@
                     <button (click)="getSuccessfulList()" type="button" class="btn btn-outline-primary successListBtn">
                         Successful Transactions
                     </button>
+
+                    <!-- <button (click)="trackingProduct()" type="button" class="btn btn-outline-primary successListBtn">
+                        Successful Transactions
+                    </button> -->
                 </div>
 
                 <ul *ngFor="let req of listSellerRequest" [hidden]="showRequest">

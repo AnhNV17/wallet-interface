@@ -19,6 +19,6 @@ export class ProductService {
   }
 
   trackDataForUser(productCode: String, publicKey: String) {
-    return this.http.get<{}>(`http://localhost:3000/product/track_productCode/${productCode}/${publicKey}`)
+    return this.http.get<TrackingData>(`http://localhost:3000/product/track_productCode/${productCode}/${publicKey}`)
   }
 }

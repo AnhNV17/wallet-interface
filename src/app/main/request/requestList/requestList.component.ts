@@ -15,6 +15,7 @@ import { appModuleAnimation } from 'src/shared/animations/routerTransition';
 import { SupplierService } from 'src/app/services/supplier.service';
 import { RequestHandlerComponent } from '../request_handler/request_handler.component';
 import { ProductDetailModalComponent } from '../../productDetail/productDetail.component';
+import { ProductService } from 'src/app/services/product.service';
 
 export class SelectItem {
   id: number;
@@ -53,12 +54,16 @@ export class RequesListComponent implements OnInit {
   listSellerRequest: any;
   showRequest = true;
 
+  productCod: String;
+  trackingResult: any;
+
   constructor(
     private router: Router,
     private userInfo: UserInfoService,
     private sellerService: SellerService,
     private supplierSerivce: SupplierService,
-    private updateBalanceService: UpdateBalanceService
+    private updateBalanceService: UpdateBalanceService,
+    private productService: ProductService
   ) {
     this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
     console.log(48, this.userWallet)
@@ -124,6 +129,7 @@ export class RequesListComponent implements OnInit {
 
     if (this.userWallet.role === "seller") {
       this.sellerService.getUserRequests(
+        this.userWallet.publicKey,
         this.primengTableHelper.getMaxResultCount(this.paginator, event),
         pageNumber
       ).subscribe(listRequest => {
@@ -134,6 +140,7 @@ export class RequesListComponent implements OnInit {
       });
     } else if (this.userWallet.role === "supplier") {
       this.supplierSerivce.getSellerRequests(
+        this.userWallet.publicKey,
         this.primengTableHelper.getMaxResultCount(this.paginator, event),
         pageNumber
       ).subscribe(result => {
@@ -180,5 +187,11 @@ export class RequesListComponent implements OnInit {
 
   openDetail(reqId: String): void {
     this.productDetailModal.show(reqId);
+  }
+
+  trackingProduct(): void {
+    this.productService.getProductInfo(this.productCod).subscribe(result => {
+      this.trackingResult = result;
+    })
   }
 }

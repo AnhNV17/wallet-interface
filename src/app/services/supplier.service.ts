@@ -19,8 +19,8 @@ export class SupplierService {
         })
     }
 
-    getSellerRequests(maxResultCount: number, pageNumber: number) {
-        return this.http.get<TableResult>(`http://localhost:3000/supplier/seller_requests/${maxResultCount}/${pageNumber}`);
+    getSellerRequests(supplier: String, maxResultCount: number, pageNumber: number) {
+        return this.http.get<TableResult>(`http://localhost:3000/supplier/seller_requests/${supplier}/${maxResultCount}/${pageNumber}`);
     }
 
     createConsignmentDetail(productName: String, productCode: String, quantityOfAConsignment: Number, amount: Number, manufacturingDate: String, expiry: String, manufacturer: String, prodName: String) {

@@ -10,12 +10,13 @@ export class BuyService {
 
   constructor(private http: HttpClient) { }
 
-  buy(username: String, quantity: Number, userchoice: String, publicKey: String){
+  buy(username: String, quantity: Number, userchoice: String, publicKey: String, seller: String){
     return this.http.post<ReturnMessage>('http://localhost:3000/user/buy', {
       username: username,
       quantity: quantity,
       userchoice: userchoice,
-      publicKey: publicKey
+      publicKey: publicKey,
+      seller: seller
     })
   }
 

@@ -28,8 +28,10 @@ export class ProductDetailModalComponent implements OnInit {
     requestID: String;
 
     detailForUser: any;
+    detailForUser1: any;
     detailForSeller: any;
     soldDate: any;
+    soldDate1: any;
 
     constructor(
         private productService: ProductService
@@ -57,24 +59,34 @@ export class ProductDetailModalComponent implements OnInit {
         ).subscribe(result => {
             console.log(64, result);
             this.soldDate = result.transactedDate;
-            this.detailForSeller = result.infoProductFromSupplier;
+            this.detailForSeller = result.productInfoFromSupplier;
         })
     }
 
     getProductDetail(): void {
+        console.log(65, this.userWallet.publicKey)
         this.productService.trackDataForUser(
-            'CVX',
-            '04ec8747d3935dae79b0ab59c2c904965265f72be807edc6974cf29fa1d0e464cbafa3bca69d42f2bceeeee2166d990f49320a982d66185b5295042634b9cf02de'
+            'CBCB',
+            this.userWallet.publicKey
         ).subscribe(result => {
-            console.log(74, result);
-            this.detailForUser = result;
+            console.log(70, result.productInfoFromSupplier.productInfo);
+            console.log(71, result.productInfoFromSeller.productInfo);
+            this.soldDate = result.productInfoFromSupplier.transactedDate;
+            this.soldDate1 = result.productInfoFromSeller.transactedDate;
+            this.detailForUser = result.productInfoFromSupplier.productInfo;
+            this.detailForUser1 = result.productInfoFromSeller.productInfo;
         })
     }
 
     show(reqId: String): void {
         console.log(72, reqId)
+        console.log(77, this.userWallet.role)
         this.requestID = reqId;
-        this.getPackageDetail();
+        if (this.userWallet.role == "seller") {
+            this.getPackageDetail();
+        } else if (this.userWallet.role == "user") {
+            this.getProductDetail();
+        }
         this.active = true;
         this.modal.show();
     }
