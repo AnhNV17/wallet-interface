@@ -25,7 +25,7 @@ export class ProductDetailModalComponent implements OnInit {
 
     primengTableHelper: PrimengTableHelper;
 
-    requestID: String;
+    requestIdOrPCode: String;
 
     detailForUser: any;
     detailForUser1: any;
@@ -52,10 +52,10 @@ export class ProductDetailModalComponent implements OnInit {
     }
 
     getPackageDetail(): void {
-        console.log(52, this.userWallet.publicKey, this.requestID)
+        console.log(52, this.userWallet.publicKey, this.requestIdOrPCode)
         this.productService.trackDataForSeller(
             this.userWallet.publicKey,
-            this.requestID
+            this.requestIdOrPCode
         ).subscribe(result => {
             console.log(64, result);
             this.soldDate = result.transactedDate;
@@ -66,23 +66,26 @@ export class ProductDetailModalComponent implements OnInit {
     getProductDetail(): void {
         console.log(65, this.userWallet.publicKey)
         this.productService.trackDataForUser(
-            'A001',
+            this.requestIdOrPCode,
+            // 'R001',
             this.userWallet.publicKey
         ).subscribe(result => {
-            console.log(70, result.productInfoFromSupplier.productInfo);
-            console.log(71, result.productInfoFromSeller.productInfo);
-            this.soldDate = result.productInfoFromSupplier.transactedDate;
-            this.soldDate1 = result.productInfoFromSeller.transactedDate;
-            this.detailForUser = result.productInfoFromSupplier.productInfo;
-            this.detailForUser1 = result.productInfoFromSeller.productInfo;
+            console.log(70, result);
+            // console.log(71, result.productInfoFromSeller.productInfo);
+            // if (result.dataReturn != null) {
+                this.soldDate = result.productInfoFromSupplier.transactedDate;
+                this.soldDate1 = result.productInfoFromSeller.transactedDate;
+                this.detailForUser = result.productInfoFromSupplier.productInfo;
+                this.detailForUser1 = result.productInfoFromSeller.productInfo;
+            // }
         })
     }
 
-    show(reqId: String): void {
-        console.log(72, reqId)
+    show(reqIdOrPCode: String): void {
+        console.log(72, reqIdOrPCode)
         console.log(77, this.userWallet.role)
-        this.requestID = reqId;
-        if (this.userWallet.role == "seller") {
+        this.requestIdOrPCode = reqIdOrPCode;
+        if (this.userWallet.role == "seller" || this.userWallet.role == "supplier") {
             this.getPackageDetail();
         } else if (this.userWallet.role == "user") {
             this.getProductDetail();

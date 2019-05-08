@@ -1,4 +1,6 @@
 export class TrackingData {
+    message: String;
+    dataReturn: any;
     info: String;
     transactedDate: String;
     productInfoFromSupplier: {

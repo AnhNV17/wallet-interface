@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
       seller: new FormControl('', { validators: [Validators.required] }),
       amount: new FormControl('', { validators: [Validators.required] }),
       receiver: new FormControl('', { validators: [Validators.required] }),
-      trackingCode: new FormControl('', { validators: [ValidationComponent.checkCharacters] })
+      trackingCode: new FormControl('', { validators: [ValidationComponent.checkCharacters, Validators.required] })
     }, { updateOn: 'change' });
 
     this.simpleItems = ["Abrica", "Robusta", "Culi", "TrungNguyen"];
@@ -144,7 +144,7 @@ export class HomeComponent implements OnInit {
       $('#' + check).focus();
       if (check == 'userChoice') {
         this.userOptions.focus();
-      } else if (check == 'SellerOptions') {
+      } else if (check == 'seller') {
         this.sellerOptions.focus();
       }
     } else {
@@ -263,8 +263,33 @@ export class HomeComponent implements OnInit {
     this.showRequest = !this.showRequest;
   }
 
-  openDetail(role: String): void {
-    this.productDetailModal.show(role);
+  getTrackingCode(): void {
+    this.formHome.get('trackingCode').setValue(this.trackingCode);
+  }
+
+  openDetail(reqId: String): void {
+    // if (this.userWallet.role == 'seller' || this.userWallet.role == 'supplier') {
+    //   this.productDetailModal.show(reqId);
+    // } else if (this.userWallet.role == 'user') {
+    let check = '';
+    let fControls = { trackingCode: FormControl }
+    for (var control in fControls) {
+      if (this.formHome.get(control).errors) {
+        check = control;
+        this.showError = true;
+        break;
+      }
+    }
+    if (check != '') {
+      for (var control in fControls) {
+        this.formHome.get(control).markAsTouched({ onlySelf: true });
+      }
+      $('#' + check).focus();
+    } else {
+      this.getTrackingCode();
+      this.productDetailModal.show(this.trackingCode);
+    }
+    // }
   }
 
   logout() {
