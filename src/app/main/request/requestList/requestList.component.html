@@ -130,9 +130,10 @@
                     <li>{{ transaction }}</li>
                 </ul>
                 <ul *ngFor="let output of successfulList" [hidden]="isShow">
-                    <li *ngIf="userWallet.role=='seller'">{{ output.info }} <a (click)="openDetail(output.requestId)"><i
+                    <li *ngIf="userWallet.role=='seller'">{{ output.info }}<a (click)="openDetail(output.requestId)"><i
                                 class="fa fa-history fa-2x" aria-hidden="true"></i></a></li>
-                    <li *ngIf="userWallet.role=='supplier'">{{ output }}</li>
+                    <li *ngIf="userWallet.role=='supplier'">{{ output }}<a (click)="openDetail(output.requestId)"><i
+                                class="fa fa-history fa-2x" aria-hidden="true"></i></a></li>
                 </ul>
             </div>
         </div>

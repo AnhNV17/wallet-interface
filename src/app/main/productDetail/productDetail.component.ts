@@ -66,7 +66,7 @@ export class ProductDetailModalComponent implements OnInit {
     getProductDetail(): void {
         console.log(65, this.userWallet.publicKey)
         this.productService.trackDataForUser(
-            'CBCB',
+            'A001',
             this.userWallet.publicKey
         ).subscribe(result => {
             console.log(70, result.productInfoFromSupplier.productInfo);

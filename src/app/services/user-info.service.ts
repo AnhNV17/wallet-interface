@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { UserWallet } from '../models/user-wallet';
 import { ProductInfor } from '../models/productInfor';
+import { UserRole } from '../models/userRole';
 
 @Injectable({
   providedIn: 'root'
@@ -40,5 +41,9 @@ export class UserInfoService {
 
   getDataBC() {
     return this.http.get<ProductInfor>(`http://localhost:3000/wallet/getDataBlockchain`);
+  }
+
+  getUserAsRole(role: String) {
+    return this.http.get<[UserRole]>(`http://localhost:3000/account/get_list/${role}`)
   }
 }

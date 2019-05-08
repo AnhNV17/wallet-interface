@@ -20,7 +20,7 @@
 
                     <div class="form-row">
 
-                        <ng-container *ngIf="userWallet.role=='seller'">
+                        <ng-container *ngIf="userWallet.role!='user'">
                             <div style="margin-left: 25%;" *ngFor="let detail of detailForSeller"
                                 class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <table>
@@ -41,7 +41,7 @@
                                         <td>
                                             <div style="display: inline-block; ">
                                                 <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
-                                                    class="fa fa-coffee fa-2x" aria-hidden="true"></i>&nbsp;
+                                                    class="fa fa-barcode fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Product Code</h6>
                                                     {{detail.ProductCode}}
@@ -54,7 +54,7 @@
                                         <td>
                                             <div style="display: inline-block; ">
                                                 <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
-                                                    class="fa fa-bars fa-2x" aria-hidden="true"></i>&nbsp;
+                                                    class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Quantity</h6>
                                                     {{detail.Quantity}}
@@ -80,7 +80,7 @@
                                         <td>
                                             <div style="display: inline-block; ">
                                                 <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
-                                                    class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
+                                                    class="fa fa-calendar-plus-o fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Manufacturing Date</h6>
                                                     {{detail.ManufacturingDate}}
@@ -93,7 +93,7 @@
                                         <td>
                                             <div style="display: inline-block; ">
                                                 <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
-                                                    class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
+                                                    class="fa fa-cart-arrow-down fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Transacted Date</h6>
                                                     {{soldDate}}
@@ -106,7 +106,7 @@
                                         <td>
                                             <div style="display: inline-block; ">
                                                 <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
-                                                    class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
+                                                    class="fa fa-calendar-times-o fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Expiry</h6>
                                                     {{detail.Expiry}}

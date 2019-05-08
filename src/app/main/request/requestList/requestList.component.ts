@@ -180,6 +180,7 @@ export class RequesListComponent implements OnInit {
     this.userInfo
       .getSuccessfulList(this.userWallet.publicKey)
       .subscribe(succesfulList => {
+        console.log(185, succesfulList)
         this.successfulList = succesfulList;
       });
     this.isShow = !this.isShow;

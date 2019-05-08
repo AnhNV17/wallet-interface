@@ -29,7 +29,7 @@
                         </div>
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                            <label>Quantity of Package</label>
+                            <label>Quantity of Product</label>
                             <input type="text" id="quantity" formControlName="quantity" [(ngModel)]="buyQuantity"
                                 class="form-control" name="quantity" maxlength="12"
                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -53,12 +53,10 @@
 
                         <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <label for="supplier">Supplier</label>
-                            <!-- <ng-select #SellerOptions [items]="sellers" bindValue="displayName" bindLabel="displayName"
-                                id="supplier" [(ngModel)]="supplier" formControlName="supplier" name="supplier"
+                            <ng-select #SupplierOpts [items]="listSupplier" bindValue="id" bindLabel="displayName"
+                                id="supplier" [(ngModel)]="supplierAddress" formControlName="supplier" name="supplier"
                                 placeholder="--Choose supplier--">
-                            </ng-select> -->
-                            <input name="supplier" [(ngModel)]="supplierAddress" formControlName="supplier" id="supplier"
-                                type="text" class="form-control item-form-control" />
+                            </ng-select>
                             <div class="valid-height">
                                 <validation [control]="formSellerImport.get('supplier')"></validation>
                             </div>

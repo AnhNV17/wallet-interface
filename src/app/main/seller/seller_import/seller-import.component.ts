@@ -22,6 +22,7 @@ export class SellerImportModalComponent implements OnInit {
     @ViewChild('SellerImportComponentModal') modal: ModalDirective;
     @ViewChild('UserOptions') userOptions: NgSelectComponent;
     @ViewChild('BrandOptions') brandOptions: NgSelectComponent;
+    @ViewChild('SupplierOpts') supplierOpts: NgSelectComponent;
 
     userWallet: UserWallet;
     walletBalance: UserWallet;
@@ -62,7 +63,8 @@ export class SellerImportModalComponent implements OnInit {
     primengTableHelper: PrimengTableHelper;
     dataBC: any;
 
-    supplierAddress: any;
+    supplierAddress: String;
+    listSupplier: any;
 
     constructor(
         private updateBalanceService: UpdateBalanceService,
@@ -86,7 +88,19 @@ export class SellerImportModalComponent implements OnInit {
 
         this.updateBalance(this.userWallet.walletId);
         this.formSellerImport.reset();
-        console.log(87, this.userWallet)
+        console.log(87, this.userWallet);
+        this.getSuppliers();
+    }
+
+    getSuppliers(): void {
+        let suppliers = [];
+        this.userInfoService.getUserAsRole('supplier').subscribe(result => {
+            result.forEach(item => {
+                suppliers.push({id: item.publicKey, displayName: item.username});
+            })
+        }, () => {}, () => {
+            this.listSupplier = suppliers;
+        })
     }
 
     updateBalance(walletId: String) {
@@ -99,6 +113,7 @@ export class SellerImportModalComponent implements OnInit {
         this.formSellerImport.get('userChoice').setValue(this.userChoice);
         this.formSellerImport.get('quantity').setValue(this.buyQuantity);
         this.formSellerImport.get('selectedBrand').setValue(this.selectedBrand);
+        this.formSellerImport.get('supplier').setValue(this.supplierAddress);
     }
 
     show(): void {
@@ -127,9 +142,10 @@ export class SellerImportModalComponent implements OnInit {
             $('#' + check).focus();
             if (check == 'userChoice') {
                 this.userOptions.focus();
-            }
-            if (check == 'selectedBrand') {
+            } else if (check == 'selectedBrand') {
                 this.brandOptions.focus();
+            } else if (check == 'supplier') {
+                this.supplierOpts.focus();
             }
         } else {
 

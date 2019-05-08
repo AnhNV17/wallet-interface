@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit {
   sellerAddress: any;
 
   trackingCode: String;
+  listSeller: any;
 
   constructor(
     private updateBalanceService: UpdateBalanceService,
@@ -91,11 +92,22 @@ export class HomeComponent implements OnInit {
     this.updateBalance(this.userWallet.walletId);
     // this.getDataBC();
     this.formHome.reset();
-    // this.getAllSeller();
+    this.getSellers();
   }
 
   uppercaseAll(e: any) {
     this.trackingCode = FormatStringComponent.vietHoa(e);
+  }
+
+  getSellers(): void {
+    let sellers = [];
+    this.userInfoService.getUserAsRole("seller").subscribe(result => {
+      result.forEach(item => {
+        sellers.push({ id: item.publicKey, displayName: item.username });
+      })
+    }, () => { }, () => {
+      this.listSeller = sellers;
+    })
   }
 
   updateBalance(walletId: String) {
@@ -107,15 +119,7 @@ export class HomeComponent implements OnInit {
   getValueForBuy() {
     this.formHome.get('userChoice').setValue(this.userChoice);
     this.formHome.get('quantity').setValue(this.buyQuantity);
-  }
-
-  getAllSeller(): void {
-    let cfShop = [];
-    this.sellerSevice.getSellers().subscribe(result => {
-      console.log(103, result)
-      this.sellerAddress = result;
-
-    })
+    this.formHome.get('seller').setValue(this.sellerAddress);
   }
 
   getValueForTransfer() {
@@ -125,7 +129,7 @@ export class HomeComponent implements OnInit {
 
   buy() {
     let check = '';
-    let fControls = { userChoice: FormControl, quantity: FormControl }
+    let fControls = { userChoice: FormControl, quantity: FormControl, seller: FormControl }
     for (var control in fControls) {
       if (this.formHome.get(control).errors) {
         check = control;
@@ -140,14 +144,13 @@ export class HomeComponent implements OnInit {
       $('#' + check).focus();
       if (check == 'userChoice') {
         this.userOptions.focus();
+      } else if (check == 'SellerOptions') {
+        this.sellerOptions.focus();
       }
-      //  else if (check == 'SellerOptions') {
-      //   this.sellerOptions.focus();
-      // }
     } else {
 
       this.getValueForBuy();
-      // console.log(95, this.userWallet.publicKey)
+      console.log(153, "sellerAddress: " + this.sellerAddress)
       if (this.buyQuantity && this.userChoice) {
         this.buyService
           .buy(

@@ -14,6 +14,7 @@
     <form [formGroup]="formHome" (onShown)="shown()" novalidate autocomplete="off">
       <div class="form-row">
         <div class="form-group div-align-1 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
+          <h4 style="text-align: center;">Buy Coffee</h4>
           <label for="userChoice">Coffee</label>
           <ng-select #UserOptions [items]="simpleItems" id="userChoice" [(ngModel)]="userChoice"
             formControlName="userChoice" name="userChoice" placeholder="--Choose coffee--">
@@ -32,11 +33,9 @@
           </div>
 
           <label for="seller">Seller</label>
-          <!-- <ng-select #SellerOptions [items]="sellers"  bindValue="displayName" bindLabel="displayName" id="seller" [(ngModel)]="seller" formControlName="seller"
+          <ng-select #SellerOptions [items]="listSeller" bindValue="id" bindLabel="displayName" id="seller" [(ngModel)]="sellerAddress" formControlName="seller"
             name="seller" placeholder="--Choose seller--">
-          </ng-select> -->
-          <input name="seller" [(ngModel)]="sellerAddress" formControlName="seller" id="seller" type="text"
-            class="form-control item-form-control" />
+          </ng-select>
           <div class="valid-height">
             <validation [control]="formHome.get('seller')"></validation>
           </div>
@@ -52,6 +51,7 @@
         <hr style="border: none; border-left: 1px solid #140148; height: 30vh; width: 1px;" />
 
         <div class="form-group div-align-2 item-form-control col-xs-5 col-sm-5 col-md-5 col-lg-5">
+          <h4 style="text-align: center;">Transfer Money</h4>
           <label for="amount">Amount</label>
           <input name="amount" [(ngModel)]="transferAmount" formControlName="amount" id="amount" type="text"
             class="form-control item-form-control" placeholder="--The amount of money--" maxlength="15"
@@ -99,16 +99,16 @@
           <li>{{ transaction }}</li>
         </ul>
 
-        <div class="input-group mb-9 form-group col-xs-3 col-sm-3 col-md-3 col-lg-3">
-          <input [hidden]="isShow" type="text" id="trackingCode" (input)="uppercaseAll($event)"
-            formControlName="trackingCode" [(ngModel)]="trackingCode" class="form-control" name="trackingCode"
-            minlength="0" maxlength="50" />
+        <!-- <div [hidden]="isShow" style="margin-left: 25%;"
+          class="input-group mb-9 form-group col-xs-3 col-sm-3 col-md-3 col-lg-3">
+          <input type="text" id="trackingCode" (input)="uppercaseAll($event)" formControlName="trackingCode"
+            [(ngModel)]="trackingCode" class="form-control" name="trackingCode" minlength="0" maxlength="50" />
           <div class="input-group-append">
             <button type="button" class="btn btn-outline-primary" [hidden]="isShow">
               <i class="fa fa-search" aria-hidden="true"></i>Tracking
             </button>
           </div>
-        </div>
+        </div> -->
 
         <ul *ngFor="let output of successfulList" [hidden]="isShow">
           <li>{{ output.info }} <a (click)="openDetail(output.requestId)"><i class="fa fa-history"
@@ -120,4 +120,4 @@
   </div>
 </div>
 
-<productDetailModal #productDetailModal></productDetailModal>
+<!-- <productDetailModal #productDetailModal></productDetailModal> -->
