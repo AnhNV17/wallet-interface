@@ -267,10 +267,7 @@ export class HomeComponent implements OnInit {
     this.formHome.get('trackingCode').setValue(this.trackingCode);
   }
 
-  openDetail(reqId: String): void {
-    // if (this.userWallet.role == 'seller' || this.userWallet.role == 'supplier') {
-    //   this.productDetailModal.show(reqId);
-    // } else if (this.userWallet.role == 'user') {
+  trackingDataByCode(): void {
     let check = '';
     let fControls = { trackingCode: FormControl }
     for (var control in fControls) {
@@ -287,9 +284,12 @@ export class HomeComponent implements OnInit {
       $('#' + check).focus();
     } else {
       this.getTrackingCode();
-      this.productDetailModal.show(this.trackingCode);
+      this.productDetailModal.show('' ,this.trackingCode);
     }
-    // }
+  }
+
+  trackingData(reqId: String): void {
+    this.productDetailModal.show(reqId, '');
   }
 
   logout() {

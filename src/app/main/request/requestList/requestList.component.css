@@ -52,7 +52,7 @@
 
 .function-btn-row {
     position: absolute; 
-    right: 16%; 
+    right: 15%; 
     /* top: 50%; */
     transform: translateY(-100%);
 }

@@ -8,7 +8,7 @@
                 </h4>
                 <button type="button" class="btn btn-outline-danger" (click)="close()">
                     <i class="fa fa-chevron-circle-left"></i>
-                    <span class="caret"></span>Back
+                    <span class="caret"></span> Back
                 </button>
             </div>
             <div class="modal-body">
@@ -33,8 +33,7 @@
                         </div>
 
                         <div class="form-group cus-width">
-                            <label *ngIf="userWallet.role==='seller'" for="quantity">Quantity of Product</label>
-                            <label *ngIf="userWallet.role==='supplier'" for="quantity">Quantity of Consignment</label>
+                            <label for="quantity">Quantity of Product</label>
                             <input type="text" id="quantity" formControlName="quantity" [(ngModel)]="quantity"
                                 class="form-control" name="quantity" />
                         </div>
@@ -135,25 +134,25 @@
                                             <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                                         </td>
                                         <td style="width: 120px; word-wrap: break-word;">
-                                            {{record.ProductName}}
+                                            {{record.productName}}
                                         </td>
                                         <td style="width: 120px; word-wrap: break-word;">
-                                            {{record.ProductCode}}
+                                            {{record.productCode}}
                                         </td>
                                         <td style="width: 120px; word-wrap: break-word;">
-                                            {{record.Quantity}}
+                                            {{record.quantity}}
                                         </td>
                                         <td style="width: 120px; word-wrap: break-word;">
-                                            {{record.Amount}}
+                                            {{record.amount}}
                                         </td>
                                         <td style="width: 120px; word-wrap: break-word;">
-                                            {{record.ManufacturingDate}}
+                                            {{record.manufacturingDate}}
                                         </td>
                                         <td style="width: 120px; word-wrap: break-word;">
-                                            {{record.Expiry}}
+                                            {{record.expiry}}
                                         </td>
                                         <td style="width: 120px; word-wrap: break-word;">
-                                            {{record.Manufacturer}}
+                                            {{record.manufacturer}}
                                         </td>
 
                                     </tr>
@@ -201,7 +200,14 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" style="position: absolute; right: 0.5%; transform: translateY(40%);"
+                            <button *ngIf="userWallet.role=='seller'" type="button"
+                                style="position: absolute; right: 0.5%; transform: translateY(40%);"
+                                class="btn btn-outline-success" (click)="submit()" [disabled]="saving">
+                                <i class="fa fa-forward"></i>
+                                <span class="caret"></span> Sell
+                            </button>
+                            <button *ngIf="userWallet.role=='supplier'" type="button"
+                                style="position: absolute; right: 0.5%; transform: translateY(40%);"
                                 class="btn btn-outline-success" (click)="submit()" [disabled]="saving">
                                 <i class="fa fa-forward"></i>
                                 <span class="caret"></span> Export

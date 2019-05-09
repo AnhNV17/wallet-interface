@@ -16,6 +16,8 @@ import { SupplierService } from 'src/app/services/supplier.service';
 import { RequestHandlerComponent } from '../request_handler/request_handler.component';
 import { ProductDetailModalComponent } from '../../productDetail/productDetail.component';
 import { ProductService } from 'src/app/services/product.service';
+import { FormatStringComponent } from 'src/app/shared/ifichain/formatString.component';
+import { ValidationComponent } from 'src/app/shared/ifichain/validation-messages.component';
 
 export class SelectItem {
   id: number;
@@ -38,7 +40,7 @@ export class RequesListComponent implements OnInit {
 
   @ViewChild('requestHandler') requestHandler: RequestHandlerComponent;
 
-  formSeller: FormGroup;
+  formTrace: FormGroup;
   active = false;
   saving = false;
   userWallet: UserWallet;
@@ -56,6 +58,9 @@ export class RequesListComponent implements OnInit {
 
   productCod: String;
   trackingResult: any;
+  showError = false;
+
+  trackingCode: String;
 
   constructor(
     private router: Router,
@@ -72,12 +77,9 @@ export class RequesListComponent implements OnInit {
 
   ngOnInit(): void {
     /** Declare formgroup, formcontrol */
-    this.formSeller = new FormGroup(
+    this.formTrace = new FormGroup(
       {
-        productName: new FormControl("", { validators: [Validators.required] }),
-        productCode: new FormControl("", { validators: [Validators.required] }),
-        quantity: new FormControl("", { validators: [Validators.required] }),
-        series: new FormControl("", { validators: [Validators.required] })
+        trackingCode: new FormControl('', { validators: [ValidationComponent.checkCharacters, Validators.required] })
       },
       { updateOn: "change" }
     );
@@ -186,8 +188,37 @@ export class RequesListComponent implements OnInit {
     this.isShow = !this.isShow;
   }
 
+  getTrackingCode(): void {
+    this.formTrace.get('trackingCode').setValue(this.trackingCode);
+  }
+
+  uppercaseAll(e: any) {
+    this.trackingCode = FormatStringComponent.vietHoa(e);
+  }
+
+  traceDataByCode(): void {
+    let check = '';
+    // let fControls = { trackingCode: FormControl }
+    // for (var control in fControls) {
+      if (this.formTrace.get('trackingCode').errors) {
+        check = 'trackingCode';
+        this.showError = true;
+      }
+    // }
+    if (check != '') {
+      // for (var control in fControls) {
+        this.formTrace.get('trackingCode').markAsTouched({ onlySelf: true });
+      // }
+      $('#' + check).focus();
+    } else {
+      this.getTrackingCode();
+      console.log(215, this.trackingCode)
+      this.productDetailModal.show('', this.trackingCode);
+    }
+  }
+
   openDetail(reqId: String): void {
-    this.productDetailModal.show(reqId);
+    this.productDetailModal.show(reqId, '');
   }
 
   trackingProduct(): void {

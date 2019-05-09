@@ -210,7 +210,7 @@ export class RequestHandlerComponent implements OnInit {
                 let removedCode = [];
 
                 for (let i = 0; i < this.selectedConsignments.length; i++) {
-                    removedCode.push(this.selectedConsignments[i].ProductCode);
+                    removedCode.push(this.selectedConsignments[i].productCode);
                 }
 
                 this.supplierSerivce.deleteConsignment(JSON.stringify(removedCode))

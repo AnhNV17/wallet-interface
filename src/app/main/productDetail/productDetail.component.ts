@@ -5,6 +5,8 @@ import { UserWallet } from 'src/app/models/user-wallet';
 import { PrimengTableHelper } from 'src/shared/helpers/tableHelper';
 import { SellerService } from 'src/app/services/seller.service';
 import { ProductService } from 'src/app/services/product.service';
+import { debug } from 'util';
+import Swal from 'sweetalert2';
 
 @Component({
     selector: "productDetailModal",
@@ -25,13 +27,21 @@ export class ProductDetailModalComponent implements OnInit {
 
     primengTableHelper: PrimengTableHelper;
 
-    requestIdOrPCode: String;
+    requestId: String;
+    productCode: String;
 
     detailForUser: any;
     detailForUser1: any;
     detailForSeller: any;
-    soldDate: any;
-    soldDate1: any;
+    detailForSeller1: any;
+    detailForSeller2: any;
+    soldDateImport: any;
+    soldDateSell: any;
+    soldDateSell1: any;
+    soldDateImport1: any;
+
+
+    typeTransaction: String;
 
     constructor(
         private productService: ProductService
@@ -47,48 +57,69 @@ export class ProductDetailModalComponent implements OnInit {
         }, { updateOn: 'change' });
 
         this.formProductDetail.reset();
-        // this.getPackageDetail();
-        // this.getProductDetail();
     }
 
     getPackageDetail(): void {
-        console.log(52, this.userWallet.publicKey, this.requestIdOrPCode)
+        console.log(52, this.userWallet.publicKey, this.requestId)
         this.productService.trackDataForSeller(
             this.userWallet.publicKey,
-            this.requestIdOrPCode
+            this.requestId
         ).subscribe(result => {
             console.log(64, result);
-            this.soldDate = result.transactedDate;
-            this.detailForSeller = result.productInfoFromSupplier;
+            if (result.type == "import") {
+                this.soldDateImport = result.transactedDate;
+                this.typeTransaction = "Import";
+                this.detailForSeller = result.productInfoFromSupplier;
+            } else if (result.type == "sell") {
+                this.typeTransaction = "Sell";
+                this.soldDateSell = result.transactedDate;
+                this.detailForUser = result.productInfoFromSupplier;
+                this.detailForUser1 = result.productInfoFromSeller;
+            }
         })
     }
 
     getProductDetail(): void {
-        console.log(65, this.userWallet.publicKey)
+        console.log(65, this.userWallet.publicKey, this.productCode)
         this.productService.trackDataForUser(
-            this.requestIdOrPCode,
-            // 'R001',
+            this.productCode,
             this.userWallet.publicKey
         ).subscribe(result => {
             console.log(70, result);
-            // console.log(71, result.productInfoFromSeller.productInfo);
             // if (result.dataReturn != null) {
-                this.soldDate = result.productInfoFromSupplier.transactedDate;
-                this.soldDate1 = result.productInfoFromSeller.transactedDate;
-                this.detailForUser = result.productInfoFromSupplier.productInfo;
-                this.detailForUser1 = result.productInfoFromSeller.productInfo;
+                // this.typeTransaction = "Buy";
+                // this.soldDateImport1 = result.productInfoFromSupplier.transactedDate;
+                // this.detailForUser1 = result.productInfoFromSeller.productInfo;
+                if (result.type == "oneSide") {
+                    this.typeTransaction = "Buy";
+                    this.soldDateSell1 = result.productInfoFromSupplier.transactedDate;
+                    this.detailForUser = result.productInfoFromSupplier.productInfo;
+                } else if (result.type == "bothSide") {
+                    this.typeTransaction = "Buy";
+                    this.detailForUser1 = result.productInfoFromSeller.productInfo;
+                    this.detailForUser = result.productInfoFromSupplier.productInfo;
+                    this.soldDateImport1 = result.productInfoFromSupplier.transactedDate;
+                }
+            // } else {
+            //     this.active = false;
+            //     this.modal.hide();
+            //     Swal.fire({
+            //         type: 'error',
+            //         title: String(result.message)
+            //     })
             // }
         })
     }
 
-    show(reqIdOrPCode: String): void {
-        console.log(72, reqIdOrPCode)
+    show(reqId: String, productCode: String): void {
+        console.log(72, reqId, productCode)
         console.log(77, this.userWallet.role)
-        this.requestIdOrPCode = reqIdOrPCode;
-        if (this.userWallet.role == "seller" || this.userWallet.role == "supplier") {
-            this.getPackageDetail();
-        } else if (this.userWallet.role == "user") {
+        this.requestId = reqId;
+        this.productCode = productCode;
+        if (reqId == '' && productCode != '') {
             this.getProductDetail();
+        } else if (reqId != '' && productCode == '') {
+            this.getPackageDetail();
         }
         this.active = true;
         this.modal.show();
