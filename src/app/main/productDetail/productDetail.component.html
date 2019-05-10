@@ -20,7 +20,7 @@
 
                     <div class="form-row">
 
-                        <ng-container *ngIf="userWallet.role!='user'&&typeTransaction=='Import'">
+                        <ng-container id="iptDetailSByReq" *ngIf="userWallet.role!='user'&&typeTransaction=='Import'">
                             <div style="margin-left: 25%;" *ngFor="let detail of detailForSeller"
                                 class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <table>
@@ -132,7 +132,230 @@
                             </div>
                         </ng-container>
 
-                        <ng-container *ngIf="userWallet.role=='user'&&detailForUser!=null">
+                        <ng-container id="sellDetailSByReq" *ngIf="userWallet.role!='user'&&typeTransaction=='Sell'">
+                            <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                                *ngFor="let reqDetail of detailByReq">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-coffee fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Product Name</h6>
+                                                    {{reqDetail.productInfoFromSupplier.productInfo.productName}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-barcode fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Product Code</h6>
+                                                    {{reqDetail.productInfoFromSupplier.productInfo.productCode}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Quantity</h6>
+                                                    {{reqDetail.productInfoFromSupplier.productInfo.quantity}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Amount</h6>
+                                                    {{reqDetail.productInfoFromSupplier.productInfo.amount}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-calendar-plus-o fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Manufacturing Date</h6>
+                                                    {{reqDetail.productInfoFromSupplier.productInfo.manufacturingDate}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-cart-arrow-down fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Transacted Date</h6>
+                                                    {{soldDateSell}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-calendar-times-o fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Expiry</h6>
+                                                    {{reqDetail.productInfoFromSupplier.productInfo.expiry}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-industry fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Manufacturer</h6>
+                                                    {{reqDetail.productInfoFromSupplier.productInfo.manufacturer}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </ng-container>
+
+                        <ng-container id="sellDetailSByCode" *ngIf="userWallet.role!='user'&&typeTransaction=='SellC'">
+                            <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-coffee fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Product Name</h6>
+                                                    {{detailForUser.productName}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-barcode fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Product Code</h6>
+                                                    {{detailForUser.productCode}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Quantity</h6>
+                                                    {{detailForUser.quantity}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Amount</h6>
+                                                    {{detailForUser.amount}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-calendar-plus-o fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Manufacturing Date</h6>
+                                                    {{detailForUser.manufacturingDate}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-cart-arrow-down fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Transacted Date</h6>
+                                                    {{soldDateImport1}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-calendar-times-o fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Expiry</h6>
+                                                    {{detailForUser.expiry}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-industry fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Manufacturer</h6>
+                                                    {{detailForUser.manufacturer}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </ng-container>
+
+                        <ng-container id="detailUByCode" *ngIf="userWallet.role=='user'&&detailForUser!=null">
                             <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <table>
                                     <tr>
@@ -230,8 +453,8 @@
                             </div>
                         </ng-container>
 
-                        <ng-container *ngIf="userWallet.role!='user'&&typeTransaction=='Sell'">
-                            <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6" *ngFor="let detail2 of detailForUser">
+                        <ng-container id="detailSByCode" *ngIf="userWallet.role!='user'&&typeTransaction=='Buy'">
+                            <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <table>
                                     <tr>
                                         <td>
@@ -240,7 +463,7 @@
                                                     class="fa fa-coffee fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Product Name</h6>
-                                                    {{detail2.productInfoFromSupplier.productInfo.productName}}
+                                                    {{detailForUser.productName}}
                                                 </span>
                                             </div>
                                         </td>
@@ -253,7 +476,7 @@
                                                     class="fa fa-barcode fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Product Code</h6>
-                                                    {{detail2.productInfoFromSupplier.productInfo.productCode}}
+                                                    {{detailForUser.productCode}}
                                                 </span>
                                             </div>
                                         </td>
@@ -266,7 +489,20 @@
                                                     class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Quantity</h6>
-                                                    {{detail2.productInfoFromSupplier.productInfo.quantity}}
+                                                    {{detailForUser.quantity}}
+                                                </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div style="display: inline-block; ">
+                                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                    class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
+                                                <span style="display: inline-block;">
+                                                    <h6>Amount</h6>
+                                                    {{detailForUser.amount}}
                                                 </span>
                                             </div>
                                         </td>
@@ -279,7 +515,7 @@
                                                     class="fa fa-calendar-plus-o fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Manufacturing Date</h6>
-                                                    {{detail2.productInfoFromSupplier.productInfo.manufacturingDate}}
+                                                    {{detailForUser.manufacturingDate}}
                                                 </span>
                                             </div>
                                         </td>
@@ -292,7 +528,7 @@
                                                     class="fa fa-cart-arrow-down fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Transacted Date</h6>
-                                                    {{soldDateImport}}
+                                                    {{soldDateSell1}}
                                                 </span>
                                             </div>
                                         </td>
@@ -305,7 +541,7 @@
                                                     class="fa fa-calendar-times-o fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Expiry</h6>
-                                                    {{detail2.productInfoFromSupplier.productInfo.expiry}}
+                                                    {{detailForUser.expiry}}
                                                 </span>
                                             </div>
                                         </td>
@@ -318,7 +554,7 @@
                                                     class="fa fa-industry fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Manufacturer</h6>
-                                                    {{detail2.productInfoFromSupplier.productInfo.manufacturer}}
+                                                    {{detailForUser.manufacturer}}
                                                 </span>
                                             </div>
                                         </td>
@@ -334,8 +570,11 @@
 
                     <h5 *ngIf="typeTransaction=='Sell'" class="body-header">From Seller</h5>
 
-                    <ng-container *ngIf="typeTransaction=='Sell'&&detailForUser1!=null">
-                        <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6" *ngFor="let detail1 of detailForUser1">
+                    <br />
+
+                    <ng-container id="detailByReq" *ngIf="typeTransaction=='Sell'&&detailByReq1!=null">
+                        <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6"
+                            *ngFor="let reqDetail1 of detailByReq1">
                             <table>
                                 <tr>
                                     <td>
@@ -344,7 +583,7 @@
                                                 class="fa fa-coffee fa-2x" aria-hidden="true"></i>&nbsp;
                                             <span style="display: inline-block;">
                                                 <h6>Product Name</h6>
-                                                {{detail1.productName}}
+                                                {{reqDetail1.productName}}
                                             </span>
                                         </div>
                                     </td>
@@ -357,7 +596,7 @@
                                                 class="fa fa-barcode fa-2x" aria-hidden="true"></i>&nbsp;
                                             <span style="display: inline-block;">
                                                 <h6>Product Code</h6>
-                                                {{detail1.productCode}}
+                                                {{reqDetail1.productCode}}
                                             </span>
                                         </div>
                                     </td>
@@ -370,7 +609,20 @@
                                                 class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
                                             <span style="display: inline-block;">
                                                 <h6>Quantity</h6>
-                                                {{detail1.quantity}}
+                                                {{reqDetail1.quantity}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Amount</h6>
+                                                {{reqDetail1.amount}}
                                             </span>
                                         </div>
                                     </td>
@@ -383,7 +635,7 @@
                                                 class="fa fa-calendar-plus-o fa-2x" aria-hidden="true"></i>&nbsp;
                                             <span style="display: inline-block;">
                                                 <h6>Manufacturing Date</h6>
-                                                {{detail1.manufacturingDate}}
+                                                {{reqDetail1.manufacturingDate}}
                                             </span>
                                         </div>
                                     </td>
@@ -409,7 +661,7 @@
                                                 class="fa fa-calendar-times-o fa-2x" aria-hidden="true"></i>&nbsp;
                                             <span style="display: inline-block;">
                                                 <h6>Expiry</h6>
-                                                {{detail1.expiry}}
+                                                {{reqDetail1.expiry}}
                                             </span>
                                         </div>
                                     </td>
@@ -422,7 +674,118 @@
                                                 class="fa fa-industry fa-2x" aria-hidden="true"></i>&nbsp;
                                             <span style="display: inline-block;">
                                                 <h6>Manufacturer</h6>
-                                                {{detail1.manufacturer}}
+                                                {{reqDetail1.manufacturer}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </ng-container>
+
+                    <ng-container id="detailByCode" *ngIf="typeTransaction=='SellC'&&detailForUser1!=null">
+                        <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-coffee fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Product Name</h6>
+                                                {{detailForUser1.productName}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-barcode fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Product Code</h6>
+                                                {{detailForUser1.productCode}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Quantity</h6>
+                                                {{detailForUser1.quantity}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Amount</h6>
+                                                {{detailForUser1.amount}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-calendar-plus-o fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Manufacturing Date</h6>
+                                                {{detailForUser1.manufacturingDate}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-cart-arrow-down fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Transacted Date</h6>
+                                                {{soldDateImport1}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-calendar-times-o fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Expiry</h6>
+                                                {{detailForUser1.expiry}}
+                                            </span>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div style="display: inline-block; ">
+                                            <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                class="fa fa-industry fa-2x" aria-hidden="true"></i>&nbsp;
+                                            <span style="display: inline-block;">
+                                                <h6>Manufacturer</h6>
+                                                {{detailForUser1.manufacturer}}
                                             </span>
                                         </div>
                                     </td>
@@ -433,7 +796,8 @@
                     </ng-container>
 
                     <h5 *ngIf="userWallet.role=='user'" class="body-header">From Seller</h5>
-                    <ng-container *ngIf="userWallet.role=='user'&&detailForUser1!=null">
+                    <br />
+                    <ng-container id="detailForUByCode" *ngIf="userWallet.role=='user'&&detailForUser1!=null">
                         <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <table>
                                 <tr>

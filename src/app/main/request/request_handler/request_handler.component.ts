@@ -12,6 +12,7 @@ import { SupplierService } from 'src/app/services/supplier.service';
 import Swal from 'sweetalert2';
 import { appModuleAnimation } from 'src/shared/animations/routerTransition';
 import { SupplierInputComponent } from '../../supplier/supplier-input/supplier-input.component';
+import { ProductService } from 'src/app/services/product.service';
 // import { SupplierInputComponent } from '../../supplier/supplier-input/supplier-input.component';
 
 export class SelectItem {
@@ -65,7 +66,8 @@ export class RequestHandlerComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private supplierSerivce: SupplierService,
-        private sellerService: SellerService
+        private sellerService: SellerService,
+        private productService: ProductService
     ) {
         this.route.queryParamMap.subscribe(resp => {
             this.requestId = resp.get('requestId');
@@ -119,14 +121,24 @@ export class RequestHandlerComponent implements OnInit {
         }
 
         if (this.userWallet.role == "supplier") {
-            this.supplierSerivce.getConsignmentDetail(
+            // this.supplierSerivce.getConsignmentDetail(
+            //     this.primengTableHelper.getMaxResultCount(this.paginator, event),
+            //     currentPageNumber
+            // ).subscribe(result => {
+            //     console.log(119, result)
+            //     this.primengTableHelper.records = result.pageList;
+            //     this.primengTableHelper.totalRecordsCount = result.totalRecords;
+            //     this.primengTableHelper.hideLoadingIndicator()
+            // })
+            this.productService.getPackageDbByName(
+                this.productName,
                 this.primengTableHelper.getMaxResultCount(this.paginator, event),
                 currentPageNumber
             ).subscribe(result => {
-                console.log(119, result)
+                console.log(138, result);
                 this.primengTableHelper.records = result.pageList;
                 this.primengTableHelper.totalRecordsCount = result.totalRecords;
-                this.primengTableHelper.hideLoadingIndicator()
+                this.primengTableHelper.hideLoadingIndicator();
             })
         } else if (this.userWallet.role == "seller") {
             this.sellerService.getBill(

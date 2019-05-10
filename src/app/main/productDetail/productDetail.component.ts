@@ -42,6 +42,8 @@ export class ProductDetailModalComponent implements OnInit {
 
 
     typeTransaction: String;
+    detailByReq: any;
+    detailByReq1: any;
 
     constructor(
         private productService: ProductService
@@ -67,14 +69,14 @@ export class ProductDetailModalComponent implements OnInit {
         ).subscribe(result => {
             console.log(64, result);
             if (result.type == "import") {
-                this.soldDateImport = result.transactedDate;
                 this.typeTransaction = "Import";
+                this.soldDateImport = result.transactedDate;
                 this.detailForSeller = result.productInfoFromSupplier;
             } else if (result.type == "sell") {
                 this.typeTransaction = "Sell";
                 this.soldDateSell = result.transactedDate;
-                this.detailForUser = result.productInfoFromSupplier;
-                this.detailForUser1 = result.productInfoFromSeller;
+                this.detailByReq = result.productInfoFromSupplier;
+                this.detailByReq1 = result.productInfoFromSeller;
             }
         })
     }
@@ -86,28 +88,18 @@ export class ProductDetailModalComponent implements OnInit {
             this.userWallet.publicKey
         ).subscribe(result => {
             console.log(70, result);
-            // if (result.dataReturn != null) {
-                // this.typeTransaction = "Buy";
-                // this.soldDateImport1 = result.productInfoFromSupplier.transactedDate;
-                // this.detailForUser1 = result.productInfoFromSeller.productInfo;
-                if (result.type == "oneSide") {
-                    this.typeTransaction = "Buy";
-                    this.soldDateSell1 = result.productInfoFromSupplier.transactedDate;
-                    this.detailForUser = result.productInfoFromSupplier.productInfo;
-                } else if (result.type == "bothSide") {
-                    this.typeTransaction = "Buy";
-                    this.detailForUser1 = result.productInfoFromSeller.productInfo;
-                    this.detailForUser = result.productInfoFromSupplier.productInfo;
-                    this.soldDateImport1 = result.productInfoFromSupplier.transactedDate;
-                }
-            // } else {
-            //     this.active = false;
-            //     this.modal.hide();
-            //     Swal.fire({
-            //         type: 'error',
-            //         title: String(result.message)
-            //     })
-            // }
+            if (result.type == "oneSide") {
+                this.typeTransaction = "Buy";
+                this.soldDateSell1 = result.productInfoFromSupplier.transactedDate;
+                this.detailForUser = result.productInfoFromSupplier.productInfo;
+            } else if (result.type == "bothSide") {
+                this.typeTransaction = "SellC";
+                console.log(99, result.productInfoFromSupplier)
+                console.log(100, result.productInfoFromSeller)
+                this.detailForUser1 = result.productInfoFromSeller.productInfo;
+                this.detailForUser = result.productInfoFromSupplier.productInfo;
+                this.soldDateImport1 = result.productInfoFromSupplier.transactedDate;
+            }
         })
     }
 
