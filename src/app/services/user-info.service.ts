@@ -46,4 +46,9 @@ export class UserInfoService {
   getUserAsRole(role: String) {
     return this.http.get<[UserRole]>(`http://localhost:3000/account/get_list/${role}`)
   }
+
+  getUsernameByPK(publicKey: String) {
+    return this.http.get<String>(`http://localhost:3000/account/getUsername/${publicKey}`);
+  }
 }
+

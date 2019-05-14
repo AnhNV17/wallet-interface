@@ -24,6 +24,6 @@ export class ProductService {
   }
 
   getPackageDbByName(productName: String, maxResultCount: number, pageNumber: number) {
-    return this.http.get<TableResult>(`http://localhost:3000/product/${productName}/${maxResultCount}/${pageNumber}`)
+    return this.http.get<TableResult>(`http://localhost:3000/product/getProductFrDb/${productName}/${maxResultCount}/${pageNumber}`)
   }
 }

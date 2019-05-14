@@ -7,6 +7,7 @@ import { SellerService } from 'src/app/services/seller.service';
 import { ProductService } from 'src/app/services/product.service';
 import { debug } from 'util';
 import Swal from 'sweetalert2';
+import { UserInfoService } from 'src/app/services/user-info.service';
 
 @Component({
     selector: "productDetailModal",
@@ -39,14 +40,20 @@ export class ProductDetailModalComponent implements OnInit {
     soldDateSell: any;
     soldDateSell1: any;
     soldDateImport1: any;
+    dateSold: any;
 
 
     typeTransaction: String;
     detailByReq: any;
     detailByReq1: any;
 
+    supplierName: String;
+    sellerName: String;
+    consumerName: String;
+
     constructor(
-        private productService: ProductService
+        private productService: ProductService,
+        private userInfoService: UserInfoService
     ) {
         this.userWallet = JSON.parse(localStorage.getItem("userWallet"));
         console.log(38, this.userWallet)
@@ -62,7 +69,7 @@ export class ProductDetailModalComponent implements OnInit {
     }
 
     getPackageDetail(): void {
-        console.log(52, this.userWallet.publicKey, this.requestId)
+        // console.log(52, this.userWallet.publicKey, this.requestId)
         this.productService.trackDataForSeller(
             this.userWallet.publicKey,
             this.requestId
@@ -72,17 +79,37 @@ export class ProductDetailModalComponent implements OnInit {
                 this.typeTransaction = "Import";
                 this.soldDateImport = result.transactedDate;
                 this.detailForSeller = result.productInfoFromSupplier;
+
+                this.active = true;
+                this.modal.show();
             } else if (result.type == "sell") {
                 this.typeTransaction = "Sell";
                 this.soldDateSell = result.transactedDate;
                 this.detailByReq = result.productInfoFromSupplier;
                 this.detailByReq1 = result.productInfoFromSeller;
+
+                this.active = true;
+                this.modal.show();
+            } else if (result.type == "buy") {
+                this.typeTransaction = "Sell";
+                this.soldDateSell = result.transactedDate;
+                this.detailByReq = result.productInfoFromSupplier;
+                this.detailByReq1 = result.productInfoFromSeller;
+
+                this.userInfoService.getUsernameByPK(
+                    result.productInfoFromSupplier[0].productInfoFromSupplier.supplierInfo
+                ).subscribe(uName => {
+                    this.supplierName = uName;
+                })
+
+                this.active = true;
+                this.modal.show();
             }
         })
     }
 
     getProductDetail(): void {
-        console.log(65, this.userWallet.publicKey, this.productCode)
+        // console.log(65, this.userWallet.publicKey, this.productCode)
         this.productService.trackDataForUser(
             this.productCode,
             this.userWallet.publicKey
@@ -90,22 +117,57 @@ export class ProductDetailModalComponent implements OnInit {
             console.log(70, result);
             if (result.type == "oneSide") {
                 this.typeTransaction = "Buy";
+
+                // get supplier Name
+                this.userInfoService.getUsernameByPK(
+                    result.productInfoFromSupplier.supplierInfo
+                ).subscribe(uName => {
+                    console.log(117, uName)
+                    this.supplierName = uName;
+                });
+
                 this.soldDateSell1 = result.productInfoFromSupplier.transactedDate;
                 this.detailForUser = result.productInfoFromSupplier.productInfo;
+
+                // show modal
+                this.active = true;
+                this.modal.show();
             } else if (result.type == "bothSide") {
                 this.typeTransaction = "SellC";
-                console.log(99, result.productInfoFromSupplier)
-                console.log(100, result.productInfoFromSeller)
+                
+                // get supplier Name
+                this.userInfoService.getUsernameByPK(
+                    result.productInfoFromSupplier.supplierInfo
+                ).subscribe(uName => {
+                    console.log(117, uName)
+                    this.supplierName = uName;
+                });
+
+                // get seller name
+                this.userInfoService.getUsernameByPK(
+                    result.productInfoFromSeller.sellerInfo
+                ).subscribe(uName => {
+                    console.log(125, uName)
+                    this.sellerName = uName;
+                });
+                // console.log(99, result.productInfoFromSupplier)
+                // console.log(100, result.productInfoFromSeller)
                 this.detailForUser1 = result.productInfoFromSeller.productInfo;
                 this.detailForUser = result.productInfoFromSupplier.productInfo;
                 this.soldDateImport1 = result.productInfoFromSupplier.transactedDate;
+
+                this.active = true;
+                this.modal.show();
+            } else if (result.type == "error") {
+                Swal.fire({
+                    type: "error",
+                    title: String(result.message)
+                })
             }
         })
     }
 
     show(reqId: String, productCode: String): void {
-        console.log(72, reqId, productCode)
-        console.log(77, this.userWallet.role)
         this.requestId = reqId;
         this.productCode = productCode;
         if (reqId == '' && productCode != '') {
@@ -113,8 +175,6 @@ export class ProductDetailModalComponent implements OnInit {
         } else if (reqId != '' && productCode == '') {
             this.getPackageDetail();
         }
-        this.active = true;
-        this.modal.show();
     }
 
     close(): void {

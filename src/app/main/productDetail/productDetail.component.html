@@ -14,7 +14,9 @@
                 </div>
                 <div class="modal-body">
 
-                    <h5 class="body-header">From Supplier</h5>
+                    <h5 *ngIf="typeTransaction=='Import'" class="body-header">Imported From Supplier</h5>
+
+                    <h5 *ngIf="typeTransaction=='SellC'||typeTransaction=='Buy'||typeTransaction=='Sell'" class="body-header">Supplier: {{supplierName}}</h5>
 
                     <br />
 
@@ -57,7 +59,7 @@
                                                     class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Quantity</h6>
-                                                    {{detail.quantity}}
+                                                    {{detail.quantityOfProduct}}
                                                 </span>
                                             </div>
                                         </td>
@@ -70,7 +72,7 @@
                                                     class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Amount</h6>
-                                                    {{detail.amount}}
+                                                    {{detail.totalAmount}}
                                                 </span>
                                             </div>
                                         </td>
@@ -109,7 +111,7 @@
                                                     class="fa fa-calendar-times-o fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Expiry</h6>
-                                                    {{detail.expiry}}
+                                                    {{detail.expiryDate}}
                                                 </span>
                                             </div>
                                         </td>
@@ -132,7 +134,7 @@
                             </div>
                         </ng-container>
 
-                        <ng-container id="sellDetailSByReq" *ngIf="userWallet.role!='user'&&typeTransaction=='Sell'">
+                        <ng-container id="sellDetailSByReq" *ngIf="typeTransaction=='Sell'">
                             <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6"
                                 *ngFor="let reqDetail of detailByReq">
                                 <table>
@@ -169,13 +171,13 @@
                                                     class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Quantity</h6>
-                                                    {{reqDetail.productInfoFromSupplier.productInfo.quantity}}
+                                                    {{reqDetail.productInfoFromSupplier.productInfo.quantityOfProduct}}
                                                 </span>
                                             </div>
                                         </td>
                                     </tr>
 
-                                    <tr>
+                                    <!-- <tr>
                                         <td>
                                             <div style="display: inline-block; ">
                                                 <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
@@ -186,7 +188,7 @@
                                                 </span>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> -->
 
                                     <tr>
                                         <td>
@@ -244,7 +246,7 @@
                             </div>
                         </ng-container>
 
-                        <ng-container id="sellDetailSByCode" *ngIf="userWallet.role!='user'&&typeTransaction=='SellC'">
+                        <ng-container id="sellDetailSByCode" *ngIf="typeTransaction=='SellC'">
                             <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <table>
                                     <tr>
@@ -280,13 +282,13 @@
                                                     class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Quantity</h6>
-                                                    {{detailForUser.quantity}}
+                                                    {{detailForUser.quantityOfProduct}}
                                                 </span>
                                             </div>
                                         </td>
                                     </tr>
 
-                                    <tr>
+                                    <!-- <tr>
                                         <td>
                                             <div style="display: inline-block; ">
                                                 <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
@@ -297,7 +299,7 @@
                                                 </span>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> -->
 
                                     <tr>
                                         <td>
@@ -332,7 +334,7 @@
                                                     class="fa fa-calendar-times-o fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Expiry</h6>
-                                                    {{detailForUser.expiry}}
+                                                    {{detailForUser.expiryDate}}
                                                 </span>
                                             </div>
                                         </td>
@@ -355,7 +357,7 @@
                             </div>
                         </ng-container>
 
-                        <ng-container id="detailUByCode" *ngIf="userWallet.role=='user'&&detailForUser!=null">
+                        <!-- <ng-container id="detailUByCode" *ngIf="userWallet.role=='user'&&detailForUser!=null">
                             <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                                 <table>
                                     <tr>
@@ -451,7 +453,7 @@
 
                                 </table>
                             </div>
-                        </ng-container>
+                        </ng-container> -->
 
                         <ng-container id="detailSByCode" *ngIf="userWallet.role!='user'&&typeTransaction=='Buy'">
                             <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -489,7 +491,7 @@
                                                     class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Quantity</h6>
-                                                    {{detailForUser.quantity}}
+                                                    {{detailForUser.quantityOfProduct}}
                                                 </span>
                                             </div>
                                         </td>
@@ -502,7 +504,7 @@
                                                     class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Amount</h6>
-                                                    {{detailForUser.amount}}
+                                                    {{detailForUser.totalAmount}}
                                                 </span>
                                             </div>
                                         </td>
@@ -541,7 +543,7 @@
                                                     class="fa fa-calendar-times-o fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Expiry</h6>
-                                                    {{detailForUser.expiry}}
+                                                    {{detailForUser.expiryDate}}
                                                 </span>
                                             </div>
                                         </td>
@@ -566,13 +568,17 @@
 
                     </div>
 
-                    <hr *ngIf="userWallet.role=='user'||typeTransaction=='Sell'" />
+                    <hr *ngIf="userWallet.role!='Import'" />
 
-                    <h5 *ngIf="typeTransaction=='Sell'" class="body-header">From Seller</h5>
+                    <!-- <h5 *ngIf="typeTransaction=='Sell'" class="body-header">From Seller</h5> -->
+
+                    <h5 *ngIf="userWallet.role!='user'&&typeTransaction=='Sell'" class="body-header">Sold To Consumer</h5>
+
+                    <h5 *ngIf="userWallet.role=='user'&&(typeTransaction=='SellC'||typeTransaction=='Sell')" class="body-header">Seller: {{sellerName}}</h5>
 
                     <br />
 
-                    <ng-container id="detailByReq" *ngIf="typeTransaction=='Sell'&&detailByReq1!=null">
+                    <ng-container id="detailByReq" *ngIf="typeTransaction=='Sell'">
                         <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6"
                             *ngFor="let reqDetail1 of detailByReq1">
                             <table>
@@ -609,13 +615,13 @@
                                                 class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
                                             <span style="display: inline-block;">
                                                 <h6>Quantity</h6>
-                                                {{reqDetail1.quantity}}
+                                                {{reqDetail1.quantityOfProduct}}
                                             </span>
                                         </div>
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <!-- <tr>
                                     <td>
                                         <div style="display: inline-block; ">
                                             <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
@@ -626,7 +632,7 @@
                                             </span>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
 
                                 <tr>
                                     <td>
@@ -684,7 +690,7 @@
                         </div>
                     </ng-container>
 
-                    <ng-container id="detailByCode" *ngIf="typeTransaction=='SellC'&&detailForUser1!=null">
+                    <ng-container id="detailByCode" *ngIf="typeTransaction=='SellC'">
                         <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <table>
                                 <tr>
@@ -720,13 +726,13 @@
                                                 class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
                                             <span style="display: inline-block;">
                                                 <h6>Quantity</h6>
-                                                {{detailForUser1.quantity}}
+                                                {{detailForUser1.quantityOfProduct}}
                                             </span>
                                         </div>
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <!-- <tr>
                                     <td>
                                         <div style="display: inline-block; ">
                                             <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
@@ -737,7 +743,7 @@
                                             </span>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> -->
 
                                 <tr>
                                     <td>
@@ -795,8 +801,8 @@
                         </div>
                     </ng-container>
 
-                    <h5 *ngIf="userWallet.role=='user'" class="body-header">From Seller</h5>
-                    <br />
+                    <!-- <h5 *ngIf="userWallet.role=='user'" class="body-header">From Seller</h5> -->
+                    <!-- <br />
                     <ng-container id="detailForUByCode" *ngIf="userWallet.role=='user'&&detailForUser1!=null">
                         <div style="margin-left: 25%;" class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
                             <table>
@@ -893,9 +899,7 @@
 
                             </table>
                         </div>
-                    </ng-container>
-
-
+                    </ng-container> -->
 
                 </div>
 

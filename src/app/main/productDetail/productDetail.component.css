@@ -26,3 +26,8 @@ table, td, th {
 th, td {
     padding-left: 120px;    
 }
+
+.body-header {
+    text-align:center; 
+    margin-bottom: 0;
+}
