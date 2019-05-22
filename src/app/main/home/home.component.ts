@@ -26,6 +26,7 @@ import { ValidationComponent } from 'src/app/shared/ifichain/validation-messages
 export class HomeComponent implements OnInit {
   @ViewChild('AppHomeModal') modal: ModalDirective;
   @ViewChild('UserOptions') userOptions: NgSelectComponent;
+  @ViewChild('ReceiverOptions') receiverOptions: NgSelectComponent;
   @ViewChild('SellerOptions') sellerOptions: NgSelectComponent;
   @ViewChild('paginator') paginator: Paginator;
   @ViewChild('dataTable') dataTable: Table;
@@ -48,7 +49,6 @@ export class HomeComponent implements OnInit {
   userChoice: any;
   buyQuantity: Number;
   transferAmount: Number;
-  transferReceiver: String;
   real_balance: Number;
 
   transferingBtn = false;
@@ -61,9 +61,13 @@ export class HomeComponent implements OnInit {
   dataBC: any;
 
   sellerAddress: any;
+  receiverAddress: any;
 
   trackingCode: String;
   listSeller: any;
+  listUser: any;
+
+  typeSuccess: String;
 
   constructor(
     private updateBalanceService: UpdateBalanceService,
@@ -93,6 +97,7 @@ export class HomeComponent implements OnInit {
     // this.getDataBC();
     this.formHome.reset();
     this.getSellers();
+    this.getAllUser();
   }
 
   uppercaseAll(e: any) {
@@ -110,6 +115,17 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  getAllUser(): void {
+    let users = [];
+    this.userInfoService.getAllUser().subscribe(result => {
+      result.forEach(item => {
+        users.push({ id: item.publicKey, displayName: item.username });
+      })
+    }, () => { }, () => {
+      this.listUser = users;
+    })
+  }
+
   updateBalance(walletId: String) {
     this.updateBalanceService.updateBalance(walletId).subscribe(balance => {
       this.userWallet.balance = balance;
@@ -124,7 +140,7 @@ export class HomeComponent implements OnInit {
 
   getValueForTransfer() {
     this.formHome.get('amount').setValue(this.transferAmount);
-    this.formHome.get('receiver').setValue(this.transferReceiver);
+    this.formHome.get('receiver').setValue(this.receiverAddress);
   }
 
   buy() {
@@ -190,7 +206,7 @@ export class HomeComponent implements OnInit {
 
   transfer() {
     let check = '';
-    let fControls = { amount: FormControl, receiver: FormControl, seller: FormControl }
+    let fControls = { amount: FormControl, receiver: FormControl }
     for (var control in fControls) {
       if (this.formHome.get(control).errors) {
         check = control;
@@ -203,12 +219,15 @@ export class HomeComponent implements OnInit {
         this.formHome.get(control).markAsTouched({ onlySelf: true });
       }
       $('#' + check).focus();
+      if (check == "receiver") {
+        this.receiverOptions.focus();
+      }
     } else {
 
       this.getValueForTransfer();
-      if (this.transferAmount && this.transferReceiver) {
+      if (this.transferAmount && this.receiverAddress) {
         this.transferService
-          .transfer(this.transferAmount, this.transferReceiver, this.userWallet.publicKey)
+          .transfer(this.transferAmount, this.receiverAddress, this.userWallet.publicKey)
           .subscribe(result => {
             if (result.typeMess == "success") {
               Swal.fire({
@@ -240,7 +259,9 @@ export class HomeComponent implements OnInit {
     this.userInfoService
       .getSuccessfulList(this.userWallet.publicKey)
       .subscribe(succesfulList => {
-        this.successfulList = succesfulList;
+        console.log(262, succesfulList)
+        this.successfulList = succesfulList.msg;
+        console.log(262, this.successfulList)
       });
     this.isShow = !this.isShow;
     this.updateBalance(this.userWallet.walletId);
@@ -284,7 +305,7 @@ export class HomeComponent implements OnInit {
       $('#' + check).focus();
     } else {
       this.getTrackingCode();
-      this.productDetailModal.show('' ,this.trackingCode);
+      this.productDetailModal.show('', this.trackingCode);
     }
   }
 

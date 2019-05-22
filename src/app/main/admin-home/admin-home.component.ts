@@ -57,7 +57,7 @@ export class AdminHomeComponent implements OnInit {
   getAllUsers(): void {
     this.userInfo.showAllUsers()
       .subscribe(listUsers => this.listUser = listUsers);
-      // console.log(58, this.listUser);
+    // console.log(58, this.listUser);
   }
 
   openChargeModal(walletId: String, uname: String): void {
@@ -72,7 +72,9 @@ export class AdminHomeComponent implements OnInit {
   getSuccessfulList() {
     this.isShow = !this.isShow;
     this.userInfo.getSuccessfulList("Coin Base")
-      .subscribe(succesfulList => { this.successfulList = succesfulList });
+      .subscribe(succesfulList => {
+        this.successfulList = succesfulList.msg;
+      });
   }
 
   blockchain(): void {

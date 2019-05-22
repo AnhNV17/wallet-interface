@@ -8,9 +8,9 @@
                     class="fa fa-sign-out"></i><span class="caret"></span> Logout</button>
         </div>
 
-        <div *ngIf="userWallet.role==='seller'">
+        <div>
             <h5>Balance: {{ userWallet.balance }}</h5>
-            <div class="btn-group function-btn-row">
+            <div *ngIf="userWallet.role==='seller'" class="btn-group function-btn-row">
                 <button class="btn btn-outline-primary" (click)="openImportModal()" type="button"><i
                         class="fa fa-cart-arrow-down"></i><span class="caret"></span> Import</button>
                 <button class="btn btn-outline-info" (click)="openTransferModal()" type="button"><i
@@ -143,12 +143,19 @@
                 </form>
 
                 <ul *ngFor="let output of successfulList" [hidden]="isShow">
-                    <li *ngIf="userWallet.role=='seller'">{{ output.info }} <span class="caret"></span><a
-                            (click)="openDetail(output.requestId)"><i class="fa fa-history fa-2x"
+                    <!-- <div *ngFor="let output of successfulList"> -->
+
+                    <li *ngIf="userWallet.role=='seller'&&output.type=='Transfer'||output.type=='Charge'">{{output.msg}}
+                    </li>
+                    <li *ngIf="userWallet.role=='seller'&&output.type=='Import'||output.type=='Buy'">
+                        {{ output.msg.info }} <span class="caret"></span><a
+                            (click)="openDetail(output.msg.requestId)"><i class="fa fa-history fa-2x"
                                 aria-hidden="true"></i></a></li>
-                    <li *ngIf="userWallet.role=='supplier'">{{ output }} <span class="caret"></span><a
-                            (click)="openDetail(output.requestId)"><i class="fa fa-history fa-2x"
+                    <li *ngIf="userWallet.role=='supplier'">{{ output.msg.info }} <span class="caret"></span><a
+                            (click)="openDetail(output.msg.requestId)"><i class="fa fa-history fa-2x"
                                 aria-hidden="true"></i></a></li>
+
+                    <!-- </div> -->
                 </ul>
             </div>
         </div>

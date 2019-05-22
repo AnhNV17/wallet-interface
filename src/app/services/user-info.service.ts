@@ -4,6 +4,7 @@ import { UserWallet } from '../models/user-wallet';
 import { ProductInfor } from '../models/productInfor';
 import { UserRole } from '../models/userRole';
 import { Blockchain } from '../models/blockchain';
+import { SuccessMsg } from '../models/SuccessMsg';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class UserInfoService {
   }
 
   getSuccessfulList(publicKey: String){
-    return this.http.get<[]>(`http://localhost:3000/wallet/success_list/${publicKey}`);
+    return this.http.get<SuccessMsg>(`http://localhost:3000/wallet/success_list/${publicKey}`);
   }
 
   getChargingList(){
@@ -54,6 +55,10 @@ export class UserInfoService {
 
   getBlockchain() {
     return this.http.get<[]>(`http://localhost:3000/blockchain/blocks`);
+  }
+
+  getAllUser() {
+    return this.http.get<UserWallet[]>('http://localhost:3000/user/getAllUsers');
   }
 }
 

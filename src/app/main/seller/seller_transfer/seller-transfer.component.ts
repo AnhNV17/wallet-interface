@@ -49,6 +49,7 @@ export class SellerTransferModalComponent implements OnInit {
 
     primengTableHelper: PrimengTableHelper;
     dataBC: any;
+    receiverAddress: String;
 
     listReceiver: any;
 
@@ -71,6 +72,7 @@ export class SellerTransferModalComponent implements OnInit {
 
         this.updateBalance(this.userWallet.walletId);
         this.formSellerTransfer.reset();
+        this.getAllUsers();
     }
 
     updateBalance(walletId: String) {
@@ -81,17 +83,19 @@ export class SellerTransferModalComponent implements OnInit {
 
     getValueForTransfer() {
         this.formSellerTransfer.get('amount').setValue(this.amount);
-        this.formSellerTransfer.get('receiver').setValue(this.receiver);
+        this.formSellerTransfer.get('receiver').setValue(this.receiverAddress);
     }
 
-    // getAllUsers(): void {
-    //     let users = [];
-    //     this.userInfoService.showAllUsers().subscribe(result => {
-    //         result.forEach(item => {
-    //             users.push({id: item.publicKey, displayName: item.username});
-    //         })
-    //     })
-    // }
+    getAllUsers(): void {
+        let users = [];
+        this.userInfoService.getAllUser().subscribe(result => {
+            result.forEach(item => {
+                users.push({id: item.publicKey, displayName: item.username});
+            })
+        }, () => {}, () => {
+            this.listReceiver = users;
+        })
+    }
 
     transfer() {
         let check = '';
@@ -108,12 +112,15 @@ export class SellerTransferModalComponent implements OnInit {
                 this.formSellerTransfer.get(control).markAsTouched({ onlySelf: true });
             }
             $('#' + check).focus();
+            if (check == 'receiver') {
+                this.receiverOptions.focus();
+            }
         } else {
 
             this.getValueForTransfer();
-            if (this.amount && this.receiver) {
+            if (this.amount && this.receiverAddress) {
                 this.transferService
-                    .transfer(this.amount, this.receiver, this.userWallet.publicKey)
+                    .transfer(this.amount, this.receiverAddress, this.userWallet.publicKey)
                     .subscribe(result => {
                         if (result.typeMess == "success") {
                             Swal.fire({

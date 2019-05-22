@@ -61,9 +61,17 @@
             <validation [control]="formHome.get('amount')"></validation>
           </div>
 
-          <label for="receiver">Receiver's Address</label>
+          <!-- <label for="receiver">Receiver's Address</label>
           <input name="receiver" [(ngModel)]="transferReceiver" formControlName="receiver" id="receiver" type="text"
             class="form-control item-form-control" placeholder="--Receiver's Address--" />
+          <div class="valid-height">
+            <validation [control]="formHome.get('receiver')"></validation>
+          </div> -->
+
+          <label for="sereceiverller">Receiver</label>
+          <ng-select #ReceiverOptions [items]="listUser" bindValue="id" bindLabel="displayName" id="receiver"
+            [(ngModel)]="receiverAddress" formControlName="receiver" name="receiver" placeholder="--Choose receiver--">
+          </ng-select>
           <div class="valid-height">
             <validation [control]="formHome.get('receiver')"></validation>
           </div>
@@ -111,10 +119,12 @@
           </div>
         </div>
 
-        <ul *ngFor="let output of successfulList" [hidden]="isShow">
-          <li>{{ output.info }} <span class="caret"></span><a (click)="trackingData(output.requestId)"><i
-                class="fa fa-history fa-2x" aria-hidden="true"></i></a>
-          </li>
+        <ul *ngFor="let output of successfulList" [hidden]="isShow"> 
+
+          <li *ngIf="output.type=='Transfer'||output.type=='Charge'">{{output.msg}}</li>
+          <li *ngIf="userWallet.role=='user'&&output.type=='Import'||output.type=='Buy'">
+            {{ output.msg.info }} <span class="caret"></span><a (click)="trackingData(output.msg.requestId)"><i
+                class="fa fa-history fa-2x" aria-hidden="true"></i></a></li>
 
         </ul>
       </div>

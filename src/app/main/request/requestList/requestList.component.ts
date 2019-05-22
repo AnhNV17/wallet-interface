@@ -62,6 +62,8 @@ export class RequesListComponent implements OnInit {
 
   trackingCode: String;
 
+  typeSuccess: String;
+
   constructor(
     private router: Router,
     private userInfo: UserInfoService,
@@ -184,6 +186,7 @@ export class RequesListComponent implements OnInit {
       .subscribe(succesfulList => {
         console.log(185, succesfulList)
         this.successfulList = succesfulList;
+        // this.typeSuccess = succesfulList.type;
       });
     this.isShow = !this.isShow;
   }

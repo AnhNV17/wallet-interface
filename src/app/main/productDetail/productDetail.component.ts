@@ -75,7 +75,7 @@ export class ProductDetailModalComponent implements OnInit {
             this.requestId
         ).subscribe(result => {
             console.log(64, result);
-            if (result.type == "import") {
+            if (result.type == "import" || result.type == "export") {
                 this.typeTransaction = "Import";
                 this.soldDateImport = result.transactedDate;
                 this.detailForSeller = result.productInfoFromSupplier;

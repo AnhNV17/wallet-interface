@@ -16,7 +16,7 @@
 
                     <h5 *ngIf="typeTransaction=='Import'" class="body-header">Imported From {{supplierName}}</h5>
 
-                    <h5 *ngIf="typeTransaction=='SellC'||typeTransaction=='Buy'||typeTransaction=='Sell'" class="body-header">Supplier: {{supplierName}}</h5>
+                    <h5 *ngIf="typeTransaction=='SellC'||typeTransaction=='Buy'||typeTransaction=='Sell'&&userWallet.role!='supplier'" class="body-header">Supplier: {{supplierName}}</h5>
 
                     <br />
 
