@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { UserWallet } from '../models/user-wallet';
 import { ProductInfor } from '../models/productInfor';
 import { UserRole } from '../models/userRole';
+import { Blockchain } from '../models/blockchain';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,10 @@ export class UserInfoService {
 
   getUsernameByPK(publicKey: String) {
     return this.http.get<String>(`http://localhost:3000/account/getUsername/${publicKey}`);
+  }
+
+  getBlockchain() {
+    return this.http.get<[]>(`http://localhost:3000/blockchain/blocks`);
   }
 }
 

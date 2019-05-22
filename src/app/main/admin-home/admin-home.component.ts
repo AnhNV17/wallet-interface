@@ -75,6 +75,10 @@ export class AdminHomeComponent implements OnInit {
       .subscribe(succesfulList => { this.successfulList = succesfulList });
   }
 
+  blockchain(): void {
+    this.router.navigate(["admin/blockchain"]);
+  }
+
   // getListTransaction() {
   //   this.userInfo.getListTransaction()
   //     .subscribe(result => { this.listTransaction = result });

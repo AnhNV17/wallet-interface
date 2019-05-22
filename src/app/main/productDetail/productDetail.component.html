@@ -14,7 +14,7 @@
                 </div>
                 <div class="modal-body">
 
-                    <h5 *ngIf="typeTransaction=='Import'" class="body-header">Imported From Supplier</h5>
+                    <h5 *ngIf="typeTransaction=='Import'" class="body-header">Imported From {{supplierName}}</h5>
 
                     <h5 *ngIf="typeTransaction=='SellC'||typeTransaction=='Buy'||typeTransaction=='Sell'" class="body-header">Supplier: {{supplierName}}</h5>
 
@@ -568,11 +568,11 @@
 
                     </div>
 
-                    <hr *ngIf="userWallet.role!='Import'" />
+                    <hr *ngIf="typeTransaction!='Import'" />
 
                     <!-- <h5 *ngIf="typeTransaction=='Sell'" class="body-header">From Seller</h5> -->
 
-                    <h5 *ngIf="userWallet.role!='user'&&typeTransaction=='Sell'" class="body-header">Sold To Consumer</h5>
+                    <h5 *ngIf="userWallet.role!='user'&&(typeTransaction=='Sell'||typeTransaction=='SellC')" class="body-header">Sold To {{consumerName}}</h5>
 
                     <h5 *ngIf="userWallet.role=='user'&&(typeTransaction=='SellC'||typeTransaction=='Sell')" class="body-header">Seller: {{sellerName}}</h5>
 

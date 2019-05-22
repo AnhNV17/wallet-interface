@@ -35,6 +35,7 @@ import { HeaderComponent } from './shared/layout/header.component';
 import { FooterComponent } from './shared/layout/footer.component';
 import { SupplierInputComponent } from './main/supplier/supplier-input/supplier-input.component';
 import { ProductDetailModalComponent } from './main/productDetail/productDetail.component';
+import { BlockchainComponent } from './main/blockchain/blockchain.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { ProductDetailModalComponent } from './main/productDetail/productDetail.
     SellerImportModalComponent,
     SellerTransferModalComponent,
     RequestHandlerComponent,
-    ProductDetailModalComponent
+    ProductDetailModalComponent,
+    BlockchainComponent
   ],
   imports: [
     NgxMyDatePickerModule.forRoot(),

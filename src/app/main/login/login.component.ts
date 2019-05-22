@@ -32,9 +32,6 @@ export class LoginComponent implements OnInit {
           } else if (userWallet.role === "seller" || userWallet.role === "supplier") {
             localStorage.setItem("userWallet", JSON.stringify(userWallet));
             this.router.navigate(['requestList']);
-            // } else if (userWallet.role === "supplier")  {
-            //   localStorage.setItem("userWallet", JSON.stringify(userWallet));
-            //   this.router.navigate(['supplier_home']);
           } else {
             Swal.fire({
               type: 'error',

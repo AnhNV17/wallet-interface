@@ -1,0 +1,111 @@
+<div class="container-login100" style="background-image: url('../assets/images/bg-06.jpg');">
+    <div class="wrap-home p-l-55 p-r-55 p-t-80 p-b-30">
+        <div class="header-title">
+            <span class="page-admin-title">Blockchain</span>
+        </div>
+
+        <div>
+            <h5>Blocks</h5>
+        </div>
+
+        <ng-container>
+            <div style="margin-left: 25%;" *ngFor="let detail of blockchain"
+                class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="display: inline-block; ">
+                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                    class="fa fa-coffee fa-2x" aria-hidden="true"></i>&nbsp;
+                                <span style="display: inline-block;">
+                                    <h6>Index</h6>
+                                    {{detail.index}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div style="display: inline-block; ">
+                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                    class="fa fa-barcode fa-2x" aria-hidden="true"></i>&nbsp;
+                                <span style="display: inline-block;">
+                                    <h6>Timestamp</h6>
+                                    {{detail.timestamp}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div style="display: inline-block; ">
+                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                    class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
+                                <span style="display: inline-block;">
+                                    <h6>Previous Hash</h6>
+                                    {{detail.lastHash}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div style="display: inline-block; ">
+                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                    class="fa fa-usd fa-2x" aria-hidden="true"></i>&nbsp;
+                                <span style="display: inline-block;">
+                                    <h6>Hash</h6>
+                                    {{detail.hash}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div style="display: inline-block; ">
+                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                    class="fa fa-calendar-plus-o fa-2x" aria-hidden="true"></i>&nbsp;
+                                <span style="display: inline-block;">
+                                    <h6>Nonce</h6>
+                                    {{detail.nonce}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div style="display: inline-block; ">
+                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                    class="fa fa-cart-arrow-down fa-2x" aria-hidden="true"></i>&nbsp;
+                                <span style="display: inline-block;">
+                                    <h6>Difficulty</h6>
+                                    {{detail.difficulty}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div style="display: inline-block; ">
+                                <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                    class="fa fa-calendar-times-o fa-2x" aria-hidden="true"></i>&nbsp;
+                                <span style="display: inline-block;">
+                                    <h6>Data</h6>
+                                    {{transactions}}
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </ng-container>
+
+    </div>
+</div>

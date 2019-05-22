@@ -80,6 +80,12 @@ export class ProductDetailModalComponent implements OnInit {
                 this.soldDateImport = result.transactedDate;
                 this.detailForSeller = result.productInfoFromSupplier;
 
+                this.userInfoService.getUsernameByPK(
+                    result.supplierInfo
+                ).subscribe(uName => {
+                    this.supplierName = uName;
+                })
+
                 this.active = true;
                 this.modal.show();
             } else if (result.type == "sell") {
@@ -87,6 +93,18 @@ export class ProductDetailModalComponent implements OnInit {
                 this.soldDateSell = result.transactedDate;
                 this.detailByReq = result.productInfoFromSupplier;
                 this.detailByReq1 = result.productInfoFromSeller;
+
+                this.userInfoService.getUsernameByPK(
+                    result.productInfoFromSupplier[0].productInfoFromSupplier.supplierInfo
+                ).subscribe(uName => {
+                    this.supplierName = uName;
+                })
+
+                this.userInfoService.getUsernameByPK(
+                    result.consumerInfo
+                ).subscribe(uName => {
+                    this.consumerName = uName;
+                })
 
                 this.active = true;
                 this.modal.show();
@@ -134,7 +152,7 @@ export class ProductDetailModalComponent implements OnInit {
                 this.modal.show();
             } else if (result.type == "bothSide") {
                 this.typeTransaction = "SellC";
-                
+
                 // get supplier Name
                 this.userInfoService.getUsernameByPK(
                     result.productInfoFromSupplier.supplierInfo

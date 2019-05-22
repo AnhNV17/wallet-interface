@@ -22,6 +22,7 @@ import { UserInfoService } from 'src/app/services/user-info.service';
 export class SellerTransferModalComponent implements OnInit {
     @ViewChild('SellerTransferComponentModal') modal: ModalDirective;
     @Output() balanceUpdate: EventEmitter<any> = new EventEmitter<any>();
+    @ViewChild('ReceiverOptions') receiverOptions: NgSelectComponent;
 
     userWallet: UserWallet;
     walletBalance: UserWallet;
@@ -48,6 +49,8 @@ export class SellerTransferModalComponent implements OnInit {
 
     primengTableHelper: PrimengTableHelper;
     dataBC: any;
+
+    listReceiver: any;
 
     constructor(
         private updateBalanceService: UpdateBalanceService,
@@ -80,6 +83,15 @@ export class SellerTransferModalComponent implements OnInit {
         this.formSellerTransfer.get('amount').setValue(this.amount);
         this.formSellerTransfer.get('receiver').setValue(this.receiver);
     }
+
+    // getAllUsers(): void {
+    //     let users = [];
+    //     this.userInfoService.showAllUsers().subscribe(result => {
+    //         result.forEach(item => {
+    //             users.push({id: item.publicKey, displayName: item.username});
+    //         })
+    //     })
+    // }
 
     transfer() {
         let check = '';

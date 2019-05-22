@@ -9,6 +9,7 @@ import { NgModule } from '@angular/core';
 import { RequesListComponent } from './main/request/requestList/requestList.component';
 import { RequestHandlerComponent } from './main/request/request_handler/request_handler.component';
 import { AppComponent } from './app.component';
+import { BlockchainComponent } from './main/blockchain/blockchain.component';
 
 @NgModule({
     imports: [
@@ -23,7 +24,8 @@ import { AppComponent } from './app.component';
             { path: 'requestList', component: RequesListComponent, data: {} },
             { path: 'user_detail/:walletId', component: AdminHomeComponent, data: {} },
             { path: 'logout', component: LogoutComponent, data: {} },
-            { path: 'request_handler', component: RequestHandlerComponent, data: {} }
+            { path: 'request_handler', component: RequestHandlerComponent, data: {} },
+            { path: 'admin/blockchain', component: BlockchainComponent, data: {} }
             //     ]
             // }
         ])

@@ -5,6 +5,8 @@ export class TrackingData {
     info: String;
     productInfo: any;
     transactedDate: String;
+    supplierInfo: String;
+    consumerInfo: String;
     productInfoFromSupplier: {
         supplierInfo: String;
         transactedDate: String;

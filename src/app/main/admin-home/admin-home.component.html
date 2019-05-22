@@ -67,6 +67,9 @@
         <button (click)="getSuccessfulList()" type="button" class="btn btn-outline-primary successListBtn">
           Successful Transactions
         </button>
+        <button (click)="blockchain()" type="button" class="btn btn-outline-primary successListBtn">
+          Blockchain
+        </button>
       </div>
 
       <ul *ngFor="let transaction of listCharging" [hidden]="isDisplay">
