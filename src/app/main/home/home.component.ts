@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
   showError = false;
 
   simpleItems = [];
-  successfulList = [];
+  successfulList: any;
   isShow = true;
   isDisplay = true;
   formHome: FormGroup;
@@ -260,7 +260,7 @@ export class HomeComponent implements OnInit {
       .getSuccessfulList(this.userWallet.publicKey)
       .subscribe(succesfulList => {
         console.log(262, succesfulList)
-        this.successfulList = succesfulList.msg;
+        this.successfulList = succesfulList;
         console.log(262, this.successfulList)
       });
     this.isShow = !this.isShow;
