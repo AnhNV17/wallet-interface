@@ -6,7 +6,8 @@
             <form [formGroup]="formProductDetail" novalidate autocomplete="off">
                 <div class="modal-header">
                     <h4 class="modal-title">
-                        <label>Product Detail Tracker</label>
+                        <label *ngIf="typeTransaction!='Fail'">Product Detail Tracker</label>
+                        <label *ngIf="typeTransaction=='Fail'">Fail Request</label>
                     </h4>
                     <button type="button" class="close" (click)="close()" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -223,7 +224,7 @@
                                                     class="fa fa-calendar-times-o fa-2x" aria-hidden="true"></i>&nbsp;
                                                 <span style="display: inline-block;">
                                                     <h6>Expiry</h6>
-                                                    {{reqDetail.productInfoFromSupplier.productInfo.expiry}}
+                                                    {{reqDetail.productInfoFromSupplier.productInfo.expiryDate}}
                                                 </span>
                                             </div>
                                         </td>
@@ -566,9 +567,70 @@
                             </div>
                         </ng-container>
 
+                        <ng-container id="failList" *ngIf="userWallet.role=='seller'&&typeTransaction=='Fail'">
+                                <div style="margin-left: 25%;" *ngFor="let detail of failList"
+                                    class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div style="display: inline-block; ">
+                                                    <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                        class="fa fa-coffee fa-2x" aria-hidden="true"></i>&nbsp;
+                                                    <span style="display: inline-block;">
+                                                        <h6>Product Name</h6>
+                                                        {{detail.requestDetail.productName}}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+    
+                                        <tr>
+                                            <td>
+                                                <div style="display: inline-block; ">
+                                                    <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                        class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
+                                                    <span style="display: inline-block;">
+                                                        <h6>Quantity</h6>
+                                                        {{detail.requestDetail.quantity}}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+    
+                                        <tr>
+                                            <td>
+                                                <div style="display: inline-block; ">
+                                                    <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                        class="fa fa-tag fa-2x" aria-hidden="true"></i>&nbsp;
+                                                    <span style="display: inline-block;">
+                                                        <h6>Brand</h6>
+                                                        {{detail.requestDetail.brand}}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+    
+                                        <tr>
+                                            <td>
+                                                <div style="display: inline-block; ">
+                                                    <i style="display: inline-block; vertical-align: top; padding-top: 5%;"
+                                                        class="fa fa-industry fa-2x" aria-hidden="true"></i>&nbsp;
+                                                    <span style="display: inline-block; word-wrap: none;">
+                                                        <h6>Supplier</h6>
+                                                        {{detail.requestDetail.supplier}}
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+    
+                                    </table>
+                                </div>
+                            </ng-container>
+
                     </div>
 
-                    <hr *ngIf="typeTransaction!='Import'" />
+                    <!-- <hr *ngIf="typeTransaction!='Import'" /> -->
+                    <hr *ngIf="typeTransaction=='SellC'||typeTransaction=='Sell'" />
 
                     <!-- <h5 *ngIf="typeTransaction=='Sell'" class="body-header">From Seller</h5> -->
 
@@ -615,7 +677,7 @@
                                                 class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
                                             <span style="display: inline-block;">
                                                 <h6>Quantity</h6>
-                                                {{reqDetail1.quantityOfProduct}}
+                                                {{reqDetail1.quantity}}
                                             </span>
                                         </div>
                                     </td>
@@ -726,7 +788,7 @@
                                                 class="fa fa-database fa-2x" aria-hidden="true"></i>&nbsp;
                                             <span style="display: inline-block;">
                                                 <h6>Quantity</h6>
-                                                {{detailForUser1.quantityOfProduct}}
+                                                {{detailForUser1.quantity}}
                                             </span>
                                         </div>
                                     </td>

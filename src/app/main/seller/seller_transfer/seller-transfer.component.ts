@@ -93,6 +93,11 @@ export class SellerTransferModalComponent implements OnInit {
                 users.push({id: item.publicKey, displayName: item.username});
             })
         }, () => {}, () => {
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].displayName == this.userWallet.username) {
+                    users[i].disabled = true;
+                }
+            }
             this.listReceiver = users;
         })
     }

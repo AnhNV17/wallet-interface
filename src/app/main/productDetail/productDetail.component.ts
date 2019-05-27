@@ -51,6 +51,8 @@ export class ProductDetailModalComponent implements OnInit {
     sellerName: String;
     consumerName: String;
 
+    failList: any;
+
     constructor(
         private productService: ProductService,
         private userInfoService: UserInfoService
@@ -185,6 +187,18 @@ export class ProductDetailModalComponent implements OnInit {
         })
     }
 
+    getFailDetail(): void {
+        this.typeTransaction = "Fail";
+        this.userInfoService.getFailList(
+            this.userWallet.publicKey
+        ).subscribe(result => {
+            this.failList = result;
+        });
+
+        this.active = true;
+        this.modal.show();
+    }
+
     show(reqId: String, productCode: String): void {
         this.requestId = reqId;
         this.productCode = productCode;
@@ -192,6 +206,8 @@ export class ProductDetailModalComponent implements OnInit {
             this.getProductDetail();
         } else if (reqId != '' && productCode == '') {
             this.getPackageDetail();
+        } else if (reqId == '' && productCode == '') {
+            this.getFailDetail();
         }
     }
 

@@ -89,13 +89,13 @@
 
       <div class="history">
         <div class="btn-group">
-          <button (click)="getRequests()" type="button" class="btn btn-outline-primary historyBtn">
+          <button (click)="getRequests()" type="button" class="btn btn-outline-primary">
             Requests
           </button>
-          <button (click)="getListHistory()" type="button" class="btn btn-outline-primary historyBtn">
+          <button (click)="getListHistory()" type="button" class="btn btn-outline-primary">
             History
           </button>
-          <button (click)="getSuccessfulList()" type="button" class="btn btn-outline-primary successListBtn">
+          <button (click)="getSuccessfulList()" type="button" class="btn btn-outline-primary">
             Successful Transactions
           </button>
         </div>
@@ -110,16 +110,18 @@
         <!-- search product infor -->
         <div [hidden]="isShow" style="margin-left: 35%;"
           class="input-group mb-9 form-group col-xs-3 col-sm-3 col-md-3 col-lg-3">
-          <input type="text" id="trackingCode" (input)="uppercaseAll($event)" formControlName="trackingCode"
-            [(ngModel)]="trackingCode" class="form-control" name="trackingCode" minlength="0" maxlength="50" />
+          <label for="trackingCode">Track data by ProductCode</label>
           <div class="input-group-append">
+            <input type="text" id="trackingCode" (input)="uppercaseAll($event)" formControlName="trackingCode"
+              [(ngModel)]="trackingCode" class="form-control" name="trackingCode" minlength="0" maxlength="50"
+              style="min-width: 140%;" />
             <button type="button" (click)="trackingDataByCode()" class="btn btn-outline-primary" [hidden]="isShow">
-              <i class="fa fa-search" aria-hidden="true"></i><span class="caret"></span> Tracking
+              <i class="fa fa-search" aria-hidden="true"></i><span class="caret"></span>
             </button>
           </div>
         </div>
 
-        <ul *ngFor="let output of successfulList" [hidden]="isShow"> 
+        <ul *ngFor="let output of successfulList" [hidden]="isShow">
 
           <li *ngIf="output.type=='Transfer'||output.type=='Charge'">{{output.msg}}</li>
           <li *ngIf="userWallet.role=='user'&&output.type=='Import'||output.type=='Buy'">

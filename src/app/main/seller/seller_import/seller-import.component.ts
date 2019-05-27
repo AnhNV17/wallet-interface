@@ -66,6 +66,8 @@ export class SellerImportModalComponent implements OnInit {
     supplierAddress: String;
     listSupplier: any;
 
+    supplierName: String;
+
     constructor(
         private updateBalanceService: UpdateBalanceService,
         private buyService: BuyService,
@@ -96,9 +98,9 @@ export class SellerImportModalComponent implements OnInit {
         let suppliers = [];
         this.userInfoService.getUserAsRole('supplier').subscribe(result => {
             result.forEach(item => {
-                suppliers.push({id: item.publicKey, displayName: item.username});
+                suppliers.push({ id: item.publicKey, displayName: item.username });
             })
-        }, () => {}, () => {
+        }, () => { }, () => {
             this.listSupplier = suppliers;
         })
     }
@@ -114,6 +116,11 @@ export class SellerImportModalComponent implements OnInit {
         this.formSellerImport.get('quantity').setValue(this.buyQuantity);
         this.formSellerImport.get('selectedBrand').setValue(this.selectedBrand);
         this.formSellerImport.get('supplier').setValue(this.supplierAddress);
+        for (let i = 0; i < this.listSupplier.length; i++) {
+            if (this.listSupplier[i].id == this.formSellerImport.get('supplier').value) {
+                this.supplierName = this.listSupplier[i].displayName;
+            }
+        }
     }
 
     show(): void {
@@ -150,7 +157,7 @@ export class SellerImportModalComponent implements OnInit {
         } else {
 
             this.getValueForBuy();
-            console.log(134, this.userWallet.username)
+            console.log(134, this.supplierName)
             if (this.buyQuantity && this.userChoice && this.selectedBrand) {
                 this.sellerService
                     .requestToSuppliers(
@@ -159,7 +166,8 @@ export class SellerImportModalComponent implements OnInit {
                         this.buyQuantity,
                         this.userWallet.publicKey,
                         this.selectedBrand,
-                        this.supplierAddress
+                        this.supplierAddress,
+                        this.supplierName
                     )
                     .subscribe(result => {
                         if (result.typeMess == "success") {

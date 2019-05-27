@@ -60,5 +60,9 @@ export class UserInfoService {
   getAllUser() {
     return this.http.get<UserWallet[]>('http://localhost:3000/user/getAllUsers');
   }
+
+  getFailList(publicKey: String) {
+    return this.http.get<[]>(`http://localhost:3000/wallet/fail_list/${publicKey}`);
+  }
 }
 

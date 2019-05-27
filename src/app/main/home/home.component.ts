@@ -122,8 +122,13 @@ export class HomeComponent implements OnInit {
         users.push({ id: item.publicKey, displayName: item.username });
       })
     }, () => { }, () => {
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].displayName == this.userWallet.username) {
+          users[i].disabled = true;
+        }
+      }
       this.listUser = users;
-    })
+    });
   }
 
   updateBalance(walletId: String) {
@@ -191,11 +196,8 @@ export class HomeComponent implements OnInit {
           });
         this.updateBalance(this.userWallet.walletId);
         this.updateListHistory();
-        // this.formHome.get("userChoice").reset();
-        // this.formHome.get("quantity").reset();
         this.formHome.reset();
       } else {
-        // alert('Please fill the form to transfer');
         Swal.fire({
           type: "info",
           text: "Please fill the form to transfer",
@@ -265,6 +267,9 @@ export class HomeComponent implements OnInit {
       });
     this.isShow = !this.isShow;
     this.updateBalance(this.userWallet.walletId);
+
+    this.showRequest = true;
+    this.isDisplay = true;
   }
 
   updateListHistory() {
@@ -276,12 +281,18 @@ export class HomeComponent implements OnInit {
     this.userInfoService.getListHistory(this.userWallet.publicKey)
       .subscribe(result => { this.listHistory = result });
     this.isDisplay = !this.isDisplay;
+
+    this.isShow = true;
+    this.showRequest = true;
   }
 
   getRequests() {
     this.userInfoService.getRequestList(this.userWallet.publicKey)
       .subscribe(result => { this.listRequest = result });
     this.showRequest = !this.showRequest;
+
+    this.isShow = true;
+    this.isDisplay = true;
   }
 
   getTrackingCode(): void {

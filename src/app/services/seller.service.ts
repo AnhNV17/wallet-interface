@@ -24,14 +24,15 @@ export class SellerService {
         return this.http.get<TableResult>(`http://localhost:3000/seller/user_requests/${seller}/${maxResultCount}/${pageNumber}`);
     }
 
-    requestToSuppliers(username: String, productName: String, quantity: Number, publicKey: String, brand: String, supplier: String) {
+    requestToSuppliers(username: String, productName: String, quantity: Number, publicKey: String, brand: String, supplier: String, supplierName: String) {
         return this.http.post<ReturnMessage>('http://localhost:3000/seller/requests_to_suppliers', {
             username: username,
             productName: productName,
             quantity: quantity,
             publicKey: publicKey,
             brand: brand,
-            supplier: supplier
+            supplier: supplier,
+            supplierName: supplierName
         })
     }
 

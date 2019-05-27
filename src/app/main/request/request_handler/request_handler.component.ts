@@ -100,6 +100,7 @@ export class RequestHandlerComponent implements OnInit {
     }
 
     reloadList(): void {
+        // debugger
         this.paginator.changePage(this.paginator.getPage());
         setTimeout(() => {
             this.getConsignmentDetail();
@@ -111,6 +112,12 @@ export class RequestHandlerComponent implements OnInit {
             this.paginator.changePage(0);
             return;
         }
+
+        // console.log(116, typeof(this.paginator.getPage()));
+        // if (this.paginator.getPage() == NaN) {
+        //     console.log(118, "true");
+        // }
+        // console.log(120, this.paginator.getPage());
 
         this.primengTableHelper.showLoadingIndicator();
 
@@ -148,6 +155,7 @@ export class RequestHandlerComponent implements OnInit {
                 this.requestObj.productName
             ).subscribe(result => {
                 console.log(136, result.pageList)
+                console.log(151, result.totalRecords);
                 this.primengTableHelper.records = result.pageList;
                 this.primengTableHelper.totalRecordsCount = result.totalRecords;
                 this.primengTableHelper.hideLoadingIndicator();
@@ -179,6 +187,7 @@ export class RequestHandlerComponent implements OnInit {
                             // remove params
                         });
                 } else if (this.userWallet.role == "seller") {
+                    // debugger
                     console.log(165, this.selectedConsignments, this.userWallet.publicKey, this.requestObj.userAdd)
                     this.sellerService.createTransaction(
                         this.requestObj.requestId,
@@ -186,6 +195,7 @@ export class RequestHandlerComponent implements OnInit {
                         this.requestObj.userAdd,
                         this.userWallet.publicKey
                     ).subscribe(result => {
+                        // debugger
                         if (result.typeMess == "success") {
                             Swal.fire({
                                 type: "info",

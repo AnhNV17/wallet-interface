@@ -28,7 +28,8 @@ export class SelectItem {
   selector: "requesListModal",
   templateUrl: "./requestList.component.html",
   styleUrls: ["./requestList.component.css"],
-  animations: [appModuleAnimation()]
+  animations: [appModuleAnimation()],
+  encapsulation: ViewEncapsulation.None
 })
 export class RequesListComponent implements OnInit {
   @ViewChild("requesListComponentModal") modal: ModalDirective;
@@ -63,6 +64,9 @@ export class RequesListComponent implements OnInit {
   trackingCode: String;
 
   typeSuccess: String;
+
+  failList: any;
+  showFail = true;
 
   constructor(
     private router: Router,
@@ -171,6 +175,16 @@ export class RequesListComponent implements OnInit {
         this.listSellerRequest = result;
       });
     this.showRequest = !this.showRequest;
+
+    this.userInfo.getFailList(
+      this.userWallet.publicKey
+    ).subscribe(result => {
+      this.failList = result;
+    });
+    this.showFail = !this.showFail;
+
+    this.isDisplay = true;
+    this.isShow = true;
   }
 
   getListHistory() {
@@ -178,6 +192,10 @@ export class RequesListComponent implements OnInit {
       this.listHistory = result;
     });
     this.isDisplay = !this.isDisplay;
+
+    this.showFail = true;
+    this.showRequest = true;
+    this.isShow = true;
   }
 
   getSuccessfulList() {
@@ -189,6 +207,9 @@ export class RequesListComponent implements OnInit {
         // this.typeSuccess = succesfulList.type;
       });
     this.isShow = !this.isShow;
+
+    this.showFail = true;
+    this.showRequest = true;
   }
 
   getTrackingCode(): void {
@@ -203,14 +224,14 @@ export class RequesListComponent implements OnInit {
     let check = '';
     // let fControls = { trackingCode: FormControl }
     // for (var control in fControls) {
-      if (this.formTrace.get('trackingCode').errors) {
-        check = 'trackingCode';
-        this.showError = true;
-      }
+    if (this.formTrace.get('trackingCode').errors) {
+      check = 'trackingCode';
+      this.showError = true;
+    }
     // }
     if (check != '') {
       // for (var control in fControls) {
-        this.formTrace.get('trackingCode').markAsTouched({ onlySelf: true });
+      this.formTrace.get('trackingCode').markAsTouched({ onlySelf: true });
       // }
       $('#' + check).focus();
     } else {
@@ -222,6 +243,19 @@ export class RequesListComponent implements OnInit {
 
   openDetail(reqId: String): void {
     this.productDetailModal.show(reqId, '');
+  }
+
+  openFailDetail(): void {
+    this.productDetailModal.show('', '');
+  }
+
+  getFailList(): void {
+    this.userInfo.getFailList(
+      this.userWallet.publicKey
+    ).subscribe(result => {
+      this.failList = result;
+    });
+    this.showFail = !this.showFail;
   }
 
   trackingProduct(): void {
